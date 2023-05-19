@@ -67,7 +67,7 @@ GO
 CREATE TABLE USUARIOS
 (
 	idUsuario	INT					NOT NULL	PRIMARY KEY IDENTITY,
-	icone		VARBINARY			NOT NULL,
+	icone		VARBINARY(MAX)			NOT NULL,
 	nome		VARCHAR(MAX)		NOT NULL,
 	nick		VARCHAR(15)			NOT NULL,
 	senha		VARCHAR(20)			NOT NULL,
@@ -240,13 +240,13 @@ GO
 
 -- INSERTS NAS TABELAS "FIXAS"
 INSERT INTO GENEROS VALUES('Casual'),
-						  ('Ação'),
+						  ('Aï¿½ï¿½o'),
 						  ('Aventura'),
 						  ('Indie'),
 						  ('Multijogador Massivo'),
 						  ('RPG'),
-						  ('Simulação'),
-						  ('Estratégia'),
+						  ('Simulaï¿½ï¿½o'),
+						  ('Estratï¿½gia'),
 						  ('Corrida')
 						  
 
@@ -258,7 +258,7 @@ INSERT INTO TIPOS VALUES('JxJ on-line'),
 						('Compatibilidade total com controle'),
 						('Um jogador'),
 						('MMO'),
-						('Inclui editor de níveis'),
+						('Inclui editor de nï¿½veis'),
 						('Compatibilidade parcial com controle'),
 						('Cooperativo tela dividida/Compartilhada'),
 						('JxJ tela dividida/compart')
