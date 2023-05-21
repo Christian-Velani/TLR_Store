@@ -1,7 +1,12 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+#region Services
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IAdministradorRepository,AdministradorRepository>();
+
+#endregion Services
 
 var app = builder.Build();
 

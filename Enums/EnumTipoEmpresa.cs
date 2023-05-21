@@ -1,4 +1,4 @@
-public enum EnumTipoEmpresa
+public enum EnumTipoEmpresa : int 
 {
     
 }
