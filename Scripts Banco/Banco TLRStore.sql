@@ -38,7 +38,7 @@ GO
 CREATE TABLE TIPOS
 (
 	idTipo		INT				NOT NULL	PRIMARY KEY		IDENTITY,
-	nome		VARCHAR(20)		NOT NULL
+	nome		VARCHAR(50)		NOT NULL
 )
 GO
 
@@ -52,7 +52,7 @@ GO
 CREATE TABLE EMPRESAS
 (
 	idEmpresa	INT			NOT NULL	PRIMARY KEY		IDENTITY,
-	nome		VARCHAR(30)	NOT NULL
+	nome		VARCHAR(50)	NOT NULL
 )
 GO
 
@@ -60,7 +60,7 @@ CREATE TABLE JOGOS_EMPRESAS
 (
 	jogoId			INT		NOT NULL,
 	empresaId		INT		NOT NULL,
-	tipoEmpresa		INT		NOT NULL	CHECK (tipoEmpresa in (1, 2, 3))
+	tipoEmpresa		INT		NOT NULL	CHECK (tipoEmpresa in (1, 2))
 )
 GO
 
@@ -240,13 +240,13 @@ GO
 
 -- INSERTS NAS TABELAS "FIXAS"
 INSERT INTO GENEROS VALUES('Casual'),
-						  ('A��o'),
+						  ('Ação'),
 						  ('Aventura'),
 						  ('Indie'),
 						  ('Multijogador Massivo'),
 						  ('RPG'),
-						  ('Simula��o'),
-						  ('Estrat�gia'),
+						  ('Simulação'),
+						  ('Estratégia'),
 						  ('Corrida')
 						  
 
@@ -331,3 +331,4 @@ INSERT INTO EMPRESAS VALUES('Innersloth'),
 						   ('Pinoki Games'),
 						   ('Kverta'),
 						   ('tinyBuild')
+
