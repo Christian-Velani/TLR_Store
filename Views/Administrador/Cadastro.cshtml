@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Jogo</title>
+    <style>
+        body {
+            background-color: #1b2838;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-form {
+            background-color: #2c3e50;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+            .register-form h1 {
+                margin-bottom: 20px;
+            }
+
+            .register-form input,
+            .register-form textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+                border: none;
+            }
+
+                .register-form input[type="submit"] {
+                    background-color: #3498db;
+                    color: #fff;
+                    cursor: pointer;
+                }
+
+                    .register-form input[type="submit"]:hover {
+                        background-color: #2980b9;
+                    }
+
+            .register-form textarea {
+                height: 100px;
+            }
+
+        ::-webkit-input-placeholder {
+            color: #ccc;
+        }
+
+        ::-moz-placeholder {
+            color: #ccc;
+        }
+
+        :-ms-input-placeholder {
+            color: #ccc;
+        }
+
+        ::placeholder {
+            color: #201e1e;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form class="register-form" method="POST" action="/Administrador/Cadastro" enctype="multipart/form-data">
+            <h1>Cadastro de Jogo</h1>
+            <input type="text" placeholder="Nome do Jogo" required id="nome" name="Nome">
+            <br>
+            <label>Selecione a Imagem do Jogo </label>
+            <input type="file" placeholder="Imagem do Jogo"name="Imagem">
+            <input type="submit" value="Enviar">
+            <input type="text" placeholder="Descrição" required id="descricao" name="Descricao">
+            <input type="number" placeholder="Data de Lançamento" required id="dataLancamento" name="DataLancamento">
+            <input type="text" placeholder="Desenvolvedora" required id="desenvolvedora" name="Desenvolvedora[0].NomeEmpresa">
+            <input type="text" placeholder="Distribuidora" required id="distribuidora" name="Distribuidora[0].NomeEmpresa">
+            <input type="text" placeholder="Gênero" required id="genero" name="Genero[0].NomeGenero">
+            <input type="text" placeholder="Tipo" required id="tipo" name="Tipo[0].NomeTipo">
+            <input type="text" placeholder="Preço" required id="preco" name="Preco">
+            <input type="text" placeholder="Desconto" required id="desconto" name="Desconto">
+            <input type="text" placeholder="Requisito" required id="requisito" name="Requisito">
+            <input type="number" placeholder="Status" required id="status" name="Status">
+            <input type="number" placeholder="Classificação Indicativa" required id="classificaoIndicativa" name="ClassificacaoIndicativa">
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
+</body>
+</html>

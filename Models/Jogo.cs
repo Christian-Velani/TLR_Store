@@ -4,7 +4,7 @@ public class Jogo
     public byte[] Imagem { get; set; }
     public string Nome { get; set; }
     public string Descricao { get; set; }
-    public DateOnly DataLancamento { get; set; }
+    public DateTime DataLancamento { get; set; }
     public List<Empresa> Desenvolvedora { get; set; }
     public List<Empresa> Distribuidora { get; set; }
     public List<Genero> Genero { get; set; }
