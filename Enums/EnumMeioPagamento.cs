@@ -1,4 +1,4 @@
-public enum EnumMeioPagamento
+public enum EnumMeioPagamento : int
 {
     
 }
