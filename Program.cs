@@ -7,6 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IAdministradorRepository,AdministradorRepository>();
 builder.Services.AddTransient<IEmpresaRepository, EmpresaRepository>();
 builder.Services.AddTransient<IGeneroRepository, GeneroRepository>();
+builder.Services.AddTransient<ITipoRepository, TipoRepository>();
 
 #endregion Services
 
