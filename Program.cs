@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IAdministradorRepository,AdministradorRepository>();
 builder.Services.AddTransient<IEmpresaRepository, EmpresaRepository>();
+builder.Services.AddTransient<IGeneroRepository, GeneroRepository>();
 
 #endregion Services
 

@@ -1,0 +1,56 @@
+@model List<Genero>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Generos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Lista de Generos</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Editar</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (Genero genero in @Model)
+        {
+            <tr>
+                <td>@genero.IdGenero</td>
+                <td>@genero.NomeGenero</td>
+                <td><a href="/genero/atualizar/@genero.IdGenero">Editar</a></td>
+            </tr>
+        }
+      </tbody>
+    </table>
+    <a class="btn btn-primary" href="/genero/cadastrar">Cadastrar</a>
+  </div>
+
+</body>
+</html>

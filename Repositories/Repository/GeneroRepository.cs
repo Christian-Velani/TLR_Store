@@ -1,12 +1,12 @@
 using System.Data.SqlClient;
 
-public class GeneroRespository : Database, IGeneroRepository
+public class GeneroRepository : Database, IGeneroRepository
 {
     public void Atualizar(int idGenero, Genero genero)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = @"UPDATE GENERO
+        cmd.CommandText = @"UPDATE GENEROs
                             SET nome = @nome
                             WHERE idGenero = @id";
 
@@ -44,7 +44,7 @@ public class GeneroRespository : Database, IGeneroRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = @"SELECT * FROM GENEREOS";
+        cmd.CommandText = @"SELECT * FROM GENEROS";
 
         List<Genero> generos = new List<Genero>();
 
