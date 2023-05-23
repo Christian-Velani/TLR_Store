@@ -35,11 +35,12 @@ public class DLCRepository : Database, IDLCRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
+        DLC complemento = new DLC();
+
         if(reader.Read())
         {
             byte[] imagemBytes = (byte[])reader["imagem"];
 
-            DLC complemento = new DLC();
             complemento.IdComplemento = Convert.ToInt32(reader["idComplemento"]);
             complemento.NomeComplemento = reader["nome"].ToString();
             complemento.Imagem = imagemBytes;
@@ -48,10 +49,11 @@ public class DLCRepository : Database, IDLCRepository
             complemento.Desconto = Convert.ToInt32(reader["desconto"]);
             complemento.Status = (EnumStatus)(reader["status"]);
 
-            return complemento;
         }
 
-        return null;
+        reader.Close();
+
+        return complemento;
     }
 
     public List<DLC> BuscarListaDLC()

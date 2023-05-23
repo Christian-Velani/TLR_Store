@@ -331,4 +331,3 @@ INSERT INTO EMPRESAS VALUES('Innersloth'),
 						   ('Pinoki Games'),
 						   ('Kverta'),
 						   ('tinyBuild')
-

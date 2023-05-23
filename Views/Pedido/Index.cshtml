@@ -1,0 +1,60 @@
+@model List<Pedido>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Pedidos do cliente</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Lista de Pedidos</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Meio de Pagamento</th>
+          <th>Valor da Compra</th>
+          <th>Data da Compra</th>
+          <th>Detalhes</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (Pedido pedido in @Model)
+        {
+            <tr>
+                <td>@pedido.IdPedido</td>
+                <td>@pedido.MeioPagamento</td>
+                <td>@pedido.ValorCompra</td>
+                <td>@pedido.DataCompra</td>
+                <td><a href="/Pedido/detalhes/?idPedido=@pedido.IdPedido">Detalhes</a></td>
+            </tr>
+        }
+      </tbody>
+    </table>
+    <a class="btn btn-primary" href="/Pedido/criar">Cadastrar</a>
+  </div>
+
+</body>
+</html>

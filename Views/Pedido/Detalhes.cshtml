@@ -1,0 +1,73 @@
+@model Pedido
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhes do Pedido</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Pedido</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Meio de Pagamento</th>
+          <th>Valor da Compra</th>
+          <th>Data da Compra</th>
+          <th>Produtos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td>@Model.IdPedido</td>
+            <td>@Model.MeioPagamento</td>
+            <td>@Model.ValorCompra</td>
+            <td>@Model.DataCompra</td>
+            <td>
+                @foreach (Object produto in Model.Produtos)
+                {
+                    if (produto is Jogo)
+                    {
+                        var jogo = produto as Jogo;
+                        <span>@jogo.Nome</span>
+                        <br>
+                    }
+                    else if (produto is DLC)
+                    {
+                        var complemento = produto as DLC;
+                        <span>@complemento.NomeComplemento</span>
+                        <br>
+                    }
+                }
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="btn btn-primary" href="/Pedido/criar">Cadastrar</a>
+  </div>
+
+</body>
+</html>
