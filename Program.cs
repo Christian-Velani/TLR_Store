@@ -8,6 +8,7 @@ builder.Services.AddTransient<IAdministradorRepository,AdministradorRepository>(
 builder.Services.AddTransient<IEmpresaRepository, EmpresaRepository>();
 builder.Services.AddTransient<IGeneroRepository, GeneroRepository>();
 builder.Services.AddTransient<ITipoRepository, TipoRepository>();
+builder.Services.AddTransient<IDLCRepository, DLCRepository>();
 
 #endregion Services
 
