@@ -3,9 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 public class AdministradorController : Controller
 {
     private readonly IAdministradorRepository _administradorRepository;
-    public AdministradorController(IAdministradorRepository administradorRepository)
+    private readonly IEmpresaRepository _empresaRepository;
+    private readonly ITipoRepository _tipoRepository;
+    private readonly IGeneroRepository _generoRepository;
+    public AdministradorController(IAdministradorRepository administradorRepository,
+    IEmpresaRepository empresaRepository,
+    ITipoRepository tipoRepository,
+    IGeneroRepository generoRepository)
     {
         _administradorRepository = administradorRepository;
+        _empresaRepository = empresaRepository;
+        _tipoRepository = tipoRepository;
+        _generoRepository = generoRepository;
     }
 
     [HttpGet]
@@ -19,12 +28,21 @@ public class AdministradorController : Controller
     [Route("Administrador/Cadastro")]
     public ActionResult Cadastro()
     {
+        var dict = new Dictionary<string, List<Object>>();
+        dict["ListaEmpresas"] = new List<Object>(); 
+        dict["ListaTipos"] = new List<Object>(); 
+        dict["ListaGeneros"] = new List<Object>(); 
+        dict["ListaEmpresas"].Add(_empresaRepository.BuscarLista());
+        dict["ListaTipos"].Add(_tipoRepository.BuscarLista());
+        dict["ListaGeneros"].Add(_generoRepository.BuscarListaCompleta());
+
+        ViewBag.Data = dict;
         return View();
     }
     
     [HttpPost]
     [Route("Administrador/Cadastro")]
-    public ActionResult Cadastro(Jogo jogo)
+    public ActionResult Cadastro(Jogo jogo, List<Empresa> empresas,List<Tipo> tipos)
     {
         var arquivoImagem = Request.Form.Files["Imagem"];
 

@@ -13,7 +13,7 @@ CREATE TABLE JOGOS
 	descricao						VARCHAR(MAX)	NOT NULL,
 	preco							DECIMAL(10,2)	NOT NULL,
 	desconto						INT				NULL,
-	dataLancamento					DATE			NOT NULL,
+	dataLancamento					DATETIME		NOT NULL,
 	classificacaoIndicativa			INT				NOT NULL	CHECK(classificacaoIndicativa in (3, 7, 12, 16, 18)),
 	requisitos						VARCHAR(MAX)	NULL,
 	status							INT				NOT NULL	CHECK(status in (0,1))
@@ -23,7 +23,7 @@ GO
 CREATE TABLE GENEROS
 (
 	idGenero	INT				NOT NULL	PRIMARY KEY		IDENTITY,
-	nome		VARCHAR(20)		NOT NULL
+	nome		VARCHAR(30)		NOT NULL
 )
 GO
 	
