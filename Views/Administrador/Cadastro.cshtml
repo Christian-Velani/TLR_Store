@@ -6,66 +6,88 @@
     <title>Cadastro de Jogo</title>
     <style>
         body {
-            background-color: #1b2838;
+            background: linear-gradient(to bottom, #000000, #08003d, #000000); /* degrade fundo */
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: "Andada Pro", Andada Pro; /* fonte letras */
+            color: #fff;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+             /* height: 300vh;     localização do cadastrador */
+            padding-top: 10px; /* superior */
+            margin-top: 10px;
+            padding-bottom: 10px; /* inferior*/
+            margin-bottom: 10px;
         }
 
         .register-form {
-            background-color: #2c3e50;
+            /* degrade meio */
             padding: 40px;
-            border-radius: 8px;
+            border-radius: 15px; /* curvatura meio */
             text-align: center;
+            max-width: 800px; /* largura meio */
+            margin: 0 auto;
+            /* border: 1px solid #ffffff; contorno */;
         }
 
-            .register-form h1 {
-                margin-bottom: 20px;
-            }
+        .register-form h1 {
+            margin-bottom: 10px;
+        }
+        
+        .register-form h2 {
+            margin-bottom: 0px;
+            padding: 10px;
+            width: 300px; /* Defina a largura desejada para os títulos */
+            text-align: left; /* Alinhe o texto à esquerda */
+            font-size: 20px;
+            
+        }
 
-            .register-form input,
-            .register-form textarea {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 10px;
-                border-radius: 4px;
-                border: none;
-            }
+        .register-form input,
+        .register-form textarea {
+            width: 95%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: none;
+            color: rgb(255, 255, 255)000;
+            background-color: rgba(255, 255, 255, 0.795);
+            box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.849); /* inf gerais */
+        }
+        
+        .register-form input[type="submit"] { /* botão */
+            background-color: #001866;  
+            color: #fff;
+            cursor: pointer;
+        } 
 
-                .register-form input[type="submit"] {
-                    background-color: #3498db;
-                    color: #fff;
-                    cursor: pointer;
-                }
+        .register-form input[type="submit"]:hover { /* botão */
+            background-color: #00318d;
+        }
 
-                    .register-form input[type="submit"]:hover {
-                        background-color: #2980b9;
-                    }
-
-            .register-form textarea {
-                height: 100px;
-            }
+        .register-form textarea {
+            height: 100px;
+        }
 
         ::-webkit-input-placeholder {
-            color: #ccc;
+            color: #000000;
         }
 
         ::-moz-placeholder {
-            color: #ccc;
+            color: #000000;
         }
 
         :-ms-input-placeholder {
-            color: #ccc;
+            color: #000000;
         }
 
         ::placeholder {
-            color: #201e1e;
+            color: #0c0c0c7c; /* dentro letras */
         }
 
     </style>
@@ -73,24 +95,36 @@
 <body>
     <div class="container">
         <form class="register-form" method="POST" action="/Administrador/Cadastro" enctype="multipart/form-data">
-            <h1>Cadastro de Jogo</h1>
-            <input type="text" placeholder="Nome do Jogo" required id="nome" name="Nome">
-            <br>
-            <label>Selecione a Imagem do Jogo </label>
-            <input type="file" placeholder="Imagem do Jogo"name="Imagem">
-            <input type="submit" value="Enviar">
-            <input type="text" placeholder="Descrição" required id="descricao" name="Descricao">
+            <h1>Cadastro</h1>
+            <h2>Nome</h2>
+            <input type="text" placeholder='Nome completo do jogo' required id="nome" name="Nome"><br>
+            <h2>Descrição</h2>
+            <input type="text" placeholder="Objetivo, história, regras e etc " required id="descricao" name="Descricao">
+             <h2>Gênero</h2>
+            <input type="text" placeholder="RPG, ação, aventura, terror e etc" required id="genero" name="Genero[0].NomeGenero">
+            <h2>Tipo</h2>
+            <input type="text" placeholder="Multiplayer, soloplayer, JXJ online e etc" required id="tipo" name="Tipo[0].NomeTipo">
+            <h2>Data e Hora de Lançamento</h2>
             <input type="datetime-local" placeholder="Data de Lançamento" required id="dataLancamento" name="DataLancamento">
-            <input type="text" placeholder="Desenvolvedora" required id="desenvolvedora" name="Desenvolvedora[0].NomeEmpresa">
-            <input type="text" placeholder="Distribuidora" required id="distribuidora" name="Distribuidora[0].NomeEmpresa">
-            <input type="text" placeholder="Gênero" required id="genero" name="Genero[0].NomeGenero">
-            <input type="text" placeholder="Tipo" required id="tipo" name="Tipo[0].NomeTipo">
-            <input type="text" placeholder="Preço" required id="preco" name="Preco">
-            <input type="text" placeholder="Desconto" required id="desconto" name="Desconto">
-            <input type="text" placeholder="Requisito" required id="requisito" name="Requisito">
-            <input type="number" placeholder="Status" required id="status" name="Status">
-            <input type="number" placeholder="Classificação Indicativa" required id="classificaoIndicativa" name="ClassificacaoIndicativa">
-            <input type="submit" value="Cadastrar">
+            <h2>Empresas</h2>
+            <input type="text" placeholder='Nome completo da Desenvolvedora' required id="desenvolvedora" name="Desenvolvedora[0].NomeEmpresa">
+            <input type="text" placeholder='Nome completo da Distribuidora' required id="distribuidora" name="Distribuidora[0].NomeEmpresa">
+            <h2>Requisitos</h2>
+            <input type="text" placeholder='Memória RAM, Processador e etc' required id="requisito" name="Requisito">
+            <h2>Classificação Indicativa</h2>
+            <select id="classificacao" name="classificacaoIndicativa">
+            <option value="3">Livre</option>
+            <option value="7">7 anos</option>
+            <option value="12">12 anos</option>
+            <option value="16">16 anos</option>
+            <option value="18">18 anos</option>
+            </select>
+
+            <h2>Preço</h2>
+            <input type="text" placeholder='00,00' required id="preco" name="Preco">
+            <h2>Imagem de Exibição</h2>
+            <input type="file" name="Imagem">
+            <input type="submit" value="Confirmar">
         </form>
     </div>
 </body>
