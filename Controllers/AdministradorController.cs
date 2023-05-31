@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-
+//teste
 public class AdministradorController : Controller
 {
     private readonly IAdministradorRepository _administradorRepository;
