@@ -17,6 +17,10 @@
             align-items: center;
             height: 100vh;
         }
+        .container2 {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
 
         .register-form {
             background-color: #2c3e50;
@@ -72,9 +76,35 @@
 </head>
 <body>
     <div class="container">
-        <form class="register-form" method="POST" action="/DLC/Cadastrar/?idJogo=1" enctype="multipart/form-data">
-            <h1>Cadastro de Pedido</h1>
-            
+        <form action="/pedido/criar" method="post">
+            <label for="meioPagamento">Meio de Pagamento:</label>
+            <br>
+            <select id="meioPagamento" name="MeioPagamento" required>
+                <option value="1">Cartão</option>
+                <option value="2">Boleto</option>
+                <option value="3">Pix</option>
+            </select>
+            <br>
+            <label for="jogosIds">Jogos a Adquirir:</label>
+            <br>
+            <div class="container2">
+                @foreach(Jogo jogo in ViewBag.jogos)
+                {
+                    <input type="CheckBox" name="jogosIds" value=@jogo.JogoId>@jogo.Nome
+                    <br>
+                }
+            </div>
+            <label for="complementoIds">Complementos a Adquirir:</label>
+            <br>
+            <div class="container2">
+                @foreach(DLC complemento in ViewBag.complementos)
+                {
+                    <input type="CheckBox" name="complementosIds" value=@complemento.IdComplemento>@complemento.NomeComplemento
+                    <br>
+                }
+            </div>
+            <br>
+            <input type="submit" value="Criar">
         </form>
     </div>
 </body>

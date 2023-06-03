@@ -39,7 +39,7 @@ public class AdministradorRepository : Database, IAdministradorRepository
         cmd.ExecuteNonQuery();
     }
 
-    public IList GetAllJogos ()
+    public List<Jogo> GetAllJogos ()
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;

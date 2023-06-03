@@ -88,18 +88,28 @@ public class PedidoRepository : Database, IPedidoRepository
         return null;
     }
 
-    public void Criar(Pedido pedido, int idUsuario, List<int> jogosIds, List<int> complementosIds)
+    public void Criar(Pedido pedido, List<int> jogosIds, List<int> complementosIds)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
         cmd.CommandText = @"INSERT INTO PEDIDOS(meioPagamento, dataCompra, usuarioId) 
-                            VALUES(@meioPagamento, @dataCompra, @usuarioId)";
+                            VALUES(@meioPagamento, GetDate(), 1)";
 
         cmd.Parameters.AddWithValue("@meioPagamento", pedido.MeioPagamento);
-        cmd.Parameters.AddWithValue("@dataCompra", pedido.DataCompra);
-        cmd.Parameters.AddWithValue("@usuarioId", idUsuario);
 
         cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"SELECT TOP 1 idPedido FROM PEDIDOS
+                            ORDER BY idPedido DESC";
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        if(reader.Read())
+        {
+            pedido.IdPedido = Convert.ToInt32(reader["idPedido"]);
+        }
+
+        reader.Close();
 
         foreach(int id in jogosIds)
         {
@@ -115,7 +125,6 @@ public class PedidoRepository : Database, IPedidoRepository
         {
             cmd.CommandText = "INSERT INTO PRODUTOS_PEDIDOS(pedidoId, complementoId) VALUES(@pedidoId, @complementoId)";
 
-            cmd.Parameters.AddWithValue("@pedidoId", pedido.IdPedido);
             cmd.Parameters.AddWithValue("@complementoId", id);
 
             cmd.ExecuteNonQuery();
@@ -129,7 +138,7 @@ public class PedidoRepository : Database, IPedidoRepository
                                 LEFT JOIN COMPLEMENTOS c ON pp.complementoId = c.idComplemento
                                 WHERE pp.pedidoId = @idPedido
                             )
-                            WHERE idPedido = @idPedido;)";
+                            WHERE idPedido = @idPedido";
 
         cmd.Parameters.AddWithValue("@idpedido", pedido.IdPedido);
 
