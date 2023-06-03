@@ -2,7 +2,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 #region Services
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IAdministradorRepository,AdministradorRepository>();
 builder.Services.AddTransient<IEmpresaRepository, EmpresaRepository>();
@@ -10,8 +9,13 @@ builder.Services.AddTransient<IGeneroRepository, GeneroRepository>();
 builder.Services.AddTransient<ITipoRepository, TipoRepository>();
 builder.Services.AddTransient<IDLCRepository, DLCRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
-
+builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 #endregion Services
+
+#region Session
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+#endregion Session
 
 var app = builder.Build();
 
