@@ -1,73 +1,72 @@
-@model Pedido
+@Model Pedido
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Detalhes do Pedido</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Tela de Pedido</title>
   <style>
-    body {
-      padding: 20px;
-    }
-    h1 {
-      margin-bottom: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #1b2838;
+    color: #fff;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .pedido-info {
+    margin-bottom: 30px;
+  }
+
+  strong {
+    color: #f2a900;
+  }
+
+  .produto-lista {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .produto-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  .produto-nome {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .produto-valor {
+    color: #f2a900;
+  }
   </style>
 </head>
 <body>
+  <h1>Detalhes do Pedido</h1>
 
-  <div class="container">
-    <h1>Pedido</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Meio de Pagamento</th>
-          <th>Valor da Compra</th>
-          <th>Data da Compra</th>
-          <th>Produtos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            <td>@Model.IdPedido</td>
-            <td>@Model.MeioPagamento</td>
-            <td>@Model.ValorCompra</td>
-            <td>@Model.DataCompra</td>
-            <td>
-                @foreach (Object produto in Model.Produtos)
-                {
-                    if (produto is Jogo)
-                    {
-                        var jogo = produto as Jogo;
-                        <span>@jogo.Nome</span>
-                        <br>
-                    }
-                    else if (produto is DLC)
-                    {
-                        var complemento = produto as DLC;
-                        <span>@complemento.NomeComplemento</span>
-                        <br>
-                    }
-                }
-            </td>
-        </tr>
-      </tbody>
-    </table>
-    <a class="btn btn-primary" href="/Pedido/criar">Cadastrar</a>
+  <div class="pedido-info">
+    <strong>ID do Pedido:</strong> <span id="id-pedido">@Model.IdPedido</span><br>
+    <strong>Meio de Pagamento:</strong> <span id="meio-pagamento">@Model.MeioPagamento</span><br>
+    <strong>Data da Compra:</strong> <span id="data-compra">@Model.DataCompra.ToString("dd/MM/yyyy")</span><br>
+    <strong>Valor da Compra:</strong> <span id="valor-compra">@Model.ValorCompra.ToString("0.00")</span><br>
   </div>
 
+  <h2>Produtos Adquiridos</h2>
+
+  <ul class="produto-lista" id="produtos-adquiridos">
+    @foreach (var produto in Model.Produtos)
+    {
+      <li class="produto-item">
+        <span class="produto-nome">@produto.Nome</span>
+        <span>R$@produto.Valor.ToString("0.00")</span>
+      </li>
+    }
+  </ul>
 </body>
 </html>
