@@ -4,16 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Jogo</title>
-    <style>
-        body {
-            background: linear-gradient(to bottom, #000000, #08003d, #000000); /* degrade fundo */
-            color: #fff;
-            font-family: "Andada Pro", Andada Pro; /* fonte letras */
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
+    <style>        
         .container {
             display: flex;
             justify-content: center;
@@ -45,6 +36,14 @@
             width: 300px; /* Defina a largura desejada para os títulos */
             text-align: left; /* Alinhe o texto à esquerda */
             font-size: 20px;
+            
+        }
+        .register-form h3 {
+            margin-bottom: 0px;
+            padding: 10px;
+            width: 300px; /* Defina a largura desejada para os títulos */
+            text-align: left; /* Alinhe o texto à esquerda */
+            font-size: 15px;
             
         }
 
@@ -89,42 +88,161 @@
         ::placeholder {
             color: #0c0c0c7c; /* dentro letras */
         }
+        
+        .genre-label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    
+        .genre-container {
+            display: flex;
+            flex-wrap: wrap;
+            height: 300px;
+            overflow-y: scroll;
+            
+        }
+        .genre-item { /*letrA BOX cor*/  
+            flex-basis: 50%;
+        }
+        .type-label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    
+        .type-container {
+            display: flex;
+            flex-wrap: wrap;
+            height: 300px;
+            overflow-y: scroll;
+            
+        }
+        .type-item { /*letrA BOX cor*/  
+            flex-basis: 50%;
+        }
+        .empresa-label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    
+        .empresa-container {
+            display: flex;
+            flex-wrap: wrap;
+            height: 300px;
+            overflow-y: scroll;
+            
+        }
+        .empresa-item { /*letrA BOX cor*/  
+            flex-basis: 50%;
+        }
+        .cadastro-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .cadastro-button:hover {
+            background-color: #45a049;
+        }
 
+        .text-area {
+            overflow-y: scroll;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <form class="register-form" method="POST" action="/Administrador/Cadastro" enctype="multipart/form-data">
-            <h1>Cadastro</h1>
-            <h2>Nome</h2>
-            <input type="text" placeholder='Nome completo do jogo' required id="nome" name="Nome"><br>
-            <h2>Descrição</h2>
-            <input type="text" placeholder="Objetivo, história, regras e etc " required id="descricao" name="Descricao">
-             <h2>Gênero</h2>
-            <input type="text" placeholder="RPG, ação, aventura, terror e etc" required id="genero" name="Genero[0].NomeGenero">
-            <h2>Tipo</h2>
-            <input type="text" placeholder="Multiplayer, soloplayer, JXJ online e etc" required id="tipo" name="Tipo[0].NomeTipo">
-            <h2>Data e Hora de Lançamento</h2>
-            <input type="datetime-local" placeholder="Data de Lançamento" required id="dataLancamento" name="DataLancamento">
-            <h2>Empresas</h2>
-            <input type="text" placeholder='Nome completo da Desenvolvedora' required id="desenvolvedora" name="Desenvolvedora[0].NomeEmpresa">
-            <input type="text" placeholder='Nome completo da Distribuidora' required id="distribuidora" name="Distribuidora[0].NomeEmpresa">
-            <h2>Requisitos</h2>
-            <input type="text" placeholder='Memória RAM, Processador e etc' required id="requisito" name="Requisito">
-            <h2>Classificação Indicativa</h2>
-            <select id="classificacao" name="classificacaoIndicativa">
+        <form class="register-form" method="POST" action="/Jogo/Cadastro">
+
+        <h1>Cadastrar Jogo</h1>
+
+        <h2>Nome</h2>
+        <input type="text" placeholder="Nome completo do Jogo" required id="nome" name="Nome"><br>
+
+        <h2>Descrição</h2>
+        <textarea class="text-area" rows="5" cols="80" required id="descricao" name="Descricao">
+        Objetivo, história, regras e etc
+        </textarea>
+
+        <h2>Gênero</h2>
+        <div class="genre-container">
+            @foreach (Genero genero in ViewBag.generos)
+            {
+                <div class="genre-item">
+                    <input type="checkbox" name="generos" value="@genero.IdGenero">
+                    <label>@genero.NomeGenero</label>
+                </div>
+            }
+        </div>
+        <a class="cadastro-button" href="/Genero/Cadastrar">Cadastrar um novo Gênero</a>
+
+        <h2>Tipos</h2>
+        <div class="type-container">
+            @foreach (Tipo tipo in ViewBag.tipos)
+            {
+                <div class="type-item">
+                    <input type="checkbox" name="tipos" value="@tipo.IdTipo">
+                    <label>@tipo.NomeTipo</label>
+                </div>
+            }
+        </div>
+        <a class="cadastro-button" href="/Tipo/Cadastrar">Cadastrar um novo Tipo</a>
+
+        <h2>Desenvolvedora</h2>
+        <div class="empresa-container">
+            @foreach (Empresa desenvolvedora in ViewBag.empresas)
+            {
+                <div class="empresa-item">
+                    <input type="checkbox" name="desenvolvedoras" value="@desenvolvedora.IdEmpresa">
+                    <label>@desenvolvedora.NomeEmpresa</label>
+                </div>
+            }
+        </div>
+
+        <h2>Distribuidora</h2>
+        <div class="empresa-container">
+            @foreach (Empresa distribuidora in ViewBag.empresas)
+            {
+                <div class="empresa-item">
+                    <input type="checkbox" name="distribuidoras" value="@distribuidora.IdEmpresa">
+                    <label>@distribuidora.NomeEmpresa</label>
+                </div>
+            }
+        </div>
+        <a class="cadastro-button" href="/Empresa/Cadastrar">Cadastrar uma nova Empresa</a>
+
+        <h2>Data de Lançamento</h2>
+        <input type="date" name="DataLancamento">
+
+        <h2>Requisitos</h2>
+        <textarea class="text-area" required name="Requisitos" rows="5" cols="80">
+            Processador:
+            Memória:
+            SO:
+            etc.
+        </textarea>
+
+        <h2>Classificação Indicativa</h2>
+        <select name="classificacaoIndicativa">
             <option value="3">Livre</option>
             <option value="7">7 anos</option>
             <option value="12">12 anos</option>
             <option value="16">16 anos</option>
             <option value="18">18 anos</option>
-            </select>
+        </select>
 
-            <h2>Preço</h2>
-            <input type="text" placeholder='00,00' required id="preco" name="Preco">
-            <h2>Imagem de Exibição</h2>
-            <input type="file" name="Imagem">
-            <input type="submit" value="Confirmar">
+        <h2>Preço</h2>
+        <input type="decimal" placeholder="00,00" required name="Preco">
+
+        <h2>Capa do Jogo</h2>
+        <input type="file" name="Imagem">
         </form>
     </div>
 </body>

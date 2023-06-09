@@ -28,15 +28,17 @@ public class JogoController : Controller
     [Route("Jogo/Cadastro")]
     public ActionResult Cadastro()
     {
-        var dict = new Dictionary<string, List<Object>>();
-        dict["ListaEmpresas"] = new List<Object>(); 
-        dict["ListaTipos"] = new List<Object>(); 
-        dict["ListaGeneros"] = new List<Object>(); 
-        dict["ListaEmpresas"].Add(_empresaRepository.BuscarLista());
-        dict["ListaTipos"].Add(_tipoRepository.BuscarLista());
-        dict["ListaGeneros"].Add(_generoRepository.BuscarListaCompleta());
+        List<Genero> generos = new List<Genero>();
+        generos = _generoRepository.BuscarListaCompleta();
+        List<Tipo> tipos = new List<Tipo>();
+        tipos = _tipoRepository.BuscarLista();
+        List<Empresa> empresas = new List<Empresa>();
+        empresas = _empresaRepository.BuscarLista();
 
-        ViewBag.Data = dict;
+        ViewBag.generos = generos;
+        ViewBag.tipos = tipos;
+        ViewBag.empresas = empresas;
+
         return View();
     }
     

@@ -1,90 +1,139 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Document</title>
-    <style>
-        body {
-            background: linear-gradient(to bottom, #000000, #08003d, #000000); /* degrade fundo */
-            color: #fff;
-            font-family: "Andada Pro", Andada Pro; /* fonte letras */
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            position: relative;
-           
-        }
-        
-        .container h2 {
-            position: relative;
-            z-index: 1;
-            font-size: 20px;
-          
-        }
-
-        .container table {
-            position: 0;
-            z-index: 0;
-            
-        }
-        
-        .register-form h1 {
-            margin-bottom: 100px;
-        
-        }
-    </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container">
-        <h1>Lista de Jogos Cadastrados</h1>
-        <table class="table table-hover">
-            @foreach(var jogo in Model)
-            {
-                <tr>
-                    <td>
-                        <h2>Código</h2>
-                        @jogo.JogoId
-                    </td>
-                    <td>
-                        <h2>Nome</h2>
-                        @jogo.Nome
-                    </td>
-                    <td><img src="data:image/jpeg;base64,@Convert.ToBase64String(jogo.Imagem)" /></td>
-                    <td>
-                        <h2>Descrição</h2>
-                        @jogo.Descricao
-                    </td>
-                    <td>
-                        <h2>Preço</h2>
-                        @jogo.Preco
-                    </td>
-                    <td>
-                        <h2>Data de Lançamento</h2>
-                        @jogo.DataLancamento
-                    </td>
-                    <td>
-                        <h2>Classificação Indicativa</h2>
-                        @jogo.ClassificacaoIndicativa
-                    </td>
-                    <td>
-                        <h2>Requisitos</h2>
-                        @jogo.Requisito
-                    </td>
-
-                    <td>
-                        <a class="btn btn-warning" href="/Administrador/Edit?jogoId=@jogo.JogoId">Editar</a>
-                    </td>
-                    <td>
-                        <form method="post" action="/Administrador/Delete">
-                            <input type="hidden" name="jogoId" value="@jogo.JogoId" />
-                            <button type="submit" class="btn btn-danger">Deletar</button>
-                        </form>
-                    </td>
-                </tr>
+    <head>
+        <title>Lista de Jogos Cadastrados</title>
+        <style>
+            body {
+                background: linear-gradient(to bottom, #000000, #08003d, #000000); /* degrade fundo */
+                color: #fffdfd;
+                font-family: "Andada Pro", Andada Pro; /* fonte letras */
+                margin: 0;
+                padding: 0;
             }
-        </table>
-    </div>    
-</body>
-<html>
+        
+            .container {
+                margin: 50px;
+                padding: 20px;
+                color: #fffdfd;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th, td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            th {
+                background-color: #000000;
+                font-weight: bold;
+            }
+
+            .game-image {
+                width: 300px;
+                height: 300px;
+                object-fit: cover;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 8px 16px;
+                margin-right: 10px;
+                border-radius: 4px;
+                text-decoration: none;
+                color: #fff;
+                background-color: #007bff;
+                border: none;
+            }
+
+            .btn.btn-warning {
+                background-color: #ffc107;
+            }
+
+            .btn.btn-danger {
+                background-color: #dc3545;
+            }
+
+            .search-container {
+            display: flex;
+            align-items: center;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            }
+
+            .search-input {
+                flex: 1;
+                border: none;
+                padding: 8px;
+                font-size: 16px;
+            }
+
+            .search-button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="search-container">
+            <input class="search-input" type="text" placeholder="Digite sua busca...">
+            <button class="search-button" type="submit" style="background-color:rgb(0, 0, 0); border-color:rgb(255, 255, 255); 
+            color:white">Buscar</button>
+        </div>
+        <div class="container">
+            <h1>Lista de Jogos Cadastrados</h1>
+            <table>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Imagem</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Data de Lançamento</th>
+                    <th>Classificação Indicativa</th>
+                    <th>Requisitos</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach(var jogo in Model)
+                {
+                    <tr>
+                        <td>@jogo.JogoId</td>
+                        <td>@jogo.Nome</td>
+                        <td><img class="game-image" src="data:image/jpeg;base64,@Convert.ToBase64String(jogo.Imagem)" /></td>
+                        <td>@jogo.Descricao</td>
+                        <td>@jogo.Preco</td>
+                        <td>@jogo.DataLancamento</td>
+                        <td>@jogo.ClassificacaoIndicativa</td>
+                        <td>@jogo.Requisito</td>
+                        <td><a class="btn btn-warning" href="/Administrador/Edit?jogoId=@jogo.JogoId">Editar</a></td>
+                        <td>
+                            <form method="post" action="/Administrador/Delete">
+                                <input type="hidden" name="jogoId" value="@jogo.JogoId" />
+                                <button type="submit" class="btn btn-danger">Deletar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </body>
+</html>
