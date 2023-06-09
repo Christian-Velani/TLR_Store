@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 #region Services
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IAdministradorRepository,AdministradorRepository>();
+builder.Services.AddTransient<IJogoRepository, JogoRepository>();
 builder.Services.AddTransient<IEmpresaRepository, EmpresaRepository>();
 builder.Services.AddTransient<IGeneroRepository, GeneroRepository>();
 builder.Services.AddTransient<ITipoRepository, TipoRepository>();

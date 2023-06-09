@@ -69,10 +69,11 @@ CREATE TABLE USUARIOS
 	idUsuario	INT						NOT NULL	PRIMARY KEY IDENTITY,
 	icone		VARBINARY(MAX)			NULL,
 	nome		VARCHAR(MAX)			NULL,
-	nick		VARCHAR(15)				NULL	UNIQUE,
+	nick		VARCHAR(15)				NULL		UNIQUE,
 	senha		VARCHAR(20)				NULL,
-	email		VARCHAR(MAX)			NULL	UNIQUE,
-	status		INT						NULL 	CHECK(status in (1,2,3))
+	email		VARCHAR(MAX)			NULL		UNIQUE,
+	status		INT						NULL 		CHECK(status in (0,1))
+	tipo        INT						NOT NULL	CHECK(status in (0,1))
 )
 GO
 
