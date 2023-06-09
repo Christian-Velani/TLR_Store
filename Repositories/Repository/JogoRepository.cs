@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Data.SqlClient;
 
-public class AdministradorRepository : Database, IAdministradorRepository
+public class JogoRepository : Database, IJogoRepository
 {
     private readonly IGeneroRepository _generoRepository;
     private readonly IDLCRepository    _dLCRepository;
     private readonly IEmpresaRepository _empresaRepository;
     private readonly ITipoRepository _tipoRepository;
 
-    public AdministradorRepository(IGeneroRepository generoRepositor, IDLCRepository dLCRepository, IEmpresaRepository empresaRepository,
+    public JogoRepository(IGeneroRepository generoRepositor, IDLCRepository dLCRepository, IEmpresaRepository empresaRepository,
     ITipoRepository tipoRepository)
     {
         _generoRepository = generoRepositor;

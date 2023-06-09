@@ -1,6 +1,6 @@
 using System.Collections;
 
-public interface IAdministradorRepository
+public interface IJogoRepository
 {
     void CadastrarJogo (Jogo jogo);
     List<Jogo> GetAllJogos ();

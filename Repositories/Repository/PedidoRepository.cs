@@ -3,12 +3,12 @@ using System.Data.SqlClient;
 public class PedidoRepository : Database, IPedidoRepository
 {
     private readonly IDLCRepository dlcRepository;
-    private readonly IAdministradorRepository _administradorRepository;
+    private readonly IJogoRepository _jogoRepository;
 
-    public PedidoRepository(IDLCRepository dlcRepository, IAdministradorRepository administradorRepository)
+    public PedidoRepository(IDLCRepository dlcRepository, IJogoRepository jogoRepository)
     {
         this.dlcRepository = dlcRepository;
-        _administradorRepository = administradorRepository;
+        _jogoRepository = jogoRepository;
     }
     public List<Pedido> BuscarPorCliente(int idUsuario)
     {
@@ -72,7 +72,7 @@ public class PedidoRepository : Database, IPedidoRepository
             {
                 if(reader["jogoId"] != DBNull.Value)
                 {
-                    Jogo jogo = _administradorRepository.GetJogo(Convert.ToInt32(reader["jogoId"]));
+                    Jogo jogo = _jogoRepository.GetJogo(Convert.ToInt32(reader["jogoId"]));
                     pedido.Produtos.Add(jogo);
                 }
                 else if(reader["complementoId"] != DBNull.Value)
