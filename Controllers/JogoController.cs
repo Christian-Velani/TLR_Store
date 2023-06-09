@@ -1,31 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 //teste
-public class AdministradorController : Controller
+public class JogoController : Controller
 {
-    private readonly IAdministradorRepository _administradorRepository;
+    private readonly IJogoRepository _jogoRepository;
     private readonly IEmpresaRepository _empresaRepository;
     private readonly ITipoRepository _tipoRepository;
     private readonly IGeneroRepository _generoRepository;
-    public AdministradorController(IAdministradorRepository administradorRepository,
+    public JogoController(IJogoRepository jogoRepository,
     IEmpresaRepository empresaRepository,
     ITipoRepository tipoRepository,
     IGeneroRepository generoRepository)
     {
-        _administradorRepository = administradorRepository;
+        _jogoRepository = jogoRepository;
         _empresaRepository = empresaRepository;
         _tipoRepository = tipoRepository;
         _generoRepository = generoRepository;
     }
 
     [HttpGet]
-    [Route("Administrador/Index")]
+    [Route("Jogo/Index")]
     public ActionResult Index()
     {
-        return View(_administradorRepository.GetAllJogos());
+        return View(_jogoRepository.GetAllJogos());
     }
     
     [HttpGet]
-    [Route("Administrador/Cadastro")]
+    [Route("Jogo/Cadastro")]
     public ActionResult Cadastro()
     {
         var dict = new Dictionary<string, List<Object>>();
@@ -41,7 +41,7 @@ public class AdministradorController : Controller
     }
     
     [HttpPost]
-    [Route("Administrador/Cadastro")]
+    [Route("Jogo/Cadastro")]
     public ActionResult Cadastro(Jogo jogo, List<Empresa> empresas,List<Tipo> tipos)
     {
         var arquivoImagem = Request.Form.Files["Imagem"];
@@ -55,7 +55,7 @@ public class AdministradorController : Controller
             }
         }
 
-        _administradorRepository.CadastrarJogo(jogo);
+        _jogoRepository.CadastrarJogo(jogo);
 
         return RedirectToAction("Index");
     }

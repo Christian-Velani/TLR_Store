@@ -4,12 +4,12 @@ public class PedidoController : Controller
 {
     IPedidoRepository pedidoRepository;
     private readonly IDLCRepository _dLCRepository;
-    private readonly IAdministradorRepository _administradorRepository;
-    public PedidoController(IPedidoRepository pedidoRepository, IDLCRepository dLCRepository, IAdministradorRepository administradorRepository)
+    private readonly IJogoRepository _jogoRepository;
+    public PedidoController(IPedidoRepository pedidoRepository, IDLCRepository dLCRepository, IJogoRepository jogoRepository)
     {
         this.pedidoRepository = pedidoRepository;
         _dLCRepository = dLCRepository;
-        _administradorRepository = administradorRepository;
+        _jogoRepository = jogoRepository;
     }
 
     public ActionResult Index()
@@ -30,7 +30,7 @@ public class PedidoController : Controller
         List<DLC> complementos = new List<DLC>();
         complementos = _dLCRepository.BuscarListaDLC();
         List<Jogo> jogos = new List<Jogo>();
-        jogos = _administradorRepository.GetAllJogos();
+        jogos = _jogoRepository.GetAllJogos();
 
         ViewBag.complementos = complementos;
         ViewBag.jogos = jogos;
