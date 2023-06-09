@@ -8,7 +8,7 @@ GO
 CREATE TABLE JOGOS
 (
 	idJogo							INT				NOT NULL	PRIMARY KEY IDENTITY,
-	nome							VARCHAR(MAX)	NOT NULL	UNIQUE,
+	nome							VARCHAR(255)	NOT NULL	UNIQUE,
 	imagem							VARBINARY(MAX)	NOT NULL,
 	descricao						VARCHAR(MAX)	NOT NULL,
 	preco							DECIMAL(10,2)	NOT NULL,
@@ -67,13 +67,13 @@ GO
 CREATE TABLE USUARIOS
 (
 	idUsuario	INT						NOT NULL	PRIMARY KEY IDENTITY,
-	icone		VARBINARY(MAX)			NULL,
-	nome		VARCHAR(MAX)			NULL,
-	nick		VARCHAR(15)				NULL		UNIQUE,
-	senha		VARCHAR(20)				NULL,
-	email		VARCHAR(MAX)			NULL		UNIQUE,
-	status		INT						NULL 		CHECK(status in (0,1))
-	tipo        INT						NOT NULL	CHECK(status in (0,1))
+	icone		VARBINARY(MAX)			NOT NULL,
+	nome		VARCHAR(MAX)			NOT NULL,
+	nick		VARCHAR(15)				NOT NULL		UNIQUE,
+	senha		VARCHAR(20)				NOT NULL,
+	email		VARCHAR(255)			NOT NULL		UNIQUE,
+	status		INT						NOT NULL 		CHECK(status in (0,1)),
+	tipo        INT						NOT NULL	CHECK(tipo in (0,1))
 )
 GO
 
@@ -87,7 +87,7 @@ GO
 CREATE TABLE COMPLEMENTOS
 (
 	idComplemento		INT					NOT NULL	PRIMARY KEY IDENTITY,
-	nome				VARCHAR(MAX)		NOT NULL	UNIQUE,
+	nome				VARCHAR(255)		NOT NULL	UNIQUE,
 	imagem				VARBINARY(MAX)		NOT NULL,
 	preco				DECIMAL(10,2)		NOT NULL,
 	descricao			VARCHAR(MAX)		NOT NULL,
@@ -319,7 +319,6 @@ INSERT INTO EMPRESAS VALUES('Innersloth'),
 						   ('BANDAI NANCO Entertainment Inc.'),
 						   ('BANDAI NAMCO Entertainment'),
 						   ('Arkane Studios'),
-						   ('Bethesda Softworks'),
 						   ('Klei Entertainment'),
 						   ('Bethesda Softworks'),
 						   ('Ubisoft Montreal'),
