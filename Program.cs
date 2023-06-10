@@ -13,6 +13,7 @@ builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 #endregion Services
 
 #region Session
+builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 #endregion Session
@@ -31,11 +32,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Jogo}/{action=Index}/{id?}");
+    pattern: "{controller=Jogo}/{action=Index}");
 
 app.Run();

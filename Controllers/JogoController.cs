@@ -62,6 +62,4 @@ public class JogoController : Controller
         return RedirectToAction("Index");
     }
 
-  
-
 }

@@ -159,90 +159,26 @@
 </head>
 <body>
     <div class="container">
-        <form class="register-form" method="POST" action="/Jogo/Cadastro" enctype="multipart/form-data">
+        <form class="register-form" method="POST" action="/Usuario/Cadastro" enctype="multipart/form-data">
 
-        <h1>Cadastrar Jogo</h1>
+        <h1>Cadastrar Usuário</h1>
 
         <h2>Nome</h2>
-        <input type="text" placeholder="Nome completo do Jogo" required id="nome" name="Nome"><br>
+        <input type="text" placeholder="Nome completo" required id="nome" name="NomeUsuario"><br>
 
-        <h2>Descrição</h2>
-        <textarea class="text-area" rows="5" cols="80" required id="descricao" name="Descricao">
-        Objetivo, história, regras e etc
-        </textarea>
+        <h2>Email</h2>
+        <input type="text" placeholder="Email" required id="email" name="Email"><br>
 
-        <h2>Gênero</h2>
-        <div class="genre-container">
-            @foreach (Genero genero in ViewBag.generos)
-            {
-                <div class="genre-item">
-                    <input type="checkbox" name="generos" value="@genero.IdGenero">
-                    <label>@genero.NomeGenero</label>
-                </div>
-            }
-        </div>
-        <a class="cadastro-button" href="/Genero/Cadastrar">Cadastrar um novo Gênero</a>
+        <h2>Nick</h2>
+        <input type="text" placeholder="Nick" required id="nick" name="Nick"><br>
 
-        <h2>Tipos</h2>
-        <div class="type-container">
-            @foreach (Tipo tipo in ViewBag.tipos)
-            {
-                <div class="type-item">
-                    <input type="checkbox" name="tipos" value="@tipo.IdTipo">
-                    <label>@tipo.NomeTipo</label>
-                </div>
-            }
-        </div>
-        <a class="cadastro-button" href="/Tipo/Cadastrar">Cadastrar um novo Tipo</a>
+        <h2>Senha</h2>
+        <input type="password" required id="senha" name="Senha"><br>
 
-        <h2>Desenvolvedora</h2>
-        <div class="empresa-container">
-            @foreach (Empresa desenvolvedora in ViewBag.empresas)
-            {
-                <div class="empresa-item">
-                    <input type="checkbox" name="desenvolvedoras" value="@desenvolvedora.IdEmpresa">
-                    <label>@desenvolvedora.NomeEmpresa</label>
-                </div>
-            }
-        </div>
-
-        <h2>Distribuidora</h2>
-        <div class="empresa-container">
-            @foreach (Empresa distribuidora in ViewBag.empresas)
-            {
-                <div class="empresa-item">
-                    <input type="checkbox" name="distribuidoras" value="@distribuidora.IdEmpresa">
-                    <label>@distribuidora.NomeEmpresa</label>
-                </div>
-            }
-        </div>
-        <a class="cadastro-button" href="/Empresa/Cadastrar">Cadastrar uma nova Empresa</a>
-
-        <h2>Data de Lançamento</h2>
-        <input type="date" name="DataLancamento">
-
-        <h2>Requisitos</h2>
-        <textarea class="text-area" required name="Requisitos" rows="5" cols="80">
-            Processador:
-            Memória:
-            SO:
-            etc.
-        </textarea>
-
-        <h2>Classificação Indicativa</h2>
-        <select name="classificacaoIndicativa">
-            <option value="3">Livre</option>
-            <option value="7">7 anos</option>
-            <option value="12">12 anos</option>
-            <option value="16">16 anos</option>
-            <option value="18">18 anos</option>
-        </select>
-
-        <h2>Preço</h2>
-        <input type="decimal" placeholder="00,00" required name="Preco">
-
-        <h2>Capa do Jogo</h2>
-        <input type="file" name="Imagem">
+        <h2>Ícone de usuário</h2>
+        <input type="file" name="Icone">
+        <br>
+        <input type="submit" value="Cadastrar">
         </form>
     </div>
 </body>
