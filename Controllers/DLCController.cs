@@ -47,7 +47,8 @@ public class DLCController : Controller
         dlcRepository.Cadastrar(complemento, idJogo);
         return RedirectToAction("Index");
     }
-
+    
+    [HttpGet]
     public ActionResult Atualizar(int id)
     {
         DLC complemento = dlcRepository.Buscar(id);
