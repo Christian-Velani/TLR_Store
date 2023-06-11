@@ -3,19 +3,17 @@
     ViewData["Title"] = "Editar DLC";
 }
 <div class="container-DLC">
-  <form class="edit-form-DLC" method="POST" action="/dlcs/editar/@Model.IdComplemento" enctype="multipart/form-data">
+  <form class="edit-form-DLC" method="POST" action="/DLC/Atualizar/?idDLC=@Model.IdComplemento" enctype="multipart/form-data">
     <h1>Editar DLC</h1>
     <label for="imagem">Imagem</label>
     <div class="file-upload-DLC">
-      <input type="file" id="imagem" name="imagem" class="file-upload-input" accept="image/*">
-      <label for="imagem" class="file-upload-label">Escolher Arquivo</label>
-      <span class="file-name-DLC">Nenhum arquivo selecionado</span>
+      <input type="file" name="Imagem" value="@Model.Imagem">
     </div>
     <div class="image-preview-DLC">
       <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.Imagem)"/>
     </div>
     <label for="nome">Nome do Complemento</label>
-    <input type="text" id="nome" name="nome" value="@Model.NomeComplemento" required>
+    <input type="text" id="nome" name="nomeComplemento" value="@Model.NomeComplemento" required>
     <label for="descricao">Descrição</label>
     <textarea id="descricao" name="descricao" rows="4" required>@Model.Descricao</textarea>
     <label for="preco">Preço</label>

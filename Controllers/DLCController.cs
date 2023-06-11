@@ -71,6 +71,9 @@ public class DLCController : Controller
                 arquivoImagem.CopyTo(ms);
                 complemento.Imagem = ms.ToArray();
             }
+        } else {
+            DLC complementoRegistrado = dlcRepository.Buscar(idDLC); 
+            complemento.Imagem = complementoRegistrado.Imagem;
         }
         dlcRepository.Atualizar(idDLC, complemento);
         return RedirectToAction("Index");
