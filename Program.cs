@@ -1,3 +1,7 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,22 +13,21 @@ builder.Services.AddTransient<IGeneroRepository, GeneroRepository>();
 builder.Services.AddTransient<ITipoRepository, TipoRepository>();
 builder.Services.AddTransient<IDLCRepository, DLCRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
-builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 #endregion Services
 
 #region Session
-builder.Services.AddSession();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddSession();
 
 #endregion Session
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -37,7 +40,10 @@ app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Jogo}/{action=Index}");
+     name: "default",
+     pattern: "{controller=Usuario}/{action=Login}/{id?}");
+
 
 app.Run();
+
+

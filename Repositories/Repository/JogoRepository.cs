@@ -25,7 +25,7 @@ public class JogoRepository : Database, IJogoRepository
         cmd.CommandText = @"INSERT INTO JOGOS (nome,imagem,descricao,preco,desconto,
         dataLancamento,classificacaoIndicativa,requisitos,status)
         VALUES(@Nome,@Imagem,@Descricao,@Preco,@Desconto,@DataLancamento,@ClassificacaoIndicativa,
-        @Requisitos,@Status)";
+        @Requisitos,1)";
 
         cmd.Parameters.AddWithValue("@Nome",jogo.Nome);
         cmd.Parameters.AddWithValue("@Imagem",jogo.Imagem);
@@ -35,7 +35,6 @@ public class JogoRepository : Database, IJogoRepository
         cmd.Parameters.AddWithValue("@DataLancamento",jogo.DataLancamento);
         cmd.Parameters.AddWithValue("@ClassificacaoIndicativa",jogo.ClassificacaoIndicativa);
         cmd.Parameters.AddWithValue("@Requisitos",jogo.Requisito);
-        cmd.Parameters.AddWithValue("@Status",jogo.Status);
 
         cmd.ExecuteNonQuery();
     }

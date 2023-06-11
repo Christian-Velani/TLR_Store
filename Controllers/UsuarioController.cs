@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+
 public class UsuarioController : Controller
 {
     private readonly IUsuarioRepository _usuarioRepository;
-
     public UsuarioController(IUsuarioRepository usuarioRepository)
     {
         _usuarioRepository = usuarioRepository;
@@ -34,7 +34,7 @@ public class UsuarioController : Controller
             HttpContext.Session.SetString("carrinho",JsonSerializer.Serialize(carrinho));
         }
         
-        return RedirectToAction("Index","Jogo");
+        return RedirectToAction("Home","Usuario");
     }
 
     [HttpPost]
@@ -74,5 +74,10 @@ public class UsuarioController : Controller
         return RedirectToAction("Login");
     }
 
-
+    [HttpGet]
+    [Route("Usuario/Home")]
+    public ActionResult Home ()
+    {
+        return View();
+    }
 }

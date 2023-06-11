@@ -45,9 +45,9 @@ public class UsuarioRepository : Database, IUsuarioRepository
         if(reader.Read())
         {
             byte[] imagemBytes = (byte[])reader["icone"];
-            //usuario.Email = reader["email"].ToString();
+            usuario.Email = reader["email"].ToString();
             usuario.Icone = imagemBytes;
-            //usuario.Senha = reader["senha"].ToString();
+            usuario.Senha = reader["senha"].ToString();
             usuario.Nick = reader["nick"].ToString();
             usuario.Status = (EnumStatus)reader["status"];
             usuario.IdUsuario = Convert.ToInt32(reader["idUsuario"]);

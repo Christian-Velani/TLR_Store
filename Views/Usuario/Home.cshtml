@@ -1,0 +1,275 @@
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+ @{
+        string? session = HttpContextAccessor.HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+    }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela Inicial</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #000000, #08003d, #000000);
+            color: #fffdfd;
+            font-family: "Andada Pro", Andada Pro;
+            color: #fff9f9;
+            margin: 0;
+            padding: 100px;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #08003d, #08003d, #000000); 
+            color: #fff;
+            padding: 50px;
+            text-align: center;
+        }
+        .header h1{
+           
+            padding: 100px;
+            text-align: center;
+        } 
+
+        .menu {
+            display: flex;
+            justify-content: space-between;
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            
+            align-items: center;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            max-width: 500px;
+            margin: 10px;
+            padding: 5px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        
+        .search-button {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #00438b;
+        }
+
+        .profile-button {
+            display: flex;
+            align-items: center;
+            margin-right: 0px;
+            cursor: pointer;
+        }
+
+        .profile-image {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .profile-nick {
+            font-weight: bold;
+        }
+
+        .options-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .option {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            text-decoration: underline;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            margin: 10px auto;
+        }
+
+        .filter-select {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: #ffffff;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        .filter-select:hover {
+            background-color: #0056b3;
+        }
+
+        .game-card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .game-card-item {
+            width: 200px;
+            padding: 10px;
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .game-card-title {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .game-card-description {
+            margin-top: 5px;
+            color: #aaaaaa;
+        }
+        .game-card-valor {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .game-card-dlc {
+            margin-bottom: 10px;
+        }
+
+        .game-card-button {
+            background-color: #003cac;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .game-card-button1 {
+            background-color: #740000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+    <body>
+        <div class="header">
+            <h1>Início</h1>
+            <h2>Seja muito bem vindo!</h2>
+            <div class="profile-button">
+                <img class="profile-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@usuario.Icone)" alt="Imagem do Perfil">
+                <span class="profile-nick">@usuario.NomeUsuario</span>
+            </div>
+            <div class="options-container">
+                <div class="option">Biblioteca</div>
+                <div class="option">Carrinho de Compras</div>
+                <div class="option">Histórico de Pedidos</div>
+            </div>
+        </div>
+        </div>
+        <div class="menu">
+            <div class="search-container">
+                <input class="search-input" type="text" placeholder="Digite sua busca...">
+                <button class="search-button" type="submit">
+                    Buscar
+                </button>
+            </div>
+        </div>
+        <div class="filters">
+            <select class="filter-select">
+                <option value="">Tipo</option>
+                <option value="JxJ on-line">JxJ on-line</option>
+                <option value="JxJ em rede local(LAN)">JxJ em rede local(LAN)</option>
+                <option value="Cooperativo on-line">Cooperativo on-line</option>
+                <option value="Cooperativo em rede local(LAN)">Cooperativo em rede local(LAN)</option>
+                <option value="Multijogador multiplataforma">Multijogador multiplataforma</option>
+                <option value="Compatibilidade total com controle">Compatibilidade total com controle</option>
+                <option value="Um jogador">Um jogador</option>
+                <option value="MMO">MMO</option>
+                <option value="Inclui editor de níveis">Inclui editor de níveis</option>
+                <option value="Compatibilidade parcial com controle">Compatibilidade parcial com controle</option>
+                <option value="Cooperativo tela dividida/Compartilhada">Cooperativo tela dividida/Compartilhada</option>
+                <option value="JxJ tela dividida/compart">JxJ tela dividida/compart</option>
+            </select>
+            <select class="filter-select">
+                <option value="">Gênero</option> 
+                <option value="Casual">Casual</option>
+                <option value="Ação">Ação</option>
+                <option value="Aventura">Aventura</option>
+                <option value="Indie">Indie</option>
+                <option value="Multijogador Massivo">Multijogador Massivo</option>
+                <option value="RPG">RPG</option>
+                <option value="Simulação">Simulação</option>
+                <option value="Estratégia">Estratégia</option>
+                <option value="Corrida">Corrida</option>
+            </select>
+        </div>
+    </div>
+            
+        <div class="game-card">
+        
+            <div class="game-card-item">
+              <img class="game-card-image" src="jogo1.jpg" alt="Jogo 1">
+              <div class="game-card-title">Jogo 1</div>
+              <div class="game-card-description">Descrição do Jogo</div>
+              <div class="game-card-valor">Preço do Jogo</div>
+              <div class="game-card-dlc">Link para dlcComplementoUser</div>
+              <button class="game-card-button">Adicionar ao Carrinho</button>
+              <button class="game-card-button1">Acessar Jogo</button>
+            </div>
+            <div class="game-card-item">
+              <img class="game-card-image" src="jogo2.jpg" alt="Jogo 2">
+              <div class="game-card-title">Jogo 2</div>
+              <div class="game-card-description">Descrição do Jogo</div>
+              <div class="game-card-valor">Preço do Jogo</div>
+              <div class="game-card-dlc">Link para dlcComplementoUser</div>
+              <button class="game-card-button">Adicionar ao Carrinho</button>
+              <button class="game-card-button1">Acessar Jogo</button>
+            </div>
+            <div class="game-card-item">
+              <img class="game-card-image" src="jogo3.jpg" alt="Jogo 3">
+              <div class="game-card-title">Jogo 3</div>
+              <div class="game-card-description">Descrição do Jogo</div>
+              <div class="game-card-valor">Preço do Jogo</div>
+              <div class="game-card-dlc">Link para dlcComplementoUser</div>
+              <button class="game-card-button">Adicionar ao Carrinho</button>
+              <button class="game-card-button1">Acessar Jogo</button>
+            </div>
+        </div>
+    </body>
+</html>
