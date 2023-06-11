@@ -1,6 +1,6 @@
 public interface IUsuarioRepository
 {
+    Usuario? Login (string email, string senha);
     void Cadastro (Usuario usuario);
-    Usuario? Login (string login, string senha);
     List<Usuario> ListUsuarios ();
 }
