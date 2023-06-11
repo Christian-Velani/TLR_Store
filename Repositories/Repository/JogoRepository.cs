@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Data.SqlClient;
+using System.Text.Json;
 
 public class JogoRepository : Database, IJogoRepository
 {
@@ -188,5 +189,36 @@ public class JogoRepository : Database, IJogoRepository
     public void UpdateJogo (int idJogo)
     {
 
+    }
+    public IList GetJogosUsuario ()
+    {
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>("usuario");
+        List<int> listIds = new List<int>();
+        List<Jogo> jogosUsuarios = new List<Jogo>();
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = 
+        @"SELECT jogoId JOGOS_USUARIOS
+        WHERE usuarioId = @id";
+
+        cmd.Connection = conn;
+        cmd.Parameters.AddWithValue("@id",usuario.IdUsuario);
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            listIds.Add(Convert.ToInt32(reader["jogoId"]));
+        }
+
+        if (listIds != null)
+        {
+            foreach (var id in listIds)
+            {
+                var jogo = GetJogo(id);
+                jogosUsuarios.Add(jogo);
+            }
+            return jogosUsuarios;
+        }
+
+        return null;
     }
 }

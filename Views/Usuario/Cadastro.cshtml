@@ -159,18 +159,26 @@
 </head>
 <body>
     <div class="container">
-        <form class="register-form" method="POST" action="/Usuario/Login">
+        <form class="register-form" method="POST" action="/Usuario/Cadastro" enctype="multipart/form-data">
 
-        <h1>Fazer Login</h1>
-        <br>
+        <h1>Cadastrar Usuário</h1>
 
-        <h2>Nick / Email</h2>
-        <input type="text" placeholder="Nick ou Email" required id="login" name="login"><br>
+        <h2>Nome</h2>
+        <input type="text" placeholder="Nome completo" required id="nome" name="NomeUsuario"><br>
+
+        <h2>Email</h2>
+        <input type="text" placeholder="Email" required id="email" name="Email"><br>
+
+        <h2>Nick</h2>
+        <input type="text" placeholder="Nick" required id="nick" name="Nick"><br>
 
         <h2>Senha</h2>
-        <input type="password" required id="senha" name="senha"><br>
+        <input type="password" required id="senha" name="Senha"><br>
 
-        <input type="submit" value="Fazer Login">
+        <h2>Ícone de usuário</h2>
+        <input type="file" name="Icone">
+        <br>
+        <input type="submit" value="Cadastrar">
         </form>
     </div>
 </body>
