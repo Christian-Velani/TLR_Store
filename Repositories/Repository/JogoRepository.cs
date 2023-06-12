@@ -244,6 +244,7 @@ public class JogoRepository : Database, IJogoRepository
     }
 
     public void UpdateJogo (int idJogo, Jogo jogo, List<int> generos, List<int> tipos, List<int> desenvolvedoras, List<int> distribuidoras)
+    public void UpdateJogo (int idJogo, Jogo jogo, List<int> generos, List<int> tipos, List<int> desenvolvedoras, List<int> distribuidoras)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
@@ -325,6 +326,8 @@ public class JogoRepository : Database, IJogoRepository
 
             cmd.ExecuteNonQuery();
         }             
+            cmd.ExecuteNonQuery();
+        }             
     }
     public IList GetJogosUsuario ()
     {
@@ -353,6 +356,46 @@ public class JogoRepository : Database, IJogoRepository
                 jogosUsuarios.Add(jogo);
             }
             return jogosUsuarios;
+        }
+
+        return null;
+    }
+
+    public List<Jogo>? SearchJogos(string? search)
+    {
+        if (search != null)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = @"SELECT * FROM JOGOS
+                                WHERE nome LIKE '%' + @search + '%'";
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@search", search);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            var jogos = new List<Jogo>();
+
+            while (reader.Read())
+            {
+                byte[] imagemBytes = (byte[])reader["imagem"];
+
+                jogos.Add(new Jogo()
+                {
+                    JogoId = Convert.ToInt32(reader["idJogo"]),
+                    Nome = reader["nome"].ToString(),
+                    Imagem = imagemBytes,
+                    Descricao = reader["descricao"].ToString(),
+                    Preco = Convert.ToDecimal(reader["preco"]),
+                    Desconto = Convert.ToInt32(reader["desconto"]),
+                    DataLancamento = Convert.ToDateTime(reader["dataLancamento"]),
+                    ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]),
+                    Requisito = reader["requisitos"].ToString(),
+                    Status = (EnumStatus)(reader["status"])
+                });
+            }
+
+            reader.Close();
+            return jogos;
         }
 
         return null;
