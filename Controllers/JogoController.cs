@@ -33,7 +33,6 @@ public class JogoController : Controller
     }
     
     [HttpGet]
-    [Route("Jogo/Cadastro")]
     public ActionResult Cadastro()
     {
         List<Genero> generos = new List<Genero>();
@@ -51,7 +50,6 @@ public class JogoController : Controller
     }
     
     [HttpPost]
-    [Route("Jogo/Cadastro")]
     public ActionResult Cadastro(Jogo jogo, List<int> tipos, List<int> generos, List<int> desenvolvedoras, List<int> distribuidoras)
     {
         var arquivoImagem = Request.Form.Files["Imagem"];
