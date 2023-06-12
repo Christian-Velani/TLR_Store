@@ -87,6 +87,8 @@ public class EmpresaRepository : Database, IEmpresaRepository
             
             empresas.Add(empresa);
         }
+        
+        reader.Close();
 
         return empresas;
     }

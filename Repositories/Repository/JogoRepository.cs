@@ -192,40 +192,15 @@ public class JogoRepository : Database, IJogoRepository
 
         reader.Close();
 
+        jogo.Genero = _generoRepository.BuscarListaPorJogo(jogo.JogoId);
 
-        cmd.CommandText = @"SELECT * FROM JOGOS_GENEROS WHERE jogoId = @id4";
-        cmd.Parameters.AddWithValue("@id4", jogo.JogoId);
-        reader = cmd.ExecuteReader();
-        while (reader.Read())
-        {
-            Genero genero = _generoRepository.Buscar(Convert.ToInt32(reader["generoId"]));
-            jogo.Genero.Add(genero);
-        }
+        jogo.Tipo = _tipoRepository.BuscarListaJogo(jogo.JogoId);
 
-        reader.Close();
+        jogo.Desenvolvedora = _empresaRepository.BuscarListaTipo(jogo.JogoId, 1);
 
+        jogo.Distribuidora = _empresaRepository.BuscarListaTipo(jogo.JogoId, 2);
 
-        cmd.CommandText = @"SELECT * FROM JOGOS_TIPOS WHERE jogoId = @id5";
-        cmd.Parameters.AddWithValue("@id5", jogo.JogoId);
-        reader = cmd.ExecuteReader();
-        while (reader.Read())
-        {
-            Tipo tipo = _tipoRepository.Buscar(Convert.ToInt32(reader["tipoId"]));
-            jogo.Tipo.Add(tipo);
-        }
-
-        reader.Close();
-
-        cmd.CommandText = @"SELECT * FROM JOGOS_COMPLEMENTOS WHERE jogoId = @id6";
-        cmd.Parameters.AddWithValue("@id6",jogo.JogoId);
-        reader = cmd.ExecuteReader();
-        while(reader.Read())
-        {
-            DLC complemento = _dLCRepository.Buscar(Convert.ToInt32(reader["complementoId"]));
-            jogo.Complemento.Add(complemento);
-        }
-
-        reader.Close();
+        jogo.Complemento = _dLCRepository.BuscarListaDLCJogo(jogo.JogoId);
 
         return jogo;
     }
@@ -242,8 +217,6 @@ public class JogoRepository : Database, IJogoRepository
 
         cmd.ExecuteNonQuery();
     }
-
-    public void UpdateJogo (int idJogo, Jogo jogo, List<int> generos, List<int> tipos, List<int> desenvolvedoras, List<int> distribuidoras)
     public void UpdateJogo (int idJogo, Jogo jogo, List<int> generos, List<int> tipos, List<int> desenvolvedoras, List<int> distribuidoras)
     {
         SqlCommand cmd = new SqlCommand();
@@ -325,9 +298,7 @@ public class JogoRepository : Database, IJogoRepository
             cmd.Parameters.AddWithValue("@empresaId", id);
 
             cmd.ExecuteNonQuery();
-        }             
-            cmd.ExecuteNonQuery();
-        }             
+        }                          
     }
     public IList GetJogosUsuario ()
     {
@@ -387,7 +358,7 @@ public class JogoRepository : Database, IJogoRepository
                     Descricao = reader["descricao"].ToString(),
                     Preco = Convert.ToDecimal(reader["preco"]),
                     Desconto = Convert.ToInt32(reader["desconto"]),
-                    DataLancamento = Convert.ToDateTime(reader["dataLancamento"]),
+                    DataLancamento = reader["dataLancamento"].ToString(),
                     ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]),
                     Requisito = reader["requisitos"].ToString(),
                     Status = (EnumStatus)(reader["status"])

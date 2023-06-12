@@ -114,7 +114,7 @@
         <ul class="nav">
             <h1>Lista de Jogos Cadastrados</h1>
             <form class="d-flex" role="search" method="POST">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="nome" value="Nome do Jogo">
+                <input class="form-control me-2" type="search" placeholder="Nome do Jogo" aria-label="Search" name="nome">
                 <button class="btn btn-outline-success" type="submit">Pesquisar</button>
             </form>
         </ul>
@@ -136,8 +136,8 @@
                 {
                     <tr>
                         <td>@jogo.JogoId</td>
-                        <td>@jogo.Nome</td>
-                        <td><img class="game-image" src="data:image/jpeg;base64,@Convert.ToBase64String(jogo.Imagem)" href="/Jogo/Detalhes/?idJogo=@jogo.JogoId"/></td>
+                        <td><a href="/Jogo/Detalhes/?idjogo=@jogo.JogoId">@jogo.Nome</a></td>
+                        <td><img class="game-image" src="data:image/jpeg;base64,@Convert.ToBase64String(jogo.Imagem)"/></td>
                         <td class="table-cell">@jogo.Descricao</td>
                         <td>@jogo.Preco</td>
                         <td>@jogo.DataLancamento</td>

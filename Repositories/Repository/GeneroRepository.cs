@@ -2,20 +2,6 @@ using System.Data.SqlClient;
 
 public class GeneroRepository : Database, IGeneroRepository
 {
-    public void Atualizar(int idGenero, Genero genero)
-    {
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = @"UPDATE GENEROs
-                            SET nome = @nome
-                            WHERE idGenero = @id";
-
-        cmd.Parameters.AddWithValue("@nome", genero.NomeGenero);
-        cmd.Parameters.AddWithValue("@id", idGenero);
-
-        cmd.ExecuteNonQuery();
-    }
-
     public Genero Buscar(int idGenero)
     {
         SqlCommand cmd = new SqlCommand();
@@ -28,16 +14,17 @@ public class GeneroRepository : Database, IGeneroRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
+        Genero genero = new Genero();
+
         if(reader.Read())
         {
-            Genero genero = new Genero();
             genero.IdGenero = Convert.ToInt32(reader["idGenero"]);
             genero.NomeGenero = reader["nome"].ToString();
-
-            return genero;
         }
 
-        return null;
+        reader.Close();
+        
+        return genero;
     }
 
     public List<Genero> BuscarListaCompleta()

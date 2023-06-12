@@ -56,7 +56,7 @@ public class UsuarioController : Controller
     public ActionResult Logout()
     {
         HttpContext.Session.Clear();
-        return RedirectToAction("Login");
+        return RedirectToAction("Login", "Usuario");
     }
 
     [HttpGet]

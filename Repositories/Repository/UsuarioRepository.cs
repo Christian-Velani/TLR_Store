@@ -68,7 +68,7 @@ public class UsuarioRepository : Database, IUsuarioRepository
         cmd.Connection = conn;
         cmd.CommandText = 
         @"INSERT INTO USUARIOS (icone,nome,nick,senha,email,status,tipo)
-        VALUES (@Icone,@Nome,@Nick,@Senha,@Email,@Status,0)";
+        VALUES (@Icone,@Nome,@Nick,@Senha,@Email,@Status,1)";
 
         cmd.Parameters.AddWithValue("@Icone",usuario.Icone);
         cmd.Parameters.AddWithValue("@Nome",usuario.NomeUsuario);

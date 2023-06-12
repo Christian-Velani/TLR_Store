@@ -31,6 +31,20 @@ public class JogoController : Controller
             return RedirectToAction("Home", "Usuario");
         }
     }
+
+     [HttpPost]
+    public ActionResult Index(string nome)
+    {
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
+        {
+            return View(_jogoRepository.SearchJogos(nome));
+        } else {
+            return RedirectToAction("Home", "Usuario");
+        }
+    }
     
     [HttpGet]
     public ActionResult Cadastro()

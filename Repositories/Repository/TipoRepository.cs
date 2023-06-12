@@ -2,20 +2,6 @@ using System.Data.SqlClient;
 
 public class TipoRepository : Database, ITipoRepository
 {
-    public void Atualizar(Tipo tipo, int idTipo)
-    {
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = @"UPDATE TIPOS
-                            SET nome = @nome
-                            WHERE idTipo = @id";
-
-        cmd.Parameters.AddWithValue("@nome", tipo.NomeTipo);
-        cmd.Parameters.AddWithValue("@id", idTipo);
-
-        cmd.ExecuteNonQuery();
-    }
-
     public Tipo Buscar(int idTipo)
     {
         SqlCommand cmd = new SqlCommand();

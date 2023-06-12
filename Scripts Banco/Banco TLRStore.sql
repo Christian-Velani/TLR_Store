@@ -353,5 +353,3 @@ INSERT INTO EMPRESAS VALUES('Innersloth'),
 
 INSERT INTO USUARIOS(nome, nick, senha, email, status, tipo) VALUES ('João Acácio', 'JoAca', '25256142', 'JoAca@email.com', 1, 0)
 GO
-
-SELECT * from jogos
