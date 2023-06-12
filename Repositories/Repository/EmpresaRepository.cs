@@ -27,16 +27,17 @@ public class EmpresaRepository : Database, IEmpresaRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
+        Empresa empresa = new Empresa();
+
         if(reader.Read())
         {
-            Empresa empresa = new Empresa();
             empresa.IdEmpresa = Convert.ToInt32(reader["idEmpresa"]);
             empresa.NomeEmpresa = reader["nome"].ToString();
-
-            return empresa;
         }
 
-        return null;
+        reader.Close();
+
+        return empresa;
     }
 
     public List<Empresa> BuscarLista()

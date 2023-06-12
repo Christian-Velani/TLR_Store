@@ -144,9 +144,9 @@
                         <td>@jogo.ClassificacaoIndicativa</td>
                         <td class="table-cell">@jogo.Requisito</td>
                         <td>@jogo.Status</td>
-                        <td><a class="btn btn-warning" href="/Jogo/Edit?jogoId=@jogo.JogoId">Editar</a></td>
+                        <td><a class="btn btn-warning" href="/Jogo/Update?idJogo=@jogo.JogoId">Editar</a></td>
                         <td>
-                            <form method="post" action="/Jogo/Delete">
+                            <form method="post" action="/Jogo/Delete?jogoId=@jogo.JogoId">
                                 <input type="hidden" name="jogoId" value="@jogo.JogoId" />
                                 <button type="submit" class="btn btn-danger">Deletar</button>
                             </form>

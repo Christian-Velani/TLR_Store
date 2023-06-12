@@ -27,16 +27,17 @@ public class TipoRepository : Database, ITipoRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
+        Tipo tipo = new Tipo();
+
         if(reader.Read())
         {
-            Tipo tipo = new Tipo();
             tipo.IdTipo = Convert.ToInt32(reader["idTipo"]);
             tipo.NomeTipo = reader["nome"].ToString();
-
-            return tipo;
         }
 
-        return null;
+        reader.Close();
+
+        return tipo;
     }
 
     public List<Tipo> BuscarLista()
