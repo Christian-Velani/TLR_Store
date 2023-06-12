@@ -67,7 +67,7 @@ GO
 CREATE TABLE USUARIOS
 (
 	idUsuario	INT						NOT NULL	PRIMARY KEY IDENTITY,
-	icone		VARBINARY(MAX)			NOT NULL,
+	icone		VARBINARY(MAX)			NULL,
 	nome		VARCHAR(MAX)			NOT NULL,
 	nick		VARCHAR(15)				NOT NULL		UNIQUE,
 	senha		VARCHAR(20)				NOT NULL,
@@ -355,3 +355,6 @@ INSERT INTO EMPRESAS VALUES('Innersloth'),
 						   ('Pinoki Games'),
 						   ('Kverta'),
 						   ('tinyBuild')
+
+INSERT INTO USUARIOS(nome, nick, senha, email, status, tipo) VALUES ('João Acácio', 'JoAca', '25256142', 'JoAca@email.com', 1, 0)
+GO

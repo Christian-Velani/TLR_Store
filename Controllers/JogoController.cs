@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 //teste
 public class JogoController : Controller
 {
@@ -18,10 +19,17 @@ public class JogoController : Controller
     }
 
     [HttpGet]
-    [Route("Jogo/Index")]
     public ActionResult Index()
     {
-        return View(_jogoRepository.GetAllJogos());
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
+        {
+            return View(_jogoRepository.GetAllJogos());
+        } else {
+            return RedirectToAction("Home", "Usuario");
+        }
     }
     
     [HttpGet]
@@ -44,7 +52,7 @@ public class JogoController : Controller
     
     [HttpPost]
     [Route("Jogo/Cadastro")]
-    public ActionResult Cadastro(Jogo jogo, List<Empresa> empresas,List<Tipo> tipos)
+    public ActionResult Cadastro(Jogo jogo, List<int> tipos, List<int> generos, List<int> desenvolvedoras, List<int> distribuidoras)
     {
         var arquivoImagem = Request.Form.Files["Imagem"];
 
@@ -57,7 +65,7 @@ public class JogoController : Controller
             }
         }
 
-        _jogoRepository.CadastrarJogo(jogo);
+        _jogoRepository.CadastrarJogo(jogo, generos, tipos, desenvolvedoras, distribuidoras);
 
         return RedirectToAction("Index");
     }

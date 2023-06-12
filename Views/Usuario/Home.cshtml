@@ -5,6 +5,7 @@
  @{
         string? session = HttpContextAccessor.HttpContext.Session.GetString("usuario");
         Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+        Layout = "/Views/Shared/_LayoutComum.cshtml";
     }
 
 <!DOCTYPE html>
@@ -188,19 +189,6 @@
     </style>
 </head>
     <body>
-        <div class="header">
-            <h1>Início</h1>
-            <h2>Seja muito bem vindo!</h2>
-            <div class="profile-button">
-                <img class="profile-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@usuario.Icone)" alt="Imagem do Perfil">
-                <span class="profile-nick">@usuario.NomeUsuario</span>
-            </div>
-            <div class="options-container">
-                <div class="option">Biblioteca</div>
-                <div class="option">Carrinho de Compras</div>
-                <div class="option">Histórico de Pedidos</div>
-            </div>
-        </div>
         </div>
         <div class="menu">
             <div class="search-container">
@@ -211,65 +199,39 @@
             </div>
         </div>
         <div class="filters">
-            <select class="filter-select">
+            <select class="filter-select" name="TiposId">
                 <option value="">Tipo</option>
-                <option value="JxJ on-line">JxJ on-line</option>
-                <option value="JxJ em rede local(LAN)">JxJ em rede local(LAN)</option>
-                <option value="Cooperativo on-line">Cooperativo on-line</option>
-                <option value="Cooperativo em rede local(LAN)">Cooperativo em rede local(LAN)</option>
-                <option value="Multijogador multiplataforma">Multijogador multiplataforma</option>
-                <option value="Compatibilidade total com controle">Compatibilidade total com controle</option>
-                <option value="Um jogador">Um jogador</option>
-                <option value="MMO">MMO</option>
-                <option value="Inclui editor de níveis">Inclui editor de níveis</option>
-                <option value="Compatibilidade parcial com controle">Compatibilidade parcial com controle</option>
-                <option value="Cooperativo tela dividida/Compartilhada">Cooperativo tela dividida/Compartilhada</option>
-                <option value="JxJ tela dividida/compart">JxJ tela dividida/compart</option>
+                @foreach(Tipo tipo in ViewBag.tipos)
+                {
+                    <option value=@tipo.IdTipo>@tipo.NomeTipo</option>
+                }
             </select>
-            <select class="filter-select">
-                <option value="">Gênero</option> 
-                <option value="Casual">Casual</option>
-                <option value="Ação">Ação</option>
-                <option value="Aventura">Aventura</option>
-                <option value="Indie">Indie</option>
-                <option value="Multijogador Massivo">Multijogador Massivo</option>
-                <option value="RPG">RPG</option>
-                <option value="Simulação">Simulação</option>
-                <option value="Estratégia">Estratégia</option>
-                <option value="Corrida">Corrida</option>
+            <select class="filter-select" name="GenerosId">
+                <option value="">Gênero</option>
+                @foreach (Genero genero in ViewBag.generos)
+                {
+                    <option value=@genero.IdGenero>@genero.NomeGenero</option>
+                }
+            </select>
+            <select class="filter-select" name="EmpresasId">
+                <option value="">Empresas</option>
+                @foreach (Empresa empresa in ViewBag.empresas)
+                {
+                    <option value=@empresa.IdEmpresa>@empresa.NomeEmpresa</option>
+                }
             </select>
         </div>
     </div>
             
         <div class="game-card">
-        
-            <div class="game-card-item">
-              <img class="game-card-image" src="jogo1.jpg" alt="Jogo 1">
-              <div class="game-card-title">Jogo 1</div>
-              <div class="game-card-description">Descrição do Jogo</div>
-              <div class="game-card-valor">Preço do Jogo</div>
-              <div class="game-card-dlc">Link para dlcComplementoUser</div>
-              <button class="game-card-button">Adicionar ao Carrinho</button>
-              <button class="game-card-button1">Acessar Jogo</button>
-            </div>
-            <div class="game-card-item">
-              <img class="game-card-image" src="jogo2.jpg" alt="Jogo 2">
-              <div class="game-card-title">Jogo 2</div>
-              <div class="game-card-description">Descrição do Jogo</div>
-              <div class="game-card-valor">Preço do Jogo</div>
-              <div class="game-card-dlc">Link para dlcComplementoUser</div>
-              <button class="game-card-button">Adicionar ao Carrinho</button>
-              <button class="game-card-button1">Acessar Jogo</button>
-            </div>
-            <div class="game-card-item">
-              <img class="game-card-image" src="jogo3.jpg" alt="Jogo 3">
-              <div class="game-card-title">Jogo 3</div>
-              <div class="game-card-description">Descrição do Jogo</div>
-              <div class="game-card-valor">Preço do Jogo</div>
-              <div class="game-card-dlc">Link para dlcComplementoUser</div>
-              <button class="game-card-button">Adicionar ao Carrinho</button>
-              <button class="game-card-button1">Acessar Jogo</button>
-            </div>
+            @foreach (Jogo jogo in ViewBag.jogos)
+            {
+                <div class="game-card-item">
+                    <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@jogo.Imagem)" href="/Jogo/Detalhes/?idJogo = @jogo.JogoId">
+                    <div class="game-card-title">@jogo.Nome</div>
+                    <button class="game-card-button" href="/Carrinho/Adicionar">Adicionar ao Carrinho</button>
+                </div>
+            }
         </div>
     </body>
 </html>

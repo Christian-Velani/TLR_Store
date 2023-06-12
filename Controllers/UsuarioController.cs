@@ -4,20 +4,26 @@ using System.Text.Json;
 public class UsuarioController : Controller
 {
     private readonly IUsuarioRepository _usuarioRepository;
-    public UsuarioController(IUsuarioRepository usuarioRepository)
+    private readonly ITipoRepository _tipoRepository;
+    private readonly IGeneroRepository _generoRepository;
+    private readonly IEmpresaRepository _empresaRepository;
+    private readonly IJogoRepository _jogoRepository;
+    public UsuarioController(IUsuarioRepository usuarioRepository, ITipoRepository tipoRepository, IGeneroRepository generoRepository, IEmpresaRepository empresaRepository, IJogoRepository jogoRepository)
     {
         _usuarioRepository = usuarioRepository;
+        _tipoRepository = tipoRepository;
+        _generoRepository = generoRepository;
+        _empresaRepository = empresaRepository;
+        _jogoRepository = jogoRepository;
     }
 
     [HttpGet]
-    [Route("Usuario/Login")] 
     public ActionResult Login ()
     {
         return View();
     }
 
     [HttpPost]
-    [Route("Usuario/Login")] 
     public ActionResult Login(string login, string senha)
     {
         var usuario = _usuarioRepository.Login(login,senha);
@@ -34,7 +40,15 @@ public class UsuarioController : Controller
             HttpContext.Session.SetString("carrinho",JsonSerializer.Serialize(carrinho));
         }
         
-        return RedirectToAction("Home","Usuario");
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario2 = JsonSerializer.Deserialize<Usuario>(session);
+
+        if(usuario2.TipoUsuario == EnumTipoUsuario.Administrador)
+        {
+            return RedirectToAction("Index", "Jogo");
+        } else {
+            return RedirectToAction("Home","Usuario");
+        }
     }
 
     [HttpPost]
@@ -76,8 +90,22 @@ public class UsuarioController : Controller
 
     [HttpGet]
     [Route("Usuario/Home")]
-    public ActionResult Home ()
+    public ActionResult Home (int page = 1)
     {
+        List<Jogo> jogos = new List<Jogo>();
+        jogos = _jogoRepository.GetAllJogos();
+        List<Empresa> empresas = new List<Empresa>();
+        empresas = _empresaRepository.BuscarLista();
+        List<Tipo> tipos = new List<Tipo>();
+        tipos = _tipoRepository.BuscarLista();
+        List<Genero> generos = new List<Genero>();
+        generos = _generoRepository.BuscarListaCompleta();
+
+        ViewBag.empresas = empresas;
+        ViewBag.tipos = tipos;
+        ViewBag.generos = generos;
+        ViewBag.jogos = jogos;
+
         return View();
     }
 }

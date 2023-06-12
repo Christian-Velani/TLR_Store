@@ -158,6 +158,27 @@
     </style>
 </head>
 <body>
+     @if(ViewBag.Error != null)
+    {
+        <div class="overlay" id="errorOverlay">
+            <div class="error-message">
+              <h2>Não foi possivel logar</h2>
+              <p>Login/Senha inválidos</p>
+              <button onclick="hideErrorMessage()">Fechar</button>
+            </div>
+          </div>
+        
+        <script>
+            function showErrorMessage() {
+            document.getElementById("errorOverlay").style.display = "flex";
+            }
+    
+            function hideErrorMessage() {
+            document.getElementById("errorOverlay").style.display = "none";
+            }
+        </script>
+    }
+
     <div class="container">
         <form class="register-form" method="POST" action="/Usuario/Login">
 
@@ -171,6 +192,8 @@
         <input type="password" required id="senha" name="senha"><br>
 
         <input type="submit" value="Fazer Login">
+
+        <a href="/Usuario/Cadastro" class="btn btn-primary">Criar Conta</a>
         </form>
     </div>
 </body>

@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 
 public class DLCController : Controller
 {
-    IDLCRepository dlcRepository;
+    private readonly IDLCRepository _dlcRepository;
     
     public DLCController(IDLCRepository dlcRepository)
     {
-        this.dlcRepository = dlcRepository;
+        this._dlcRepository = dlcRepository;
     }
 
     public ActionResult Index()
@@ -16,13 +16,13 @@ public class DLCController : Controller
 
     public ActionResult ListaDLCs()
     {
-        List<DLC> complementos = dlcRepository.BuscarListaDLC();
+        List<DLC> complementos = _dlcRepository.BuscarListaDLC();
         return View(complementos);
     }
 
     public ActionResult ListaDLCsJogo(int idJogo)
     {
-        List<DLC> complementos = dlcRepository.BuscarListaDLCJogo(idJogo);
+        List<DLC> complementos = _dlcRepository.BuscarListaDLCJogo(idJogo);
         return View(complementos);
     }
 
@@ -44,14 +44,14 @@ public class DLCController : Controller
                 complemento.Imagem = ms.ToArray();
             }
         }
-        dlcRepository.Cadastrar(complemento, idJogo);
+        _dlcRepository.Cadastrar(complemento, idJogo);
         return RedirectToAction("Index");
     }
     
     [HttpGet]
     public ActionResult Atualizar(int id)
     {
-        DLC complemento = dlcRepository.Buscar(id);
+        DLC complemento = _dlcRepository.Buscar(id);
         if(complemento != null)
         {
             return View(complemento);
@@ -72,16 +72,16 @@ public class DLCController : Controller
                 complemento.Imagem = ms.ToArray();
             }
         } else {
-            DLC complementoRegistrado = dlcRepository.Buscar(idDLC); 
+            DLC complementoRegistrado = _dlcRepository.Buscar(idDLC); 
             complemento.Imagem = complementoRegistrado.Imagem;
         }
-        dlcRepository.Atualizar(idDLC, complemento);
+        _dlcRepository.Atualizar(idDLC, complemento);
         return RedirectToAction("Index");
     }
 
     public ActionResult Desativar(int idDLC)
     {
-        dlcRepository.Desativar(idDLC);
+        _dlcRepository.Desativar(idDLC);
         return RedirectToAction("Index");
     }
 }

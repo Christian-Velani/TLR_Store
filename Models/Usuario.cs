@@ -10,4 +10,5 @@ public class Usuario
     public List<Jogo> JogosAdquiridos { get; set; }
     public List<DLC> ComplementosAdquiridos { get; set; }
     public List<Pedido> HistoricoCompras { get; set; }
+    public EnumTipoUsuario TipoUsuario { get; set; }
 }
