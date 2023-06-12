@@ -8,6 +8,7 @@ public class UsuarioController : Controller
     private readonly IGeneroRepository _generoRepository;
     private readonly IEmpresaRepository _empresaRepository;
     private readonly IJogoRepository _jogoRepository;
+    private List<Jogo>? jogosAux;
     public UsuarioController(IUsuarioRepository usuarioRepository, ITipoRepository tipoRepository, IGeneroRepository generoRepository, IEmpresaRepository empresaRepository, IJogoRepository jogoRepository)
     {
         _usuarioRepository = usuarioRepository;
@@ -108,4 +109,21 @@ public class UsuarioController : Controller
 
         return View();
     }
+
+    [HttpPost]
+    public ActionResult Pesquisar (string? search)
+    {
+        jogosAux = _jogoRepository.SearchJogos(search);
+    
+        return RedirectToAction("Home","Usuario");
+    }
+
+    [HttpGet]
+    public ActionResult Pesquisar()
+    {
+        ViewBag.jogosAux = jogosAux;
+        return RedirectToAction("Home","Usuario");
+    }
+    
 }
+

@@ -245,9 +245,74 @@ public class JogoRepository : Database, IJogoRepository
         cmd.ExecuteNonQuery();
     }
 
-    public void UpdateJogo (int idJogo)
+    public void UpdateJogo (int idJogo, Jogo jogo, List<int> generos, List<int> tipos, List<int> desenvolvedoras, List<int> distribuidoras)
     {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"
+        UPDATE JOGOS
+        SET nome = @Nome, imagem = @Imagem, descricao = @Descricao, preco = @Preco, desconto = @Desconto, dataLancamento = @DataLancamento, classificacaoIndicativa = @ClassificacaoIndicativa, requisitos = @Requisitos
+        WHERE idJogo = @id";
 
+        cmd.Parameters.AddWithValue("@id",idJogo);
+        cmd.Parameters.AddWithValue("@Nome",jogo.Nome);
+        cmd.Parameters.AddWithValue("@Imagem",jogo.Imagem);
+        cmd.Parameters.AddWithValue("@Descricao",jogo.Descricao);
+        cmd.Parameters.AddWithValue("@Preco",jogo.Preco);
+        cmd.Parameters.AddWithValue("@Desconto",jogo.Desconto);
+        cmd.Parameters.AddWithValue("@DataLancamento",jogo.DataLancamento);
+        cmd.Parameters.AddWithValue("@ClassificacaoIndicativa",jogo.ClassificacaoIndicativa);
+        cmd.Parameters.AddWithValue("@Requisitos",jogo.Requisito);
+
+        cmd.ExecuteNonQuery();
+
+        foreach(int id in tipos)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_TIPOS (jogoId, tipoId) VALUES (@jogoId, @tipoId)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@tipoId", id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        foreach(int id in generos)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_GENEROS (jogoId, generoId) VALUES (@jogoId, @generoId)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@generoId", id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        foreach(int id in desenvolvedoras)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 1)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@empresaId", id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        foreach(int id in distribuidoras)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 2)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@empresaId", id);
+
+            cmd.ExecuteNonQuery();
+        }             
     }
     public IList GetJogosUsuario ()
     {
@@ -276,6 +341,46 @@ public class JogoRepository : Database, IJogoRepository
                 jogosUsuarios.Add(jogo);
             }
             return jogosUsuarios;
+        }
+
+        return null;
+    }
+
+    public List<Jogo>? SearchJogos(string? search)
+    {
+        if (search != null)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = @"SELECT * FROM JOGOS
+                                WHERE nome LIKE '%' + @search + '%'";
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@search", search);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            var jogos = new List<Jogo>();
+
+            while (reader.Read())
+            {
+                byte[] imagemBytes = (byte[])reader["imagem"];
+
+                jogos.Add(new Jogo()
+                {
+                    JogoId = Convert.ToInt32(reader["idJogo"]),
+                    Nome = reader["nome"].ToString(),
+                    Imagem = imagemBytes,
+                    Descricao = reader["descricao"].ToString(),
+                    Preco = Convert.ToDecimal(reader["preco"]),
+                    Desconto = Convert.ToInt32(reader["desconto"]),
+                    DataLancamento = Convert.ToDateTime(reader["dataLancamento"]),
+                    ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]),
+                    Requisito = reader["requisitos"].ToString(),
+                    Status = (EnumStatus)(reader["status"])
+                });
+            }
+
+            reader.Close();
+            return jogos;
         }
 
         return null;

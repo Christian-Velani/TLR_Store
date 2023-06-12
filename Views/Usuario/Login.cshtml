@@ -155,27 +155,48 @@
         .text-area {
             overflow-y: scroll;
         }
+        .popup {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        padding: 20px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        margin: 20px auto;
+    }
+
+    .popup-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .popup-message {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .popup-button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
     </style>
 </head>
 <body>
      @if(ViewBag.Error != null)
     {
-        <div class="overlay" id="errorOverlay">
-            <div class="error-message">
-              <h2>Não foi possivel logar</h2>
-              <p>Login/Senha inválidos</p>
-              <button onclick="hideErrorMessage()">Fechar</button>
-            </div>
-          </div>
-        
         <script>
-            function showErrorMessage() {
-            document.getElementById("errorOverlay").style.display = "flex";
-            }
-    
-            function hideErrorMessage() {
-            document.getElementById("errorOverlay").style.display = "none";
-            }
+          alert("Usuário ou senha inválidos");
         </script>
     }
 
