@@ -119,7 +119,7 @@ public class JogoRepository : Database, IJogoRepository
                 Descricao = reader["descricao"].ToString(),
                 Preco = Convert.ToDecimal(reader["preco"]),
                 Desconto = Convert.ToInt32(reader["desconto"]),
-                DataLancamento = Convert.ToDateTime(reader["dataLancamento"]),
+                DataLancamento = reader["dataLancamento"].ToString(),
                 ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]),
                 Requisito = reader["requisitos"].ToString(),
                 Status = (EnumStatus)(reader["status"])
@@ -151,7 +151,7 @@ public class JogoRepository : Database, IJogoRepository
             jogo.Descricao = reader["descricao"].ToString();
             jogo.Preco = Convert.ToDecimal(reader["preco"]);
             jogo.Desconto = Convert.ToInt32(reader["desconto"]);
-            jogo.DataLancamento = Convert.ToDateTime(reader["dataLancamento"]);
+            jogo.DataLancamento = reader["dataLancamento"].ToString();
             jogo.ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]);
             jogo.Requisito = reader["requisito"].ToString();
             jogo.Status = (EnumStatus)(reader["status"]);

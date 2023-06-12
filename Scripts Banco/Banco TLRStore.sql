@@ -13,7 +13,7 @@ CREATE TABLE JOGOS
 	descricao						VARCHAR(MAX)	NOT NULL,
 	preco							DECIMAL(10,2)	NOT NULL,
 	desconto						INT				NULL,
-	dataLancamento					DATETIME		NOT NULL,
+	dataLancamento					DATE			NOT NULL,
 	classificacaoIndicativa			INT				NOT NULL	CHECK(classificacaoIndicativa in (3, 7, 12, 16, 18)),
 	requisitos						VARCHAR(MAX)	NULL,
 	status							INT				NOT NULL	CHECK(status in (0,1))
@@ -175,11 +175,6 @@ ALTER TABLE JOGOS_EMPRESAS
 ADD CONSTRAINT FK_JOGOSEMPRESAS_EMPRESAS
 FOREIGN KEY (empresaId)
 REFERENCES EMPRESAS(idEmpresa)
-GO
-
-ALTER TABLE JOGOS_EMPRESAS
-ADD CONSTRAINT PK_JOGOSEMPRESAS
-PRIMARY KEY (jogoId, empresaId)
 GO
 
 ALTER TABLE JOGOS_USUARIOS
@@ -358,3 +353,5 @@ INSERT INTO EMPRESAS VALUES('Innersloth'),
 
 INSERT INTO USUARIOS(nome, nick, senha, email, status, tipo) VALUES ('João Acácio', 'JoAca', '25256142', 'JoAca@email.com', 1, 0)
 GO
+
+SELECT * from jogos

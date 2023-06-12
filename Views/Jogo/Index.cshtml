@@ -100,6 +100,13 @@
                 justify-content: space-between;
             }
 
+            .table-cell {
+                max-width: 200px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
         </style>
     </head>
 
@@ -130,12 +137,12 @@
                     <tr>
                         <td>@jogo.JogoId</td>
                         <td>@jogo.Nome</td>
-                        <td><img class="game-image" src="data:image/jpeg;base64,@Convert.ToBase64String(jogo.Imagem)" /></td>
-                        <td>@jogo.Descricao</td>
+                        <td><img class="game-image" src="data:image/jpeg;base64,@Convert.ToBase64String(jogo.Imagem)" href="/Jogo/Detalhes/?idJogo=@jogo.JogoId"/></td>
+                        <td class="table-cell">@jogo.Descricao</td>
                         <td>@jogo.Preco</td>
                         <td>@jogo.DataLancamento</td>
                         <td>@jogo.ClassificacaoIndicativa</td>
-                        <td>@jogo.Requisito</td>
+                        <td class="table-cell">@jogo.Requisito</td>
                         <td>@jogo.Status</td>
                         <td><a class="btn btn-warning" href="/Jogo/Edit?jogoId=@jogo.JogoId">Editar</a></td>
                         <td>
@@ -147,6 +154,7 @@
                     </tr>
                 }
             </table>
+            <a href="/Jogo/Cadastro" class="btn btn-primary">Cadastrar</a>
         </div>
     </body>
 </html>
