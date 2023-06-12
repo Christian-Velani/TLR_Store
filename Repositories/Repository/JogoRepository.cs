@@ -145,7 +145,7 @@ public class JogoRepository : Database, IJogoRepository
         {
             byte[] imagemBytes = (byte[])reader["imagem"];
 
-            jogo.JogoId = Convert.ToInt32(reader[idJogo]);
+            jogo.JogoId = Convert.ToInt32(reader["idJogo"]);
             jogo.Nome = reader["nome"].ToString();
             jogo.Imagem = imagemBytes;
             jogo.Descricao = reader["descricao"].ToString();
@@ -153,10 +153,8 @@ public class JogoRepository : Database, IJogoRepository
             jogo.Desconto = Convert.ToInt32(reader["desconto"]);
             jogo.DataLancamento = reader["dataLancamento"].ToString();
             jogo.ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]);
-            jogo.Requisito = reader["requisito"].ToString();
+            jogo.Requisito = reader["requisitos"].ToString();
             jogo.Status = (EnumStatus)(reader["status"]);
-
-            cmd.ExecuteNonQuery();
         }
 
         reader.Close();
@@ -177,7 +175,7 @@ public class JogoRepository : Database, IJogoRepository
             Empresa empresa = _empresaRepository.Buscar(Convert.ToInt32(reader["empresaId"]));
             jogo.Desenvolvedora.Add(empresa);
         }
-        cmd.ExecuteNonQuery();
+
         reader.Close();
 
 
@@ -191,7 +189,7 @@ public class JogoRepository : Database, IJogoRepository
             Empresa empresa = _empresaRepository.Buscar(Convert.ToInt32(reader["empresaId"]));
             jogo.Desenvolvedora.Add(empresa);
         }
-        cmd.ExecuteNonQuery();
+
         reader.Close();
 
 
@@ -203,7 +201,7 @@ public class JogoRepository : Database, IJogoRepository
             Genero genero = _generoRepository.Buscar(Convert.ToInt32(reader["generoId"]));
             jogo.Genero.Add(genero);
         }
-        cmd.ExecuteNonQuery();
+
         reader.Close();
 
 
@@ -215,7 +213,7 @@ public class JogoRepository : Database, IJogoRepository
             Tipo tipo = _tipoRepository.Buscar(Convert.ToInt32(reader["tipoId"]));
             jogo.Tipo.Add(tipo);
         }
-        cmd.ExecuteNonQuery();
+
         reader.Close();
 
         cmd.CommandText = @"SELECT * FROM JOGOS_COMPLEMENTOS WHERE jogoId = @id6";
@@ -226,7 +224,7 @@ public class JogoRepository : Database, IJogoRepository
             DLC complemento = _dLCRepository.Buscar(Convert.ToInt32(reader["complementoId"]));
             jogo.Complemento.Add(complemento);
         }
-        cmd.ExecuteNonQuery();
+
         reader.Close();
 
         return jogo;
@@ -245,9 +243,88 @@ public class JogoRepository : Database, IJogoRepository
         cmd.ExecuteNonQuery();
     }
 
-    public void UpdateJogo (int idJogo)
+    public void UpdateJogo (int idJogo, Jogo jogo, List<int> generos, List<int> tipos, List<int> desenvolvedoras, List<int> distribuidoras)
     {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"
+        UPDATE JOGOS
+        SET nome = @Nome, imagem = @Imagem, descricao = @Descricao, preco = @Preco, desconto = @Desconto, dataLancamento = @DataLancamento, classificacaoIndicativa = @ClassificacaoIndicativa, requisitos = @Requisitos
+        WHERE idJogo = @id";
 
+        cmd.Parameters.AddWithValue("@id",idJogo);
+        cmd.Parameters.AddWithValue("@Nome",jogo.Nome);
+        cmd.Parameters.AddWithValue("@Imagem",jogo.Imagem);
+        cmd.Parameters.AddWithValue("@Descricao",jogo.Descricao);
+        cmd.Parameters.AddWithValue("@Preco",jogo.Preco);
+        cmd.Parameters.AddWithValue("@Desconto",jogo.Desconto);
+        cmd.Parameters.AddWithValue("@DataLancamento",jogo.DataLancamento);
+        cmd.Parameters.AddWithValue("@ClassificacaoIndicativa",jogo.ClassificacaoIndicativa);
+        cmd.Parameters.AddWithValue("@Requisitos",jogo.Requisito);
+
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"DELETE FROM JOGOS_TIPOS WHERE jogoId = @id";
+
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"DELETE FROM JOGOS_GENEROS WHERE jogoId = @id";
+
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"DELETE FROM JOGOS_EMPRESAS WHERE jogoId = @id";
+
+        cmd.ExecuteNonQuery();
+
+        jogo.JogoId = idJogo;
+
+        foreach(int id in tipos)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_TIPOS (jogoId, tipoId) VALUES (@jogoId, @tipoId)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@tipoId", id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        foreach(int id in generos)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_GENEROS (jogoId, generoId) VALUES (@jogoId, @generoId)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@generoId", id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        foreach(int id in desenvolvedoras)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 1)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@empresaId", id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        foreach(int id in distribuidoras)
+        {
+            cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 2)";
+
+            cmd.Parameters.Clear();
+
+            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+            cmd.Parameters.AddWithValue("@empresaId", id);
+
+            cmd.ExecuteNonQuery();
+        }             
     }
     public IList GetJogosUsuario ()
     {

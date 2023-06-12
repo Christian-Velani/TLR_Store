@@ -1,12 +1,13 @@
 @{
     Layout = "/Views/Shared/_LayoutAdmin.cshtml";
 }
+@model Jogo;
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Jogo</title>
+    <title>Atualizar Jogo</title>
     <style>
      
         body {
@@ -168,28 +169,41 @@
     .text-area {
       overflow-y: scroll;
     }
+
+    .image-preview img {
+    max-width: 300px;
+    max-height: 300px;
+    }
     </style>
 </head>
 <body>
     <div class="container">
-        <form class="register-form" method="POST" action="/Jogo/Cadastro" enctype="multipart/form-data">
+        <form class="register-form" method="POST" action="/Jogo/Update/?idJogo=@Model.JogoId" enctype="multipart/form-data">
 
-        <h1>Cadastrar Jogo</h1>
+        <h1>Editar Jogo</h1>
 
         <h2>Nome</h2>
-        <input type="text" placeholder="Nome completo do Jogo" required id="nome" name="Nome"><br>
+        <input type="text" placeholder="Nome completo do Jogo" required id="nome" name="Nome" value="@Model.Nome"><br>
 
         <h2>Descrição</h2>
-        <textarea class="text-area" rows="5" cols="80" required id="descricao" name="Descricao">Objetivo, história, regras e etc</textarea>
+        <textarea class="text-area" rows="5" cols="80" required id="descricao" name="Descricao">@Model.Descricao</textarea>
 
         <h2>Gênero</h2>
         <div class="genre-container">
             @foreach (Genero genero in ViewBag.generos)
             {
-                <div class="genre-item">
-                    <input type="checkbox" name="generos" value="@genero.IdGenero">
-                    <label>@genero.NomeGenero</label>
-                </div>
+                if(@Model.Genero.Contains(genero))
+                {
+                    <div class="genre-item">
+                        <input type="checkbox" name="generos" value="@genero.IdGenero" checked>
+                        <label>@genero.NomeGenero</label>
+                    </div>
+                } else {
+                    <div class="genre-item">
+                        <input type="checkbox" name="generos" value="@genero.IdGenero">
+                        <label>@genero.NomeGenero</label>
+                    </div>
+                }
             }
         </div>
         <a class="cadastro-button" href="/Genero/Cadastrar">Cadastrar um novo Gênero</a>
@@ -198,10 +212,18 @@
         <div class="type-container">
             @foreach (Tipo tipo in ViewBag.tipos)
             {
-                <div class="type-item">
-                    <input type="checkbox" name="tipos" value="@tipo.IdTipo">
-                    <label>@tipo.NomeTipo</label>
-                </div>
+                if(@Model.Tipo.Contains(tipo))
+                {
+                    <div class="type-item">
+                        <input type="checkbox" name="tipos" value="@tipo.IdTipo" checked>
+                        <label>@tipo.NomeTipo</label>
+                    </div>
+                } else {
+                    <div class="type-item">
+                        <input type="checkbox" name="tipos" value="@tipo.IdTipo">
+                        <label>@tipo.NomeTipo</label>
+                    </div>
+                }
             }
         </div>
         <a class="cadastro-button" href="/Tipo/Cadastrar">Cadastrar um novo Tipo</a>
@@ -210,10 +232,18 @@
         <div class="empresa-container">
             @foreach (Empresa desenvolvedora in ViewBag.empresas)
             {
-                <div class="empresa-item">
-                    <input type="checkbox" name="desenvolvedoras" value="@desenvolvedora.IdEmpresa">
-                    <label>@desenvolvedora.NomeEmpresa</label>
-                </div>
+                if(@Model.Desenvolvedora.Contains(desenvolvedora))
+                {
+                    <div class="empresa-item">
+                        <input type="checkbox" name="desenvolvedoras" value="@desenvolvedora.IdEmpresa" checked>
+                        <label>@desenvolvedora.NomeEmpresa</label>
+                    </div>
+                } else {
+                    <div class="empresa-item">
+                        <input type="checkbox" name="desenvolvedoras" value="@desenvolvedora.IdEmpresa">
+                        <label>@desenvolvedora.NomeEmpresa</label>
+                    </div>
+                }
             }
         </div>
 
@@ -221,23 +251,27 @@
         <div class="empresa-container">
             @foreach (Empresa distribuidora in ViewBag.empresas)
             {
-                <div class="empresa-item">
-                    <input type="checkbox" name="distribuidoras" value="@distribuidora.IdEmpresa">
-                    <label>@distribuidora.NomeEmpresa</label>
-                </div>
+                if(@Model.Distribuidora.Contains(distribuidora))
+                {
+                    <div class="empresa-item">
+                        <input type="checkbox" name="distribuidoras" value="@distribuidora.IdEmpresa" checked>
+                        <label>@distribuidora.NomeEmpresa</label>
+                    </div>
+                } else {
+                    <div class="empresa-item">
+                        <input type="checkbox" name="distribuidoras" value="@distribuidora.IdEmpresa">
+                        <label>@distribuidora.NomeEmpresa</label>
+                    </div>
+                }
             }
         </div>
         <a class="cadastro-button" href="/Empresa/Cadastrar">Cadastrar uma nova Empresa</a>
 
         <h2>Data de Lançamento</h2>
-        <input type="date" name="DataLancamento">
+        <input type="date" name="DataLancamento" value="@Model.DataLancamento">
 
         <h2>Requisitos</h2>
-        <textarea class="text-area" rows="5" cols="80" name="requisito">Processador:
-Memória:
-SO:
-etc.
-        </textarea>
+        <textarea class="text-area" rows="5" cols="80" name="requisito">@Model.Requisito</textarea>
 
         <h2>Classificação Indicativa</h2>
         <select name="classificacaoIndicativa">
@@ -249,9 +283,13 @@ etc.
         </select>
 
         <h2>Preço</h2>
-        <input type="decimal" placeholder="00,00" required name="Preco">
+        <input type="decimal" placeholder="00,00" required name="Preco" value="@Model.Preco">
 
         <h2>Capa do Jogo</h2>
+        <div class="image-preview">
+              <label>Imagem Atual</label>
+              <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.Imagem)"/>
+        </div>
         <input type="file" name="Imagem">
         <br>
         <input type="submit" value="Cadastrar">
