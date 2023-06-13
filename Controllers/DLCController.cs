@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 public class DLCController : Controller
 {
@@ -9,17 +10,6 @@ public class DLCController : Controller
         this._dlcRepository = dlcRepository;
     }
 
-    public ActionResult Index()
-    {
-        return View();
-    }
-
-    public ActionResult ListaDLCs()
-    {
-        List<DLC> complementos = _dlcRepository.BuscarListaDLC();
-        return View(complementos);
-    }
-
     public ActionResult ListaDLCsJogo(int idJogo)
     {
         List<DLC> complementos = _dlcRepository.BuscarListaDLCJogo(idJogo);
@@ -27,9 +17,17 @@ public class DLCController : Controller
     }
 
     [HttpGet]
-    public ActionResult Cadastrar()
+    public ActionResult Cadastrar(int idJogo)
     {
-        return View();
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
+        {       
+            return View(idJogo);
+        } else {
+            return RedirectToAction("Home", "Usuario");
+        }
     }
 
     [HttpPost]
@@ -45,23 +43,32 @@ public class DLCController : Controller
             }
         }
         _dlcRepository.Cadastrar(complemento, idJogo);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", "Jogo");
     }
     
     [HttpGet]
-    public ActionResult Atualizar(int id)
+    public ActionResult Atualizar(int idComplemento)
     {
-        DLC complemento = _dlcRepository.Buscar(id);
-        if(complemento != null)
-        {
-            return View(complemento);
-        }
+        DLC complemento = _dlcRepository.Buscar(idComplemento);
 
-        return NotFound();
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
+        {
+            if(complemento != null)
+            {
+                return View(complemento);
+            }
+
+            return NotFound();
+        } else {
+            return RedirectToAction("Home", "Usuario");
+        }
     }
 
     [HttpPost]
-    public ActionResult Atualizar(DLC complemento, int idDLC)
+    public ActionResult Atualizar(DLC complemento, int idComplemento)
     {
         var arquivoImagem = Request.Form.Files["Imagem"];
         if (arquivoImagem != null && arquivoImagem.Length > 0)
@@ -72,16 +79,43 @@ public class DLCController : Controller
                 complemento.Imagem = ms.ToArray();
             }
         } else {
-            DLC complementoRegistrado = _dlcRepository.Buscar(idDLC); 
+            DLC complementoRegistrado = _dlcRepository.Buscar(idComplemento); 
             complemento.Imagem = complementoRegistrado.Imagem;
         }
-        _dlcRepository.Atualizar(idDLC, complemento);
-        return RedirectToAction("Index");
+        _dlcRepository.Atualizar(idComplemento, complemento);
+        return RedirectToAction("Index", "Jogo");
     }
 
     public ActionResult Desativar(int idDLC)
     {
         _dlcRepository.Desativar(idDLC);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", "Jogo");
+    }
+
+    public ActionResult Detalhes(int idComplemento)
+    {
+        DLC complemento = _dlcRepository.Buscar(idComplemento);
+
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
+        {
+            if(complemento != null)
+            {
+                return View("/Views/DLC/DetalhesAdmin.cshtml", complemento);
+            }
+
+            return NotFound();
+        } else {
+            
+            if(complemento != null)
+            {
+                return View("/Views/DLC/DetalhesComum.cshtml", complemento);
+            }
+
+            return NotFound();
+        }
+
     }
 }

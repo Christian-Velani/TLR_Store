@@ -1,60 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 public class EmpresaController : Controller
 {
-    IEmpresaRepository empresaRepository;
+    private readonly IEmpresaRepository _empresaRepository;
 
     public EmpresaController(IEmpresaRepository empresaRepository)
     {
-        this.empresaRepository = empresaRepository;
-    }
-
-    public ActionResult Index()
-    {
-        return View();
-    }
-
-    public ActionResult ListaEmpresasTipo(int idJogo, int tipo)
-    {
-        List<Empresa> empresas = empresaRepository.BuscarListaTipo(idJogo, tipo);
-        return View(empresas);
-    }
-
-    public ActionResult ListaEmpresas()
-    {
-        List<Empresa> empresas = empresaRepository.BuscarLista();
-        return View(empresas);
+        _empresaRepository = empresaRepository;
     }
 
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        return View();
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
+        {   
+            return View();
+        } else {
+            return RedirectToAction("Cadastro", "Jogo");
+        }
     }
 
     [HttpPost]
     public ActionResult Cadastrar(Empresa empresa)
     {
-        empresaRepository.Cadastrar(empresa);
+        _empresaRepository.Cadastrar(empresa);
         return RedirectToAction("Index");
     }
-
-    public ActionResult Atualizar(int id) {
-        
-        Empresa empresa = empresaRepository.Buscar(id);
-
-        if(empresa != null)
-            return View(empresa);
-        
-        return NotFound();
-    }
-
-    [HttpPost]
-    public ActionResult Atualizar(int id, Empresa empresa)
-    {
-        empresaRepository.Atualizar(empresa, id);
-        return RedirectToAction("Index");
-    }
-
-
 }

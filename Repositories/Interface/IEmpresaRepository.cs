@@ -4,5 +4,4 @@ public interface IEmpresaRepository
     Empresa Buscar(int empresaId);
     List<Empresa> BuscarLista();
     void Cadastrar(Empresa empresa);
-    void Atualizar(Empresa empresa, int id);
 }

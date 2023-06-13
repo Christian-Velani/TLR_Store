@@ -175,63 +175,66 @@
     max-height: 300px;
     }
 
-        .game-card {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 20px auto;
-            max-width: 1200px;
-        }
+    .game-card {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px auto;
+        max-width: 1200px;
+    }
 
-        .game-card-item {
-            width: 200px;
-            padding: 10px;
-        }
+    .game-card-item {
+        width: 200px;
+        padding: 10px;
+    }
 
-        .game-card-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+    .game-card-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
 
-        .game-card-title {
-            margin-top: 10px;
-            font-weight: bold;
-        }
+    .game-card-title {
+        margin-top: 10px;
+        font-weight: bold;
+    }
 
-        .game-card-description {
-            margin-top: 5px;
-            color: #aaaaaa;
-        }
-        .game-card-valor {
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+    .game-card-description {
+        margin-top: 5px;
+        color: #aaaaaa;
+    }
 
-        .game-card-dlc {
-            margin-bottom: 10px;
-        }
+    .game-card-valor {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
 
-        .game-card-button {
-            background-color: #003cac;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-        .game-card-button1 {
-            background-color: #740000;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
+    .game-card-dlc {
+        margin-bottom: 10px;
+    }
+
+    .game-card-button {
+        background-color: #003cac;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .game-card-button1 {
+        background-color: #740000;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+    
     </style>
 </head>
 <body>
@@ -350,14 +353,16 @@
         <input type="number" min="0" max="1" name="Status" value=@Model.Status>
 
         <h2>Complementos</h2>
-        @foreach (DLC complemento in @Model.Complemento)
-        {
-            <div class="game-card-item">
-                <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@complemento.Imagem)" href="/DLC/Detalhes/?idComplemento=@complemento.IdComplemento">
-                <div class="game-card-title">@complemento.NomeComplemento</div>
-                <button class="game-card-button" href="/DLC/Cadastrar?jogoId=@Model.JogoId">Cadastrar nova DLC</button>
-            </div>
-        }
+        <div class="game-card">
+            @foreach (DLC complemento in @Model.Complemento)
+            {
+                <div class="game-card-item">
+                    <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@complemento.Imagem)" href="/DLC/Detalhes/?idComplemento=@complemento.IdComplemento">
+                    <a class="game-card-title" href="/DLC/Detalhes?idComplemento=@complemento.IdComplemento">@complemento.NomeComplemento</a>
+                </div>
+            }
+        </div>
+        <a class="cadastro-button" href="/DLC/Cadastrar?idJogo=@Model.JogoId">Cadastrar uma nova DLC</a>
 
         <h2>Capa do Jogo</h2>
         <div class="image-preview">

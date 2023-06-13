@@ -123,13 +123,14 @@ public class DLCRepository : Database, IDLCRepository
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
         cmd.CommandText = @"INSERT INTO COMPLEMENTOS(nome,imagem,preco,descricao,desconto,jogoId,status)
-                            VALUES(@nome, @imagem, @preco, @descricao, @desconto, 1, 1)";
+                            VALUES(@nome, @imagem, @preco, @descricao, @desconto, @id, 1)";
 
         cmd.Parameters.AddWithValue("@nome", complemento.NomeComplemento);
         cmd.Parameters.AddWithValue("@imagem", complemento.Imagem);
         cmd.Parameters.AddWithValue("@descricao", complemento.Descricao);
         cmd.Parameters.AddWithValue("@preco", complemento.Preco);
         cmd.Parameters.AddWithValue("@desconto", complemento.Desconto);
+        cmd.Parameters.AddWithValue("@id", idJogo);
 
         cmd.ExecuteNonQuery();
     }

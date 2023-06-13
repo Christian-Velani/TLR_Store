@@ -1,88 +1,195 @@
+@{
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model int;
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Complemento</title>
+    <title>Cadastro de DLC</title>
     <style>
+     
         body {
-            background-color: #1b2838;
-            color: #fff;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #000000, #08003d, #000000); /* degrade fundo */
+            color: #fffdfd;
+            font-family: "Andada Pro", Andada Pro; /* fonte letras */
+            color: #fff9f9;
+            margin: 0;
+            padding: 0;
         }
 
+       
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+             /* height: 300vh;     localização do cadastrador */
+            padding-top: 10px; /* superior */
+            margin-top: 10px;
+            padding-bottom: 10px; /* inferior*/
+            margin-bottom: 10px;
         }
 
         .register-form {
-            background-color: #2c3e50;
+            /* degrade meio */
             padding: 40px;
-            border-radius: 8px;
+            border-radius: 15px; /* curvatura meio */
             text-align: center;
+            max-width: 800px; /* largura meio */
+            margin: 0 auto;
+            /* border: 1px solid #ffffff; contorno */;
         }
 
-            .register-form h1 {
-                margin-bottom: 20px;
-            }
+        .register-form h1 {
+            margin-bottom: 10px;
+        }
+        
+        .register-form h2 {
+            margin-bottom: 0px;
+            padding: 10px;
+            width: 300px; /* Defina a largura desejada para os títulos */
+            text-align: left; /* Alinhe o texto à esquerda */
+            font-size: 20px;
+            
+        }
+        .register-form h3 {
+            margin-bottom: 0px;
+            padding: 10px;
+            width: 300px; /* Defina a largura desejada para os títulos */
+            text-align: left; /* Alinhe o texto à esquerda */
+            font-size: 15px;
+            
+        }
 
-            .register-form input,
-            .register-form textarea {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 10px;
-                border-radius: 4px;
-                border: none;
-            }
+        .register-form input,
+        .register-form textarea {
+            width: 95%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: none;
+            color: rgb(255, 255, 255)000;
+            background-color: rgba(255, 255, 255, 0.795);
+            box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.849); /* inf gerais */
+        }
+        
+        .register-form input[type="submit"] { /* botão */
+            background-color: #001866;  
+            color: #fff;
+            cursor: pointer;
+        } 
 
-                .register-form input[type="submit"] {
-                    background-color: #3498db;
-                    color: #fff;
-                    cursor: pointer;
-                }
+        .register-form input[type="submit"]:hover { /* botão */
+            background-color: #00318d;
+        }
 
-                    .register-form input[type="submit"]:hover {
-                        background-color: #2980b9;
-                    }
-
-            .register-form textarea {
-                height: 100px;
-            }
+        .register-form textarea {
+            height: 100px;
+        }
 
         ::-webkit-input-placeholder {
-            color: #ccc;
+            color: #000000;
         }
 
         ::-moz-placeholder {
-            color: #ccc;
+            color: #000000;
         }
 
         :-ms-input-placeholder {
-            color: #ccc;
+            color: #000000;
         }
 
         ::placeholder {
-            color: #201e1e;
+            color: #0c0c0c7c; /* dentro letras */
+        }
+        
+        .genre-label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    
+        .genre-container {
+            display: flex;
+            flex-wrap: wrap;
+            
+        }
+        .genre-item { /*letrA BOX cor*/  
+            flex-basis: 50%;
         }
 
+    .type-label {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .type-container {
+      display: flex;
+      flex-wrap: wrap;
+      height: 300px;
+      overflow-y: scroll;
+    
+    }
+    .type-item { /*letrA BOX cor*/  
+      flex-basis: 50%;
+    }
+    .empresa-label {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .empresa-container {
+      display: flex;
+      flex-wrap: wrap;
+      height: 300px;
+      overflow-y: scroll;
+    
+    }
+    .empresa-item { /*letrA BOX cor*/  
+      flex-basis: 50%;
+    }
+    .cadastro-button {
+      display: inline-block;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .cadastro-button:hover {
+      background-color: #45a049;
+    }
+
+    .text-area {
+      overflow-y: scroll;
+    }
     </style>
 </head>
 <body>
     <div class="container">
-        <form class="register-form" method="POST" action="/DLC/Cadastrar/?idJogo=1" enctype="multipart/form-data">
-            <h1>Cadastro de Complemento</h1>
-            <input type="text" placeholder="Nome do Complemento" required id="nome" name="nomeComplemento">
-            <br>
-            <label>Selecione a Imagem do Complemento </label>
-            <input type="file" placeholder="Imagem do Complemento"name="imagem">
-            <input type="text" placeholder="Descrição" required id="descricao" name="descricao">
-            <input type="text" placeholder="Preço" required id="preco" name="preco">
-            <input type="text" placeholder="Desconto" required id="desconto" name="desconto">
-            <input type="hidden" name="status" value="1">
-            <input type="submit" value="Cadastrar">
+        <form class="register-form" method="POST" action="/DLC/Cadastrar?idJogo=@Model" enctype="multipart/form-data">
+
+        <h1>Cadastrar DLC</h1>
+
+        <h2>Nome</h2>
+        <input type="text" placeholder="Nome da DLC" required id="nome" name="NomeComplemento"><br>
+
+        <h2>Descrição</h2>
+        <textarea class="text-area" rows="5" cols="80" required id="descricao" name="Descricao">Objetivo, história, regras e etc</textarea>
+
+        <h2>Preço</h2>
+        <input type="decimal" placeholder="00,00" required name="Preco">
+
+        <h2>Capa da DLC</h2>
+        <input type="file" name="Imagem">
+        <br>
+        <input type="submit" value="Cadastrar">
         </form>
     </div>
 </body>

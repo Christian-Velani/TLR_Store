@@ -1,121 +1,272 @@
-@model DLC
-<style>
-    .container-DLC {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+@{
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model DLC;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar DLC</title>
+    <style>
+     
+        body {
+            background: linear-gradient(to bottom, #000000, #08003d, #000000); /* degrade fundo */
+            color: #fffdfd;
+            font-family: "Andada Pro", Andada Pro; /* fonte letras */
+            color: #fff9f9;
+            margin: 0;
+            padding: 0;
+        }
 
-  .edit-form-DLC {
-    width: 600px;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 40px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
+       
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             /* height: 300vh;     localização do cadastrador */
+            padding-top: 10px; /* superior */
+            margin-top: 10px;
+            padding-bottom: 10px; /* inferior*/
+            margin-bottom: 10px;
+        }
 
-  .edit-form-DLC h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
+        .register-form {
+            /* degrade meio */
+            padding: 40px;
+            border-radius: 15px; /* curvatura meio */
+            text-align: center;
+            max-width: 800px; /* largura meio */
+            margin: 0 auto;
+            /* border: 1px solid #ffffff; contorno */;
+        }
 
-  .edit-form-DLC label {
-    display: block;
-    margin-bottom: 10px;
-    color: #555;
-    font-size: 14px;
-    font-weight: bold;
-  }
+        .register-form h1 {
+            margin-bottom: 10px;
+        }
+        
+        .register-form h2 {
+            margin-bottom: 0px;
+            padding: 10px;
+            width: 300px; /* Defina a largura desejada para os títulos */
+            text-align: left; /* Alinhe o texto à esquerda */
+            font-size: 20px;
+            
+        }
+        .register-form h3 {
+            margin-bottom: 0px;
+            padding: 10px;
+            width: 300px; /* Defina a largura desejada para os títulos */
+            text-align: left; /* Alinhe o texto à esquerda */
+            font-size: 15px;
+            
+        }
 
-  .edit-form-DLC input,
-  .edit-form-DLC textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #e9e9e9;
-    color: #333;
-    font-size: 16px;
-  }
+        .register-form input,
+        .register-form textarea {
+            width: 95%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: none;
+            color: rgb(255, 255, 255)000;
+            background-color: rgba(255, 255, 255, 0.795);
+            box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.849); /* inf gerais */
+        }
+        
+        .register-form input[type="submit"] { /* botão */
+            background-color: #001866;  
+            color: #fff;
+            cursor: pointer;
+        } 
 
-  .edit-form-DLC input[type="file"] {
-    cursor: pointer;
-  }
+        .register-form input[type="submit"]:hover { /* botão */
+            background-color: #00318d;
+        }
 
-  .edit-form-DLC input[type="submit"] {
-    background-color: #3d8af7;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 12px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
+        .register-form textarea {
+            height: 100px;
+        }
 
-  .edit-form-DLC input[type="submit"]:hover {
-    background-color: #3268c7;
-  }
+        ::-webkit-input-placeholder {
+            color: #000000;
+        }
 
-  .edit-form-DLC .file-upload-label {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #3d8af7;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+        ::-moz-placeholder {
+            color: #000000;
+        }
 
-  .edit-form-DLC .file-upload-label:hover {
-    background-color: #3268c7;
-  }
+        :-ms-input-placeholder {
+            color: #000000;
+        }
 
-  .edit-form-DLC .file-upload-input {
-    display: none;
-  }
+        ::placeholder {
+            color: #0c0c0c7c; /* dentro letras */
+        }
+        
+        .genre-label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    
+        .genre-container {
+            display: flex;
+            flex-wrap: wrap;
+            
+        }
+        .genre-item { /*letrA BOX cor*/  
+            flex-basis: 50%;
+        }
 
-  .edit-form-DLC .file-name {
-    font-size: 14px;
-    color: #777;
-    margin-top: 5px;
-  }
+    .type-label {
+      display: inline-block;
+      margin-right: 10px;
+    }
 
-  .file-upload-DLC, .image-preview-DLC {
-    display: inline-block;
-    width: 50%;
-    vertical-align: top;
-  }
+    .type-container {
+      display: flex;
+      flex-wrap: wrap;
+      height: 300px;
+      overflow-y: scroll;
+    
+    }
+    .type-item { /*letrA BOX cor*/  
+      flex-basis: 50%;
+    }
+    .empresa-label {
+      display: inline-block;
+      margin-right: 10px;
+    }
 
-  .image-preview-DLC img {
+    .empresa-container {
+      display: flex;
+      flex-wrap: wrap;
+      height: 300px;
+      overflow-y: scroll;
+    
+    }
+    .empresa-item { /*letrA BOX cor*/  
+      flex-basis: 50%;
+    }
+    .cadastro-button {
+      display: inline-block;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .cadastro-button:hover {
+      background-color: #45a049;
+    }
+
+    .text-area {
+      overflow-y: scroll;
+    }
+
+    .image-preview img {
     max-width: 300px;
     max-height: 300px;
-  }
-</style>
-@{
-    ViewData["Title"] = "Editar DLC";
-}
-<div class="container-DLC">
-  <form class="edit-form-DLC" method="POST" action="/DLC/Atualizar/?idDLC=@Model.IdComplemento" enctype="multipart/form-data">
-    <h1>Editar DLC</h1>
-    <label for="imagem">Imagem</label>
-    <div class="file-upload-DLC">
-      <input type="file" name="Imagem" value="@Model.Imagem">
+    }
+
+    .game-card {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px auto;
+        max-width: 1200px;
+    }
+
+    .game-card-item {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .game-card-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .game-card-title {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .game-card-description {
+        margin-top: 5px;
+        color: #aaaaaa;
+    }
+
+    .game-card-valor {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .game-card-dlc {
+        margin-bottom: 10px;
+    }
+
+    .game-card-button {
+        background-color: #003cac;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .game-card-button1 {
+        background-color: #740000;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form class="register-form" method="POST" action="/DLC/Atualizar/?idComplemento=@Model.IdComplemento" enctype="multipart/form-data">
+
+        <h1>Editar DLC</h1>
+
+        <h2>Nome</h2>
+        <input type="text" placeholder="Nome da DLC" required id="nome" name="NomeComplemento" value="@Model.NomeComplemento"><br>
+
+        <h2>Descrição</h2>
+        <textarea class="text-area" rows="5" cols="80" required id="descricao" name="Descricao">@Model.Descricao</textarea>
+
+        <h2>Preço</h2>
+        <input type="decimal" placeholder="00,00" required name="Preco" value="@Model.Preco">
+
+        <h2>Desconto</h2>
+        <input type="number" min="0" max="100" name="Desconto" value="@Model.Desconto">
+
+        <h2>Status</h2>
+        <input type="number" min="0" max="1" name="Status" value=@Model.Status>
+
+        <h2>Capa da DLC</h2>
+        <div class="image-preview">
+              <label>Imagem Atual</label>
+              <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.Imagem)"/>
+        </div>
+        <input type="file" name="Imagem">
+        <br>
+        <input type="submit" value="Atualizar">
+        </form>
     </div>
-    <div class="image-preview-DLC">
-      <label>Imagem Atual</label>
-      <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.Imagem)"/>
-    </div>
-    <label for="nome">Nome do Complemento</label>
-    <input type="text" id="nome" name="nomeComplemento" value="@Model.NomeComplemento" required>
-    <label for="descricao">Descrição</label>
-    <textarea id="descricao" name="descricao" rows="4" required>@Model.Descricao</textarea>
-    <label for="preco">Preço</label>
-    <input type="text" id="preco" name="preco" value="@Model.Preco" required>
-    <label for="desconto">Desconto</label>
-    <input type="text" id="desconto" name="desconto" value="@Model.Desconto" required>
-    <input type="submit" value="Confirmar">
-  </form>
-</div>
+</body>
+</html>
