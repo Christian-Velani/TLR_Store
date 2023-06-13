@@ -5,6 +5,5 @@ public class DLC
     public byte[] Imagem { get; set; }
     public decimal Preco { get; set; }
     public string Descricao { get; set; }
-    public int Desconto { get; set; }
     public EnumStatus Status { get; set; }
 }

@@ -1,0 +1,219 @@
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+ @{
+        string? session = HttpContextAccessor.HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+        Layout = "/Views/Shared/_LayoutComum.cshtml";
+    }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #000000, #08003d, #000000);
+            color: #fffdfd;
+            font-family: "Andada Pro", Andada Pro;
+            color: #fff9f9;
+            margin: 0;
+            padding: 100px;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #08003d, #08003d, #000000); 
+            color: #fff;
+            padding: 50px;
+            text-align: center;
+        }
+        .header h1{
+           
+            padding: 100px;
+            text-align: center;
+        } 
+
+        .menu {
+            display: flex;
+            justify-content: space-between;
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            
+            align-items: center;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            max-width: 500px;
+            margin: 10px;
+            padding: 5px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        
+        .search-button {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #00438b;
+        }
+
+        .profile-button {
+            display: flex;
+            align-items: center;
+            margin-right: 0px;
+            cursor: pointer;
+        }
+
+        .profile-image {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .profile-nick {
+            font-weight: bold;
+        }
+
+        .options-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .option {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            text-decoration: underline;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            margin: 10px auto;
+        }
+
+        .filter-select {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: #ffffff;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        .filter-select:hover {
+            background-color: #0056b3;
+        }
+
+        .game-card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .game-card-item {
+            width: 200px;
+            padding: 10px;
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .game-card-title {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .game-card-description {
+            margin-top: 5px;
+            color: #aaaaaa;
+        }
+        .game-card-valor {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .game-card-dlc {
+            margin-bottom: 10px;
+        }
+
+        .game-card-button {
+            background-color: #003cac;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .game-card-button1 {
+            background-color: #740000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+    <body>
+        <div class="game-card">
+            <h2>Jogos Adquiridos</h2>
+            @if(ViewBag.jogos != null)
+            {
+                @foreach(Jogo jogo in ViewBag.jogos)
+                {
+                    <div class="game-card-item">
+                        <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@jogo.Imagem)">
+                        <a class="game-card-title" href="/Jogo/Detalhes/?idJogo=@jogo.JogoId">@jogo.Nome</a>
+                    </div>
+                }
+            }
+        </div>
+        <div class="game-card">
+            <h2>Complementos Adquiridos</h2>
+            @if(ViewBag.complementos != null)
+            {
+                @foreach(DLC complemento in ViewBag.complementos)
+                {
+                    <div class="game-card-item">
+                        <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@complemento.Imagem)">
+                        <a class="game-card-title" href="/DLC/Detalhes/?idComplemento=@complemento.IdComplemento">@complemento.NomeComplemento</a>
+                    </div>
+                }
+            }
+        </div>
+    </body>
+</html>

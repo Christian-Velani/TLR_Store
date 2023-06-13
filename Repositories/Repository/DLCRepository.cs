@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using System.Text.Json;
 
 public class DLCRepository : Database, IDLCRepository
 {
@@ -19,7 +20,6 @@ public class DLCRepository : Database, IDLCRepository
         cmd.Parameters.AddWithValue("@imagem", Complemento.Imagem);
         cmd.Parameters.AddWithValue("@preco", Complemento.Preco);
         cmd.Parameters.AddWithValue("@descricao", Complemento.Descricao);
-        cmd.Parameters.AddWithValue("@desconto", Complemento.Desconto);
 
         cmd.ExecuteNonQuery();
     }
@@ -56,33 +56,35 @@ public class DLCRepository : Database, IDLCRepository
         return complemento;
     }
 
-    public List<DLC> BuscarListaDLC()
+    public List<DLC> BuscarListaDLC(int idUsuario)
     {
+        List<int> listIds = new List<int>();
+        List<DLC> complementosUsuarios = new List<DLC>();
         SqlCommand cmd = new SqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = @"SELECT * FROM COMPLEMENTOS";
+        cmd.CommandText = 
+        @"SELECT complementoId from Complementos_USUARIOS
+        WHERE usuarioId = @id";
 
+        cmd.Connection = conn;
+        cmd.Parameters.AddWithValue("@id",idUsuario);
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<DLC> complementos = new List<DLC>();
-
-        while(reader.Read())
+        while (reader.Read())
         {
-            byte[] imagemBytes = (byte[])reader["imagem"];
-
-            DLC complemento = new DLC();
-            complemento.IdComplemento = Convert.ToInt32(reader["idComplemento"]);
-            complemento.NomeComplemento = reader["nome"].ToString();
-            complemento.Imagem = imagemBytes;
-            complemento.Preco = Convert.ToDecimal(reader["preco"]);
-            complemento.Descricao = reader["descricao"].ToString();
-            complemento.Desconto = Convert.ToInt32(reader["desconto"]);
-            complemento.Status = (EnumStatus)(reader["status"]);
-
-            complementos.Add(complemento);
+            listIds.Add(Convert.ToInt32(reader["complementoId"]));
         }
 
-        return complementos;
+        if (listIds != null)
+        {
+            foreach (var id in listIds)
+            {
+                var complemento = Buscar(id);
+                complementosUsuarios.Add(complemento);
+            }
+            return complementosUsuarios;
+        }
+
+        return null;
     }
 
     public List<DLC> BuscarListaDLCJogo(int idJogo)
@@ -110,7 +112,6 @@ public class DLCRepository : Database, IDLCRepository
             complemento.Imagem = imagemBytes;
             complemento.Preco = Convert.ToDecimal(reader["preco"]);
             complemento.Descricao = reader["descricao"].ToString();
-            complemento.Desconto = Convert.ToInt32(reader["desconto"]);
             complemento.Status = (EnumStatus)(reader["status"]);
 
             complementos.Add(complemento);
@@ -132,7 +133,6 @@ public class DLCRepository : Database, IDLCRepository
         cmd.Parameters.AddWithValue("@imagem", complemento.Imagem);
         cmd.Parameters.AddWithValue("@descricao", complemento.Descricao);
         cmd.Parameters.AddWithValue("@preco", complemento.Preco);
-        cmd.Parameters.AddWithValue("@desconto", complemento.Desconto);
         cmd.Parameters.AddWithValue("@id", idJogo);
 
         cmd.ExecuteNonQuery();

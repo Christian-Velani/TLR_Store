@@ -12,7 +12,6 @@ CREATE TABLE JOGOS
 	imagem							VARBINARY(MAX)	NOT NULL,
 	descricao						VARCHAR(MAX)	NOT NULL,
 	preco							DECIMAL(10,2)	NOT NULL,
-	desconto						INT				NULL,
 	dataLancamento					DATE			NOT NULL,
 	classificacaoIndicativa			INT				NOT NULL	CHECK(classificacaoIndicativa in (3, 7, 12, 16, 18)),
 	requisitos						VARCHAR(MAX)	NULL,
@@ -91,7 +90,6 @@ CREATE TABLE COMPLEMENTOS
 	imagem				VARBINARY(MAX)		NOT NULL,
 	preco				DECIMAL(10,2)		NOT NULL,
 	descricao			VARCHAR(MAX)		NOT NULL,
-	desconto			INT					NULL,
 	jogoId				INT					NOT NULL,
 	status				INT					NOT NULL	CHECK(status in (0,1))
 )
@@ -353,3 +351,5 @@ INSERT INTO EMPRESAS VALUES('Innersloth'),
 
 INSERT INTO USUARIOS(nome, nick, senha, email, status, tipo) VALUES ('João Acácio', 'JoAca', '25256142', 'JoAca@email.com', 1, 0)
 GO
+
+SELECT * FROM COMPLEMENTOS_USUARIOS

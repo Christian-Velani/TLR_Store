@@ -8,14 +8,15 @@ public class UsuarioController : Controller
     private readonly IGeneroRepository _generoRepository;
     private readonly IEmpresaRepository _empresaRepository;
     private readonly IJogoRepository _jogoRepository;
-    private List<Jogo>? jogosAux;
-    public UsuarioController(IUsuarioRepository usuarioRepository, ITipoRepository tipoRepository, IGeneroRepository generoRepository, IEmpresaRepository empresaRepository, IJogoRepository jogoRepository)
+    private readonly IDLCRepository _dlcRepository;
+    public UsuarioController(IUsuarioRepository usuarioRepository, ITipoRepository tipoRepository, IGeneroRepository generoRepository, IEmpresaRepository empresaRepository, IJogoRepository jogoRepository, IDLCRepository dlcRepository)
     {
         _usuarioRepository = usuarioRepository;
         _tipoRepository = tipoRepository;
         _generoRepository = generoRepository;
         _empresaRepository = empresaRepository;
         _jogoRepository = jogoRepository;
+        _dlcRepository = dlcRepository;
     }
 
     [HttpGet]
@@ -217,6 +218,21 @@ public class UsuarioController : Controller
     public ActionResult Perfil ()
     {
         return View();
+    }
+
+    public ActionResult Biblioteca()
+    {
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        List<Jogo> jogos = _jogoRepository.GetJogosUsuario(usuario.IdUsuario);
+        List<DLC> complementos = _dlcRepository.BuscarListaDLC(usuario.IdUsuario);
+
+        ViewBag.jogos = jogos;
+        ViewBag.complementos = complementos;
+
+        return View();
+
     }
     
 }

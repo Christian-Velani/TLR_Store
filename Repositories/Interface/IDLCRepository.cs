@@ -1,7 +1,7 @@
 public interface IDLCRepository
 {
     List<DLC> BuscarListaDLCJogo(int idJogo);
-    List<DLC> BuscarListaDLC();
+    List<DLC> BuscarListaDLC(int idUsuario);
     DLC Buscar(int idDLC);
     void Cadastrar(DLC Complemento, int idJogo);
     void Atualizar(int idDLC, DLC Complemento);

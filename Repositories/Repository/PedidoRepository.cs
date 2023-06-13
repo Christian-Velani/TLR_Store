@@ -88,14 +88,15 @@ public class PedidoRepository : Database, IPedidoRepository
         return null;
     }
 
-    public void Criar(Pedido pedido, List<int> jogosIds, List<int> complementosIds)
+    public void Criar(Pedido pedido, List<int> jogosIds, List<int> complementosIds, int idUsuario)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
         cmd.CommandText = @"INSERT INTO PEDIDOS(meioPagamento, dataCompra, usuarioId) 
-                            VALUES(@meioPagamento, GetDate(), 1)";
+                            VALUES(@meioPagamento, GetDate(), @idUsuario)";
 
         cmd.Parameters.AddWithValue("@meioPagamento", pedido.MeioPagamento);
+        cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
 
         cmd.ExecuteNonQuery();
 
@@ -111,23 +112,43 @@ public class PedidoRepository : Database, IPedidoRepository
 
         reader.Close();
 
-        foreach(int id in jogosIds)
-        {
-            cmd.CommandText = "INSERT INTO PRODUTOS_PEDIDOS(pedidoId, jogoId) VALUES(@pedidoId, @jogoId)";
+        if(jogosIds != null)
+        {        
 
-            cmd.Parameters.AddWithValue("@pedidoId", pedido.IdPedido);
-            cmd.Parameters.AddWithValue("@jogoId", id);
+            foreach(int id in jogosIds)
+            {
+                cmd.CommandText = "INSERT INTO PRODUTOS_PEDIDOS(pedidoId, jogoId) VALUES(@pedidoId, @jogoId)";
 
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("@pedidoId", pedido.IdPedido);
+                cmd.Parameters.AddWithValue("@jogoId", id);
+
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "INSERT INTO JOGOS_USUARIOS(jogoId, usuarioId) VALUES(@jogoId, @userId)";
+
+                cmd.Parameters.AddWithValue("@userId", idUsuario);
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
-        foreach(int id in complementosIds)
+        if(complementosIds != null)
         {
-            cmd.CommandText = "INSERT INTO PRODUTOS_PEDIDOS(pedidoId, complementoId) VALUES(@pedidoId, @complementoId)";
 
-            cmd.Parameters.AddWithValue("@complementoId", id);
+            foreach(int id in complementosIds)
+            {
+                cmd.CommandText = "INSERT INTO PRODUTOS_PEDIDOS(pedidoId, complementoId) VALUES(@pedidoId, @complementoId)";
 
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@complementoId", id);
+
+                cmd.ExecuteNonQuery();            
+
+                cmd.CommandText = "INSERT INTO COMPLEMENTOS_USUARIOS(complementoId, usuarioId) VALUES(@jcomplemento, @userId)";
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         cmd.CommandText = @"UPDATE PEDIDOS

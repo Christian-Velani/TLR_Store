@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-
+using System.Text.Json;
 public class PedidoController : Controller
 {
     IPedidoRepository pedidoRepository;
@@ -14,7 +14,10 @@ public class PedidoController : Controller
 
     public ActionResult Index()
     {
-        List<Pedido> pedidos = pedidoRepository.BuscarPorCliente(1);
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        List<Pedido> pedidos = pedidoRepository.BuscarPorCliente(usuario.IdUsuario);
         return View(pedidos);
     }
 
@@ -24,25 +27,25 @@ public class PedidoController : Controller
         return View(pedido);
     }
 
-    [HttpGet]
-    public ActionResult Criar()
-    {
-        List<DLC> complementos = new List<DLC>();
-        complementos = _dLCRepository.BuscarListaDLC();
-        List<Jogo> jogos = new List<Jogo>();
-        jogos = _jogoRepository.GetAllJogos();
-
-        ViewBag.complementos = complementos;
-        ViewBag.jogos = jogos;
-
-        return View();
-    }
-
     [HttpPost]
-    public ActionResult Criar(Pedido pedido, List<int> jogosIds, List<int> complementosIds)
+    public ActionResult Criar(int MeioPagamento)
     {
-        pedidoRepository.Criar(pedido, jogosIds, complementosIds);
-        return RedirectToAction("Index");
+        string? session = HttpContext.Session.GetString("carrinho");
+        Carrinho? carrinho = JsonSerializer.Deserialize<Carrinho>(session);
+
+        string? session2 = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session2);
+
+
+        Pedido pedido = new Pedido();
+        pedido.MeioPagamento = (EnumMeioPagamento)(MeioPagamento);
+        int idUsuario = usuario.IdUsuario;
+
+        List<int> jogosIds = carrinho.idJogos;
+        List<int> complementosIds = carrinho.idComplementos;
+
+        pedidoRepository.Criar(pedido, jogosIds, complementosIds, idUsuario);
+        return RedirectToAction("Home", "Usuario");
     }
 
 }

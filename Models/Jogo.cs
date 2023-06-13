@@ -10,7 +10,6 @@ public class Jogo
     public List<Genero> Genero { get; set; }
     public List<Tipo> Tipo { get; set; }
     public decimal Preco { get; set; }
-    public int Desconto { get; set; }
     public List<DLC> Complemento { get; set; }
     public string Requisito { get; set; }
     public EnumStatus Status { get; set; }

@@ -33,7 +33,7 @@ public class UsuarioRepository : Database, IUsuarioRepository
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
         cmd.CommandText = @"SELECT * FROM USUARIOS
-                            WHERE (email = @Email or nick = @Nick) and senha = @Senha";
+                            WHERE (email = @Email or nick = @Nick) and senha = @Senha and status = 1";
                  
         cmd.Parameters.AddWithValue("@Email",login);
         cmd.Parameters.AddWithValue("@Nick",login);
@@ -55,6 +55,7 @@ public class UsuarioRepository : Database, IUsuarioRepository
             usuario.Status = (EnumStatus)reader["status"];
             usuario.IdUsuario = Convert.ToInt32(reader["idUsuario"]);
             usuario.TipoUsuario = (EnumTipoUsuario)reader["tipo"];
+            usuario.NomeUsuario = reader["nome"].ToString();
             
             return usuario;
         }
@@ -85,6 +86,8 @@ public class UsuarioRepository : Database, IUsuarioRepository
             cmd.CommandText = 
             @"INSERT INTO USUARIOS (icone,nome,nick,senha,email,status,tipo)
             VALUES (@Icone,@Nome,@Nick,@Senha,@Email,@Status,1)";
+
+            cmd.Parameters.Clear();
 
             cmd.Parameters.AddWithValue("@Icone",usuario.Icone);
             cmd.Parameters.AddWithValue("@Nome",usuario.NomeUsuario);

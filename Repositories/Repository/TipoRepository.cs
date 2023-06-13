@@ -36,10 +36,11 @@ public class TipoRepository : Database, ITipoRepository
 
         List<Tipo> tipos = new List<Tipo>();
 
-        Tipo tipo = new Tipo();
 
         while(reader.Read())
         {
+            Tipo tipo = new Tipo();
+            
             tipo.IdTipo = Convert.ToInt32(reader["idTipo"]);
             tipo.NomeTipo = reader["nome"].ToString();
 
