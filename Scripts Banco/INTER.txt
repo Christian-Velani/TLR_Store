@@ -1,0 +1,204 @@
+Jogo 1:
+
+Among Us
+
+Descrição:
+Boas-vindas, recrutas!
+
+Venham embarcar no novo mapa de Among Us: Airship! Trabalhem em equipe na nave para executar o maior dos planos... Se vai ser como Tripulante ou Impostor já são outros quinhentos.
+
+A atualização grátis vem com:
+O 4º mapa, que é o maior até agora
+Novas tarefas, como polir joias, tirar o lixo (caramba, que top!) e muito mais
+A possibilidade de escolher a sala inicial
+Áreas novinhas para explorar (ou para ser vítima de assassinato)
+Maior mobilidade, graças a escadas e plataformas móveis
+Novos chapéus grátis: broche de coração, sobrancelhas iradas, chifre de unicórnio, luva cheia e muito mais!
+
+Gêneros:
+Casual
+
+Tipos: 
+JxJ on-line
+JxJ em rede local(LAN)
+Cooperativo on-line
+Cooperativo em rede local(LAN)
+Multijogador multiplataforma
+Compatibilidade total com controle
+
+Desenvolvedoras:
+Innersloth
+
+Distribuidoras:
+Innersloth
+
+Data de Lançamento:
+16/11/2018
+
+Requisistos:
+MÍNIMOS:
+SO: Windows 10 x32bit
+Processador: INTEL i3-4330
+Memória: 1 GB de RAM
+Placa de vídeo: INTEL HD Graphics 4600
+RECOMENDADOS:
+SO: Windows 10 x64bit
+Processador: INTEL i3-4330
+Memória: 4 GB de RAM
+Placa de vídeo: Nvidia GTX 650
+
+Classificação Indicativa:
+Livre
+
+Preço: 14,99
+
+
+Jogo 2:
+
+Worms Ultimate Mayhem
+
+Descrição:
+Worms™: Ultimate Mayhem is the definitive 3D "Worms™" game! Load your weapons and experience a whole new dimension in destructive turn-based cartoon action! Taking the game into 3D creates all-new strategic and gameplay possibilities. With over 70 single-player missions and challenges, online and local multi-player for up to 4 players, 5 multi-player modes, Steam Achievements, unprecedented customization of both worms and weapons, and fully destructible environments, it’s bursting with anarchic mayhem. Battle and puzzle your way through all of the missions from both "Worms™ 3D" and "Worms™ 4: Mayhem" - it’s essentially two games in one. With the addition of HD visuals, gameplay enhancements and new extra content, it is the ultimate 3D "Worms™" collection!
+Key Features
+EXTENSIVE SINGLE-PLAYER CONTENT:
+A vast array of single-player content spanning the very best of the 3D "Worms™" games, ranging from shooting challenges to speed runs, whilst a collection of crazy missions, interspersed with newly fully voiced narrative FMV sequences, make up the single-player campaign. Additionally, a huge number of challenges ask the player to master the individual skills of the game (such as piloting a Jetpack or steering a Parachute) in order to complete tasks such as target shooting or collecting targets, all against the clock.
+ONLINE AND LOCAL MULTI-PLAYER:
+Full online play for up to 4 players over a wealth of game modes such as "Statue Defend", "Homelands" or just plain "Deathmatch", plus the ability to create your own custom game settings to play against your friends! Because of the turn-based nature of the game, it can be played multi-player offline on one screen.
+Fight on the randomly generated landscapes, even save and share them, which allows for a huge amount of multi-player map options!
+GET COMPETITIVE:
+Play standard or ranked games in a bid to scale the Steam Leaderboards!
+MASSIVE CUSTOMIZATION OPTIONS:
+Players are able to name their teams, choose which hats they want their worms to wear, whether they wear glasses, have moustaches, what they say, which flag represents them, and even what gravestone they leave behind when they die.
+Worms™ WEAPONS AND UTILITIES:
+Many of the classic Worms™ weapons are present and correct, with the Holy Hand Grenade, Bazooka, Dynamite, Banana Bomb, Baseball Bat, Super Sheep and many more in your arsenal of destruction.
+There is also a sprinkling of even more crazy and surreal weapons too, such as Alien Abduction, Fatkins Strike, Flood, Inflatable Scouser, Old Woman, Starburst and Bovine Blitz with which to wage war on your enemies.
+CUSTOM BUILT WEAPONRY:
+Players are also able to construct their own weapons from a wide selection of components. These weapons are added to the players’ arsenals and remain secret until deployed, giving opponents a nasty shock.
+TALK TRASH:
+In-game voice-chat so you can cheer on team mates or indeed win the battle against opponents verbally!
+FULLY DESTRUCTIBLE ENVIRONMENTS:
+Deform everything in real-time.
+NEW PICTURE-IN-PICTURE DISPLAY:
+This tracks every action a player makes when attacking, whilst at the same time allowing the player to retreat and not miss a single moment of the glorious action.
+NUMEROUS GAMEPLAY IMPROVEMENTS & ENHANCEMENTS
+New camera enhancements make it easier to follow the action; optimized AI means more intelligent enemies, and the addition of speech and lip-synching to the single-player missions makes for even more cinematic fun!
+New visual improvements, with dynamic real time lighting and post process effects and shaders, make the mayhem look even more impressive.
+
+Gêneros:
+Estratégia
+
+Tipos:
+Um jogador
+Compatibilidade parcial com controle
+
+Desenvolvedoras:
+Team17 Digital Ltd
+
+Distribuidoras:
+Team17 Digital LTd
+
+Data de Lançamento:
+28/09/2011
+
+Requisitos:
+OS: Windows 7 / Vista / XP
+Processor: 3.0 GHz P4, Dual Core 2.0 (or higher) or AMD64X2 (or higher)
+Memory: 2GB
+Graphics: 512 MB NVIDIA GeForce 8400 / ATI Radeon HD 4650 or higher
+DirectX®: 9.0c
+Hard Drive: At least 1.8 GB of Space
+Sound: DirectX 9.0c compatible
+Other: Internet connection required
+
+Classificação Indicativa:
+Livre
+
+Preço: 24,99
+
+Jogo 3:
+
+Borderlands 3
+
+Descrição:
+O jogo de tiro original está de volta, com milhões de armas e uma aventura cheia de destruição! Acabe com novos mundos e inimigos com um dos quatro novos Vault Hunters. Jogue sozinho ou com amigos para enfrentar inimigos insanos, conseguir um monte de itens e salvar seu lar dos líderes cultistas mais cruéis da galáxia.
+
+Gêneros:
+Ação
+RPG
+FPS
+
+Tipos:
+Um jogador
+Cooperativo on-line
+Cooperativo em rede local(LAN)
+Multijogador multiplataforma
+
+Desenvolvedoras:
+Gearbox Software
+
+Distribuidoras:
+2K
+
+Data de Lançamento:
+13/03/2020
+
+Requisitos:
+MÍNIMOS:
+Requer um processador e sistema operacional de 64 bits
+SO: Windows 7/10 (latest service pack)
+Processador: AMD FX-8350 or Intel i5-3570
+Memória: 6 GB de RAM
+Placa de vídeo: AMD Radeon™ HD 7970 or NVIDIA GeForce GTX 680 2 GB
+DirectX: Versão 11
+Armazenamento: 75 GB de espaço disponível
+Placa de som: DirectX Compatible
+
+RECOMENDADOS:
+Requer um processador e sistema operacional de 64 bits
+SO: Windows 7/10 (latest service pack)
+Processador: AMD Ryzen™ 5 2600 (Intel i7-4770)
+Memória: 16 GB de RAM
+Placa de vídeo: AMD Radeon™ RX 590 or NVIDIA GeForce GTX 1060 6GB
+DirectX: Versão 12
+Armazenamento: 75 GB de espaço disponível
+Placa de som: DirectX Compatible
+
+Classificação Indicativa:
+16
+
+Preço:
+119,90
+
+
+Complemento 1:
+
+Borderlands 3: Gold Weapon Skins Pack
+
+Descrição:
+
+Dê um brilho nas suas armas favoritas de Borderlands 3 com o Pacote de Skins de Arma Douradas. Esse pacote contém um enfeite de arma dourado e skins de arma douradas, aplicáveis em todas as armas.
+
+Preço:
+15,90
+
+Complemento 2:
+
+Borderlands 3: Gearbox Cosmetic Pack
+
+Descrição:
+
+O Pacote de Cosméticos da Gearbox inclui o seguinte conteúdo para usar em Borderlands 3:
+
+Skin de arma da Gearbox
+Enfeite de arma da Gearbox
+
+Preço:
+15,90
+
+
+
+
+
+
+
+
