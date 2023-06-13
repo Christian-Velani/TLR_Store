@@ -1,0 +1,157 @@
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+ @{
+        string? session = HttpContextAccessor.HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+        Layout = "/Views/Shared/_LayoutComum.cshtml";
+    }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+             margin-top: 100px;
+            margin-bottom: 300px;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #003cac;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 30px;
+        }
+
+        .profile-username {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .profile-nick {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .profile-actions button {
+
+            background-color: #003cac;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .profile-actions button:hover {
+            background-color: #002a7a;
+        }
+
+        .menu {
+            background-color: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .menu-item {
+            margin-right: 40px;
+            cursor: pointer;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top: 20px;
+            margin-right: 400px;
+        
+        }
+
+        .profile-details {
+            width: 70%;
+            
+        }
+
+        .profile-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .profile-details p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .profile-actions2 {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .edit-profile-button {
+            margin-top: 20px;
+            background-color: #003cac;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 800px;
+        }
+
+        .edit-profile-button:hover {
+            background-color: #002a7a;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="profile-info">
+            <img class="profile-img" src="data:image/jpeg;base64,@Convert.ToBase64String(@usuario.Icone)">
+            <div class="profile-text">
+                <div class="profile-username">@usuario.NomeUsuario</div>
+                <div class="profile-nick">@usuario.Nick</div>
+            </div>
+        </div>
+        <div class="profile-actions">
+            <button class="edit-profile-button">Alterar Icone</button>
+        </div>
+    </div>
+    
+    </div>
+    <div class="profile-container">
+        <div class="profile-details">
+            <h2>Perfil do Usuário</h2>
+            <p><strong>Nome:</strong>@usuario.NomeUsuario</p>
+            <p><strong>Nick:</strong>@usuario.Nick</p>
+            <p><strong>Senha:</strong>@usuario.Senha</p>
+            <p><strong>Email:</strong>@usuario.Email</p>
+        </div>
+        <div class="profile-actions2">
+            <button class="edit-profile-button">Editar</button>
+        </div>
+    </div>
+</body>
+</html>

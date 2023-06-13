@@ -66,17 +66,34 @@ public class UsuarioRepository : Database, IUsuarioRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = 
-        @"INSERT INTO USUARIOS (icone,nome,nick,senha,email,status,tipo)
-        VALUES (@Icone,@Nome,@Nick,@Senha,@Email,@Status,1)";
+        cmd.CommandText = @"SELECT COUNT(nick)
+                            FROM USUARIOS
+                            WHERE nick = @Nick";
 
-        cmd.Parameters.AddWithValue("@Icone",usuario.Icone);
-        cmd.Parameters.AddWithValue("@Nome",usuario.NomeUsuario);
         cmd.Parameters.AddWithValue("@Nick",usuario.Nick);
-        cmd.Parameters.AddWithValue("@Senha",usuario.Senha);
-        cmd.Parameters.AddWithValue("@Email",usuario.Email);
-        cmd.Parameters.AddWithValue("@Status",usuario.Status);
+        int countNick = (int)cmd.ExecuteScalar();
 
-        cmd.ExecuteNonQuery();
+        cmd.CommandText = @"SELECT COUNT(email)
+                            FROM USUARIOS
+                            WHERE email = @Email";
+
+        cmd.Parameters.AddWithValue("@Email",usuario.Email);
+        int countEmail = (int)cmd.ExecuteScalar();
+
+        if (countNick == 0 && countEmail == 0)
+        {
+            cmd.CommandText = 
+            @"INSERT INTO USUARIOS (icone,nome,nick,senha,email,status,tipo)
+            VALUES (@Icone,@Nome,@Nick,@Senha,@Email,@Status,1)";
+
+            cmd.Parameters.AddWithValue("@Icone",usuario.Icone);
+            cmd.Parameters.AddWithValue("@Nome",usuario.NomeUsuario);
+            cmd.Parameters.AddWithValue("@Nick",usuario.Nick);
+            cmd.Parameters.AddWithValue("@Senha",usuario.Senha);
+            cmd.Parameters.AddWithValue("@Email",usuario.Email);
+            cmd.Parameters.AddWithValue("@Status",usuario.Status);
+
+            cmd.ExecuteNonQuery();
+        }
     }
 }

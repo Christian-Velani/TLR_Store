@@ -110,6 +110,12 @@ public class UsuarioController : Controller
         return View();
     }
 
+    [HttpGet]
+    public ActionResult Perfil ()
+    {
+        return View();
+    }
+
     [HttpPost]
     public ActionResult Pesquisar (string? search)
     {

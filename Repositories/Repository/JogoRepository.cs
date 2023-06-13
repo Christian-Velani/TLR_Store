@@ -22,81 +22,91 @@ public class JogoRepository : Database, IJogoRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = @"INSERT INTO JOGOS (nome,imagem,descricao,preco,desconto,
-        dataLancamento,classificacaoIndicativa,requisitos,status)
-        VALUES(@Nome,@Imagem,@Descricao,@Preco,@Desconto,@DataLancamento,@ClassificacaoIndicativa,
-        @Requisitos,1)";
 
+        cmd.CommandText = @"SELECT COUNT (nome)
+                            FROM JOGOS
+                            WHERE nome like @Nome";
         cmd.Parameters.AddWithValue("@Nome",jogo.Nome);
-        cmd.Parameters.AddWithValue("@Imagem",jogo.Imagem);
-        cmd.Parameters.AddWithValue("@Descricao",jogo.Descricao);
-        cmd.Parameters.AddWithValue("@Preco",jogo.Preco);
-        cmd.Parameters.AddWithValue("@Desconto",jogo.Desconto);
-        cmd.Parameters.AddWithValue("@DataLancamento",jogo.DataLancamento);
-        cmd.Parameters.AddWithValue("@ClassificacaoIndicativa",jogo.ClassificacaoIndicativa);
-        cmd.Parameters.AddWithValue("@Requisitos",jogo.Requisito);
+        int countName = (int)cmd.ExecuteScalar();
 
-        cmd.ExecuteNonQuery();
-
-        cmd.CommandText = @"SELECT TOP 1 idJogo FROM JOGOS
-                            ORDER BY idJogo DESC";
-
-        SqlDataReader reader = cmd.ExecuteReader();
-
-        if(reader.Read())
+        if (countName == 0)
         {
-            jogo.JogoId = Convert.ToInt32(reader["idJogo"]);
-        }
+            cmd.CommandText = @"INSERT INTO JOGOS (nome,imagem,descricao,preco,desconto,
+            dataLancamento,classificacaoIndicativa,requisitos,status)
+            VALUES(@Nome,@Imagem,@Descricao,@Preco,@Desconto,@DataLancamento,@ClassificacaoIndicativa,
+            @Requisitos,1)";
 
-        reader.Close();
-
-        foreach(int id in tipos)
-        {
-            cmd.CommandText = @"INSERT INTO JOGOS_TIPOS (jogoId, tipoId) VALUES (@jogoId, @tipoId)";
-
-            cmd.Parameters.Clear();
-
-            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
-            cmd.Parameters.AddWithValue("@tipoId", id);
+            cmd.Parameters.AddWithValue("@Nome",jogo.Nome);
+            cmd.Parameters.AddWithValue("@Imagem",jogo.Imagem);
+            cmd.Parameters.AddWithValue("@Descricao",jogo.Descricao);
+            cmd.Parameters.AddWithValue("@Preco",jogo.Preco);
+            cmd.Parameters.AddWithValue("@Desconto",jogo.Desconto);
+            cmd.Parameters.AddWithValue("@DataLancamento",jogo.DataLancamento);
+            cmd.Parameters.AddWithValue("@ClassificacaoIndicativa",jogo.ClassificacaoIndicativa);
+            cmd.Parameters.AddWithValue("@Requisitos",jogo.Requisito);
 
             cmd.ExecuteNonQuery();
+
+            cmd.CommandText = @"SELECT TOP 1 idJogo FROM JOGOS
+                                ORDER BY idJogo DESC";
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if(reader.Read())
+            {
+                jogo.JogoId = Convert.ToInt32(reader["idJogo"]);
+            }
+
+            reader.Close();
+
+            foreach(int id in tipos)
+            {
+                cmd.CommandText = @"INSERT INTO JOGOS_TIPOS (jogoId, tipoId) VALUES (@jogoId, @tipoId)";
+
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+                cmd.Parameters.AddWithValue("@tipoId", id);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            foreach(int id in generos)
+            {
+                cmd.CommandText = @"INSERT INTO JOGOS_GENEROS (jogoId, generoId) VALUES (@jogoId, @generoId)";
+
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+                cmd.Parameters.AddWithValue("@generoId", id);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            foreach(int id in desenvolvedoras)
+            {
+                cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 1)";
+
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+                cmd.Parameters.AddWithValue("@empresaId", id);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            foreach(int id in distribuidoras)
+            {
+                cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 2)";
+
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
+                cmd.Parameters.AddWithValue("@empresaId", id);
+
+                cmd.ExecuteNonQuery();
+            }             
         }
-
-        foreach(int id in generos)
-        {
-            cmd.CommandText = @"INSERT INTO JOGOS_GENEROS (jogoId, generoId) VALUES (@jogoId, @generoId)";
-
-            cmd.Parameters.Clear();
-
-            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
-            cmd.Parameters.AddWithValue("@generoId", id);
-
-            cmd.ExecuteNonQuery();
-        }
-
-        foreach(int id in desenvolvedoras)
-        {
-            cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 1)";
-
-            cmd.Parameters.Clear();
-
-            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
-            cmd.Parameters.AddWithValue("@empresaId", id);
-
-            cmd.ExecuteNonQuery();
-        }
-
-        foreach(int id in distribuidoras)
-        {
-            cmd.CommandText = @"INSERT INTO JOGOS_EMPRESAS (jogoId, empresaId, tipoEmpresa) VALUES (@jogoId, @empresaId, 2)";
-
-            cmd.Parameters.Clear();
-
-            cmd.Parameters.AddWithValue("@jogoId", jogo.JogoId);
-            cmd.Parameters.AddWithValue("@empresaId", id);
-
-            cmd.ExecuteNonQuery();
-        }             
     }
 
     public List<Jogo> GetAllJogos ()
