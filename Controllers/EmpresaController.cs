@@ -28,6 +28,6 @@ public class EmpresaController : Controller
     public ActionResult Cadastrar(Empresa empresa)
     {
         _empresaRepository.Cadastrar(empresa);
-        return RedirectToAction("Index");
+        return RedirectToAction("Cadastro", "Jogo");
     }
 }

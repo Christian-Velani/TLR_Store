@@ -89,7 +89,7 @@ public class DLCRepository : Database, IDLCRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = @"SELECT idComplemento, nome, imagem, preco, descricao, desconto, status
+        cmd.CommandText = @"SELECT idComplemento, nome, imagem, preco, descricao, status
                             FROM COMPLEMENTOS
                             WHERE jogoId = @id";
 

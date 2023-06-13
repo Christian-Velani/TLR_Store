@@ -6,7 +6,7 @@ public abstract class Database : IDisposable
 
     public Database()
     {
-        string connectionString = "Data Source=CHRISTIANVELANI; Initial Catalog=BD_TLRStore; Integrated Security=true; TrustServerCertificate=true";
+        string connectionString = "Data Source=DESKTOP-LAB0512\\MSSQLSERVER02; Initial Catalog=BD_TLRStore; Integrated Security=true; TrustServerCertificate=true";
 
         conn = new SqlConnection(connectionString);
         conn.Open();

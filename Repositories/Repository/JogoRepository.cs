@@ -255,7 +255,7 @@ public class JogoRepository : Database, IJogoRepository
         cmd.Connection = conn;
         cmd.CommandText = @"
         UPDATE JOGOS
-        SET nome = @Nome, imagem = @Imagem, descricao = @Descricao, preco = @Preco, dataLancamento = @DataLancamento, classificacaoIndicativa = @ClassificacaoIndicativa, requisitos = @Requisitos
+        SET nome = @Nome, imagem = @Imagem, descricao = @Descricao, preco = @Preco, dataLancamento = @DataLancamento, classificacaoIndicativa = @ClassificacaoIndicativa, requisitos = @Requisitos, status = @Status
         WHERE idJogo = @id";
 
         cmd.Parameters.AddWithValue("@id",idJogo);
@@ -266,6 +266,7 @@ public class JogoRepository : Database, IJogoRepository
         cmd.Parameters.AddWithValue("@DataLancamento",jogo.DataLancamento);
         cmd.Parameters.AddWithValue("@ClassificacaoIndicativa",jogo.ClassificacaoIndicativa);
         cmd.Parameters.AddWithValue("@Requisitos",jogo.Requisito);
+        cmd.Parameters.AddWithValue("@Status",jogo.Status);
 
         cmd.ExecuteNonQuery();
 
