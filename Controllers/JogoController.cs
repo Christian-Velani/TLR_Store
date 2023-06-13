@@ -40,7 +40,7 @@ public class JogoController : Controller
 
         if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
         {
-            return View(_jogoRepository.SearchJogos(nome));
+            return View(_jogoRepository.SearchJogosNome2(nome));
         } else {
             return RedirectToAction("Home", "Usuario");
         }

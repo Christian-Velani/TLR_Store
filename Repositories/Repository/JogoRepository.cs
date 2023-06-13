@@ -33,9 +33,9 @@ public class JogoRepository : Database, IJogoRepository
 
         if (countName == 0)
         {
-            cmd.CommandText = @"INSERT INTO JOGOS (nome,imagem,descricao,preco,desconto,
+            cmd.CommandText = @"INSERT INTO JOGOS (nome,imagem,descricao,preco,
             dataLancamento,classificacaoIndicativa,requisitos,status)
-            VALUES(@Nome,@Imagem,@Descricao,@Preco,@Desconto,@DataLancamento,@ClassificacaoIndicativa,
+            VALUES(@Nome,@Imagem,@Descricao,@Preco,@DataLancamento,@ClassificacaoIndicativa,
             @Requisitos,1)";
 
 
@@ -149,6 +149,44 @@ public class JogoRepository : Database, IJogoRepository
         return jogosFinal;
     }
 
+    public List<Jogo> GetAllJogosAtivos ()
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = "SELECT * FROM JOGOS WHERE status = 1";
+        
+        SqlDataReader reader = cmd.ExecuteReader();
+        var jogos = new List<Jogo>();
+
+        while (reader.Read())
+        {
+            byte[] imagemBytes = (byte[])reader["imagem"];
+
+            jogos.Add(new Jogo(){
+                JogoId = Convert.ToInt32(reader["idJogo"]),
+                Nome = reader["nome"].ToString(),
+                Imagem =  imagemBytes,
+                Descricao = reader["descricao"].ToString(),
+                Preco = Convert.ToDecimal(reader["preco"]),
+                DataLancamento = reader["dataLancamento"].ToString(),
+                ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]),
+                Requisito = reader["requisitos"].ToString(),
+                Status = (EnumStatus)(reader["status"])
+            });
+        }
+
+        reader.Close();
+
+        List<Jogo> jogosFinal = new List<Jogo>();
+
+        foreach(Jogo jogo in jogos)
+        {
+            jogosFinal.Add(GetJogo(jogo.JogoId));
+        }
+
+        return jogosFinal;
+    }
+
     public Jogo GetJogo (int idJogo)
     {
         SqlCommand cmd = new SqlCommand();
@@ -217,7 +255,7 @@ public class JogoRepository : Database, IJogoRepository
         cmd.Connection = conn;
         cmd.CommandText = @"
         UPDATE JOGOS
-        SET nome = @Nome, imagem = @Imagem, descricao = @Descricao, preco = @Preco, desconto = @Desconto, dataLancamento = @DataLancamento, classificacaoIndicativa = @ClassificacaoIndicativa, requisitos = @Requisitos
+        SET nome = @Nome, imagem = @Imagem, descricao = @Descricao, preco = @Preco, dataLancamento = @DataLancamento, classificacaoIndicativa = @ClassificacaoIndicativa, requisitos = @Requisitos
         WHERE idJogo = @id";
 
         cmd.Parameters.AddWithValue("@id",idJogo);
@@ -348,6 +386,37 @@ public class JogoRepository : Database, IJogoRepository
         reader.Close();
 
         return jogos;
+    }
+
+    public List<Jogo>? SearchJogosNome2(string? search)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"SELECT * FROM JOGOS
+                            WHERE nome LIKE '%' + @search + '%'";
+        cmd.Parameters.Clear();
+
+        cmd.Parameters.AddWithValue("@search", search);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<int> jogos = new List<int>();
+
+        while(reader.Read())
+        {
+            jogos.Add(Convert.ToInt32(reader["idJogo"]));
+        }
+
+        reader.Close();
+
+        List<Jogo> jogosFinal = new List<Jogo>();
+
+        foreach (int idJogo in jogos)
+        {
+            jogosFinal.Add(GetJogo(idJogo));
+        }
+
+        return jogosFinal;
     }
 
     public List<int>? JogosGeneros(int idGenero)

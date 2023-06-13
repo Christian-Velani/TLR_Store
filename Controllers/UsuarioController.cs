@@ -92,7 +92,7 @@ public class UsuarioController : Controller
     public ActionResult Home ()
     {
         List<Jogo> jogos = new List<Jogo>();
-        jogos = _jogoRepository.GetAllJogos();
+        jogos = _jogoRepository.GetAllJogosAtivos();
         List<Empresa> empresas = new List<Empresa>();
         empresas = _empresaRepository.BuscarLista();
         List<Tipo> tipos = new List<Tipo>();
@@ -121,7 +121,7 @@ public class UsuarioController : Controller
         List<Tipo> tipos = new List<Tipo>();        
         List<Genero> generos = new List<Genero>();
 
-        jogos = _jogoRepository.GetAllJogos();
+        jogos = _jogoRepository.GetAllJogosAtivos();
 
         if(nome != null)
         {
