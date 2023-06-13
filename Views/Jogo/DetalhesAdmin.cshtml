@@ -1,14 +1,13 @@
 @{
     Layout = "/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-@model DLC;
+@model Jogo;
 
 <!DOCTYPE html>
 <html>
 <head>
 
-    <title>@Model.NomeComplemento</title>
+    <title>@Model.Nome - TLR Store</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,7 +47,6 @@
 
         .info-label {
             font-weight: bold;
-            color: #ffffff;
         }
 
         .info-value {
@@ -93,22 +91,68 @@
 </head>
 <body>
     <div class="container bg-black text-white">
-        <h1>@Model.NomeComplemento</h1>
+        <h1>@Model.Nome</h1>
         <h1>Imagem de Exibição</h1>
         <div class="gamee-button">
             <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.Imagem)"/>
         </div>
         <div class="game-info">
-            <p class="info-label">Descricao:</p>
-            <textarea rows="5" class="info-value" readonly>@Model.Descricao</textarea>
+            <p class="info-label">Descrição:</p>
+            <textarea class="info-value" rows="5" cols="80" readonly>@Model.Descricao</textarea>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Requisitos:</p>
+            <textarea class="info-value" rows="5" cols="80" readonly>@Model.Requisito</textarea>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Data de Lançamento:</p>
+            <p class="info-value">@Model.DataLancamento</p>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Gêneros:</p>
+            @foreach (Genero genero in @Model.Genero)
+            {
+                <p class="info-value">@genero.NomeGenero</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Tipos:</p>
+            @foreach (Tipo tipo in @Model.Tipo)
+            {
+                <p class="info-value">@tipo.NomeTipo</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Desenvolvedoras:</p>
+            @foreach (Empresa desenvolvedora in @Model.Desenvolvedora)
+            {
+                <p class="info-value">@desenvolvedora.NomeEmpresa</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Distribuidora:</p>
+            @foreach (Empresa distribuidora in @Model.Distribuidora)
+            {
+                <p class="info-value">@distribuidora.NomeEmpresa</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Classificação Indicativa:</p>
+            <p class="info-value">@Model.ClassificacaoIndicativa</p>
         </div>
         <div class="game-info">
             <p class="info-label">Preço:</p>
             <p class="info-value price">@Model.Preco</p>
         </div>
-        <div class="button-container">
-            <a class="add-to-cart-button" href="/DLC/Atualizar?idComplemento=@Model.IdComplemento">Editar</a>
-            <a class="buy-button" href="/DLC/Desativar?idComplemento=@Model.IdComplemento">Deletar</a>
+        <h2>Complementos</h2>
+        <div class="game-card">
+            @foreach (DLC complemento in @Model.Complemento)
+            {
+                <div class="game-card-item">
+                    <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@complemento.Imagem)" href="/DLC/Detalhes/?idComplemento=@complemento.IdComplemento">
+                    <a class="game-card-title" href="/DLC/Detalhes?idComplemento=@complemento.IdComplemento">@complemento.NomeComplemento</a>
+                </div>
+            }
         </div>
     </div>
 </body>

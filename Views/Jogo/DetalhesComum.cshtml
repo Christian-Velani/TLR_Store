@@ -1,0 +1,164 @@
+@{
+    Layout = "/Views/Shared/_LayoutComum.cshtml";
+}
+@model Jogo;
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>@Model.Nome - TLR Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #000000, #08003d, #000000); /* degrade fundo */
+            margin: 50PX;
+            padding: 50PX;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #000000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .game-image {
+            max-width: 900px;
+            max-height: 900px;
+            margin-bottom: 20px;
+        }
+
+        .game-description {
+            margin-bottom: 20px;
+        }
+
+        .game-info {
+            margin-bottom: 20px;
+        }
+
+        .info-label {
+            font-weight: bold;
+        }
+
+        .info-value {
+            margin-left: 10px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #004299;
+        }
+        .joguin {
+            width: 200px;
+            height: 300px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .gamee-button {
+            display: flex;
+            align-items: center;
+            margin-right: 0px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .add-to-cart-button,
+        .buy-button {
+            padding: 10px 20px;
+            background-color: #005499;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container bg-black text-white">
+        <h1>@Model.Nome</h1>
+        <h1>Imagem de Exibição</h1>
+        <div class="gamee-button">
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.Imagem)"/>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Descrição:</p>
+            <textarea class="info-value" rows="5" cols="80" readonly>@Model.Descricao</textarea>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Requisitos:</p>
+            <textarea class="info-value" rows="5" cols="80" readonly>@Model.Requisito</textarea>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Data de Lançamento:</p>
+            <p class="info-value">@Model.DataLancamento</p>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Gêneros:</p>
+            @foreach (Genero genero in @Model.Genero)
+            {
+                <p class="info-value">@genero.NomeGenero</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Tipos:</p>
+            @foreach (Tipo tipo in @Model.Tipo)
+            {
+                <p class="info-value">@tipo.NomeTipo</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Desenvolvedoras:</p>
+            @foreach (Empresa desenvolvedora in @Model.Desenvolvedora)
+            {
+                <p class="info-value">@desenvolvedora.NomeEmpresa</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Distribuidora:</p>
+            @foreach (Empresa distribuidora in @Model.Distribuidora)
+            {
+                <p class="info-value">@distribuidora.NomeEmpresa</p>
+            }
+        </div>
+        <div class="game-info">
+            <p class="info-label">Classificação Indicativa:</p>
+            <p class="info-value">@Model.ClassificacaoIndicativa</p>
+        </div>
+        <div class="game-info">
+            <p class="info-label">Preço:</p>
+            <p class="info-value price">@Model.Preco</p>
+        </div>
+        <h2>Complementos</h2>
+        <div class="game-card">
+            @foreach (DLC complemento in @Model.Complemento)
+            {
+                <div class="game-card-item">
+                    <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@complemento.Imagem)" href="/DLC/Detalhes/?idComplemento=@complemento.IdComplemento">
+                    <a class="game-card-title" href="/DLC/Detalhes?idComplemento=@complemento.IdComplemento">@complemento.NomeComplemento</a>
+                </div>
+            }
+        </div>
+        <div class="button-container">
+            <a class="add-to-cart-button" href="/Carrinho/AdicionarCarrinhoJogo?idProduto=@Model.JogoId">Adicionar ao Carrinho</a>
+        </div>
+    </div>
+</body>
+</html>
+
+ 

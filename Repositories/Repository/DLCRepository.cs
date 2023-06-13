@@ -99,11 +99,12 @@ public class DLCRepository : Database, IDLCRepository
 
         List<DLC> complementos = new List<DLC>();
 
+        DLC complemento = new DLC();
+
         while(reader.Read())
         {
             byte[] imagemBytes = (byte[])reader["imagem"];
 
-            DLC complemento = new DLC();
             complemento.IdComplemento = Convert.ToInt32(reader["idComplemento"]);
             complemento.NomeComplemento = reader["nome"].ToString();
             complemento.Imagem = imagemBytes;
@@ -114,6 +115,8 @@ public class DLCRepository : Database, IDLCRepository
 
             complementos.Add(complemento);
         }
+
+        reader.Close();
 
         return complementos;
     }

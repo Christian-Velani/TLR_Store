@@ -52,22 +52,20 @@ public class UsuarioController : Controller
         }
     }
 
-    [HttpPost]
+    [HttpGet]
     public ActionResult Logout()
     {
         HttpContext.Session.Clear();
-        return RedirectToAction("Login", "Usuario");
+        return RedirectToAction("Login");
     }
 
     [HttpGet]
-    [Route("Usuario/Cadastro")]
     public ActionResult Cadastro()
     {
         return View();
     }
 
     [HttpPost]
-    [Route("Usuario/Cadastro")]
     public ActionResult Cadastro(Usuario user)
     {
         var arquivoImagem = Request.Form.Files["Icone"];
@@ -90,8 +88,7 @@ public class UsuarioController : Controller
     }
 
     [HttpGet]
-    [Route("Usuario/Home")]
-    public ActionResult Home (int page = 1)
+    public ActionResult Home ()
     {
         List<Jogo> jogos = new List<Jogo>();
         jogos = _jogoRepository.GetAllJogos();
@@ -110,25 +107,116 @@ public class UsuarioController : Controller
         return View();
     }
 
+    public ActionResult Home (string nome, int GenerosId, int TiposId, int EmpresasId)
+    {
+        List<Jogo> jogos = new List<Jogo>();
+        List<int> jogos1 = new List<int>();
+        List<int> jogos2 = new List<int>();
+        List<int> jogos3 = new List<int>();
+        List<int> jogos4 = new List<int>();  
+        List<int> jogosfinal = new List<int>();
+        List<Jogo> jogosfiltrados = new List<Jogo>();      
+        List<Empresa> empresas = new List<Empresa>();        
+        List<Tipo> tipos = new List<Tipo>();        
+        List<Genero> generos = new List<Genero>();
+
+        jogos = _jogoRepository.GetAllJogos();
+
+        if(nome != null)
+        {
+            jogos1 = _jogoRepository.SearchJogosNome(nome);
+        }
+
+        if(GenerosId != 0)
+        {
+            jogos2 = _jogoRepository.JogosGeneros(GenerosId);
+        }
+
+        if(TiposId != 0)
+        {
+            jogos3 = _jogoRepository.JogosTipos(TiposId);
+        }
+
+        if(EmpresasId != 0)
+        {
+            jogos4 = _jogoRepository.JogosEmpresas(EmpresasId);
+        }
+
+        int controle = 0;
+
+        if(jogos1.Count > 0)
+        {
+            jogosfinal = jogos1;
+            controle = 1;
+        }
+
+        if(jogos2.Count > 0)
+        {
+            if(jogosfinal.Count > 0)
+            {
+                jogosfinal = jogosfinal.Intersect(jogos2).ToList();
+            } else {
+                jogosfinal = jogos2;
+            }
+            controle = 1;
+        }
+
+        if(jogos3.Count > 0)
+        {
+            if(jogosfinal.Count > 0)
+            {
+                jogosfinal = jogosfinal.Intersect(jogos3).ToList();
+            } else {
+                jogosfinal = jogos3;
+            }
+            controle = 1;
+        }
+
+        if(jogos4.Count > 0)
+        {
+            if(jogosfinal.Count > 0)
+            {
+                jogosfinal = jogosfinal.Intersect(jogos4).ToList();
+            } else {
+                jogosfinal = jogos4;
+            }
+            controle = 1;
+        }
+
+        if (controle == 1)
+        {
+            foreach(int jogoid in jogosfinal)
+            {
+                foreach(Jogo jogo in jogos)
+                {
+                    if(jogoid == jogo.JogoId)
+                    {
+                        jogosfiltrados.Add(jogo);
+                    }
+                }
+            }
+        } else {
+            jogosfiltrados = jogos;
+        }
+
+
+        generos = _generoRepository.BuscarListaCompleta();
+        empresas = _empresaRepository.BuscarLista();
+        tipos = _tipoRepository.BuscarLista();
+
+
+        ViewBag.empresas = empresas;
+        ViewBag.tipos = tipos;
+        ViewBag.generos = generos;
+        ViewBag.jogos = jogosfiltrados;
+
+            return View();
+    }
+
     [HttpGet]
     public ActionResult Perfil ()
     {
         return View();
-    }
-
-    [HttpPost]
-    public ActionResult Pesquisar (string? search)
-    {
-        jogosAux = _jogoRepository.SearchJogos(search);
-    
-        return RedirectToAction("Home","Usuario");
-    }
-
-    [HttpGet]
-    public ActionResult Pesquisar()
-    {
-        ViewBag.jogosAux = jogosAux;
-        return RedirectToAction("Home","Usuario");
     }
     
 }

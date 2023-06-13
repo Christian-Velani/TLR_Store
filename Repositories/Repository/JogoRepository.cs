@@ -25,9 +25,11 @@ public class JogoRepository : Database, IJogoRepository
 
         cmd.CommandText = @"SELECT COUNT (nome)
                             FROM JOGOS
-                            WHERE nome like @Nome";
+                            WHERE nome = @Nome";
         cmd.Parameters.AddWithValue("@Nome",jogo.Nome);
         int countName = (int)cmd.ExecuteScalar();
+
+        cmd.Parameters.Clear();
 
         if (countName == 0)
         {
@@ -35,6 +37,7 @@ public class JogoRepository : Database, IJogoRepository
             dataLancamento,classificacaoIndicativa,requisitos,status)
             VALUES(@Nome,@Imagem,@Descricao,@Preco,@Desconto,@DataLancamento,@ClassificacaoIndicativa,
             @Requisitos,1)";
+
 
             cmd.Parameters.AddWithValue("@Nome",jogo.Nome);
             cmd.Parameters.AddWithValue("@Imagem",jogo.Imagem);
@@ -136,7 +139,16 @@ public class JogoRepository : Database, IJogoRepository
             });
         }
 
-        return jogos;
+        reader.Close();
+
+        List<Jogo> jogosFinal = new List<Jogo>();
+
+        foreach(Jogo jogo in jogos)
+        {
+            jogosFinal.Add(GetJogo(jogo.JogoId));
+        }
+
+        return jogosFinal;
     }
 
     public Jogo GetJogo (int idJogo)
@@ -342,43 +354,139 @@ public class JogoRepository : Database, IJogoRepository
         return null;
     }
 
-    public List<Jogo>? SearchJogos(string? search)
+    public List<int>? SearchJogosNome(string? search)
     {
-        if (search != null)
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"SELECT * FROM JOGOS
+                            WHERE nome LIKE '%' + @search + '%'";
+        cmd.Parameters.Clear();
+
+        cmd.Parameters.AddWithValue("@search", search);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<int> jogos = new List<int>();
+
+        while(reader.Read())
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = @"SELECT * FROM JOGOS
-                                WHERE nome LIKE '%' + @search + '%'";
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@search", search);
-
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            var jogos = new List<Jogo>();
-
-            while (reader.Read())
-            {
-                byte[] imagemBytes = (byte[])reader["imagem"];
-
-                jogos.Add(new Jogo()
-                {
-                    JogoId = Convert.ToInt32(reader["idJogo"]),
-                    Nome = reader["nome"].ToString(),
-                    Imagem = imagemBytes,
-                    Descricao = reader["descricao"].ToString(),
-                    Preco = Convert.ToDecimal(reader["preco"]),
-                    Desconto = Convert.ToInt32(reader["desconto"]),
-                    DataLancamento = reader["dataLancamento"].ToString(),
-                    ClassificacaoIndicativa = Convert.ToInt32(reader["classificacaoIndicativa"]),
-                    Requisito = reader["requisitos"].ToString(),
-                    Status = (EnumStatus)(reader["status"])
-                });
-            }
-
-            reader.Close();
-            return jogos;
+            jogos.Add(Convert.ToInt32(reader["idJogo"]));
         }
 
-        return null;
+        reader.Close();
+
+        return jogos;
+    }
+
+    public List<int>? JogosGeneros(int idGenero)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"SELECT j.*
+                            FROM JOGOS j
+                            INNER JOIN JOGOS_GENEROS jg ON j.idJogo = jg.jogoId
+                            WHERE jg.generoId = @id";
+
+        cmd.Parameters.Clear();
+
+        cmd.Parameters.AddWithValue("@id", idGenero);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<int> jogos = new List<int>();
+
+        while(reader.Read())
+        {
+            jogos.Add(Convert.ToInt32(reader["idJogo"]));
+        }
+
+        reader.Close();
+
+        return jogos;
+    }
+
+    public List<int>? JogosEmpresas(int idEmpresa)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"SELECT j.*
+                            FROM JOGOS j
+                            INNER JOIN JOGOS_EMPRESAS je ON j.idJogo = je.jogoId
+                            WHERE je.empresaId = @id";
+
+        cmd.Parameters.Clear();
+
+        cmd.Parameters.AddWithValue("@id", idEmpresa);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<int> jogos = new List<int>();
+
+        while(reader.Read())
+        {
+            jogos.Add(Convert.ToInt32(reader["idJogo"]));
+        }
+
+        reader.Close();
+
+        return jogos;
+    }
+
+    public List<int>? JogosTipos(int idTipo)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"SELECT j.*
+                            FROM JOGOS j
+                            INNER JOIN JOGOS_Tipos jt ON j.idJogo = jt.jogoId
+                            WHERE jt.tipoId = @id";
+
+        cmd.Parameters.Clear();
+
+        cmd.Parameters.AddWithValue("@id", idTipo);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<int> jogos = new List<int>();
+
+        while(reader.Read())
+        {
+            jogos.Add(Convert.ToInt32(reader["idJogo"]));
+        }
+
+        reader.Close();
+
+        return jogos;
+    }
+
+    public List<Jogo>? SearchJogos(string? search)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = @"SELECT * FROM JOGOS
+                            WHERE nome LIKE '%' + @search + '%'";
+        cmd.Parameters.Clear();
+
+        cmd.Parameters.AddWithValue("@search", search);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<int> jogos = new List<int>();
+
+        while(reader.Read())
+        {
+            jogos.Add(Convert.ToInt32(reader["idJogo"]));
+        }
+
+        reader.Close();
+        
+        List<Jogo> jogosfiltrados = new List<Jogo>();
+
+        foreach(int id in jogos)
+        {
+            jogosfiltrados.Add(GetJogo(id));
+        }
+
+        return jogosfiltrados;
     }
 }

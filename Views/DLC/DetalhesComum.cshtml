@@ -99,15 +99,14 @@
         </div>
         <div class="game-info">
             <p class="info-label">Descricao:</p>
-            <textarea rows="5" class="info-value">@Model.Descricao</textarea>
+            <textarea rows="5" class="info-value" readonly>@Model.Descricao</textarea>
         </div>
         <div class="game-info">
             <p class="info-label">Preço:</p>
             <p class="info-value price">@Model.Preco</p>
         </div>
         <div class="button-container">
-            <button class="add-to-cart-button">Adicionar ao Carrinho</button>
-            <button class="buy-button">Comprar</button>
+            <a class="game-card-button" href="/Carrinho/AdicionarCarrinhoDLC?idProduto=@Model.IdComplemento">Adicionar ao Carrinho</a>
         </div>
     </div>
 </body>

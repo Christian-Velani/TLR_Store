@@ -33,3 +33,21 @@ footer {
 .navbar {
   z-index: 1000;
 }
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  margin-right: 0px;
+  cursor: pointer;
+}
+
+.profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.profile-nick {
+  font-weight: bold;
+}

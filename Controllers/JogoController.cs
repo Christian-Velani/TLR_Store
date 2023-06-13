@@ -146,4 +146,29 @@ public class JogoController : Controller
         _jogoRepository.DeleteJogo(jogoId);
         return RedirectToAction("Index");
     }
+
+    public ActionResult Detalhes(int idJogo)
+    {
+        string? session = HttpContext.Session.GetString("usuario");
+        Usuario? usuario = JsonSerializer.Deserialize<Usuario>(session);
+
+        Jogo jogo = _jogoRepository.GetJogo(idJogo);
+
+        if(usuario.TipoUsuario == EnumTipoUsuario.Administrador)
+        {
+            if(jogo != null)
+            {
+                return View("/Views/Jogo/DetalhesAdmin.cshtml", jogo);
+            }
+
+            return NotFound();
+        } else {
+            if(jogo != null)
+            {
+                return View("/Views/Jogo/DetalhesComum.cshtml", jogo);
+            }
+
+            return NotFound();
+        }
+    }
 }

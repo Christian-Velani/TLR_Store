@@ -65,14 +65,17 @@ public class GeneroRepository : Database, IGeneroRepository
 
         List<Genero> generos = new List<Genero>();
 
+        Genero genero = new Genero();
+
         while(reader.Read())
         {
-            Genero genero = new Genero();
             genero.IdGenero = Convert.ToInt32(reader["idGenero"]);
             genero.NomeGenero = reader["nome"].ToString();
 
             generos.Add(genero);
         }
+
+        reader.Close();
 
         return generos;
     }

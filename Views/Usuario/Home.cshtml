@@ -189,66 +189,48 @@
     </style>
 </head>
     <body>
-    <form class="register-form" method="POST" action="/Usuario/Pesquisar">
-        </div>
-        <div class="menu">
+    <form class="register-form" method="POST">
+        <ul class="nav">
             <div class="search-container">
-                <input class="search-input" type="text" placeholder="Digite sua busca..." name="search">
-                <button class="search-button" type="submit">
-                    Buscar
-                </button>
+                <input class="search-input" type="text" placeholder="Digite o nome do jogo" name="nome">
             </div>
-        </div>
-        <div class="filters">
-            <select class="filter-select" name="TiposId">
-                <option value="">Tipo</option>
-                @foreach(Tipo tipo in ViewBag.tipos)
-                {
-                    <option value=@tipo.IdTipo>@tipo.NomeTipo</option>
-                }
-            </select>
-            <select class="filter-select" name="GenerosId">
-                <option value="">Gênero</option>
-                @foreach (Genero genero in ViewBag.generos)
-                {
-                    <option value=@genero.IdGenero>@genero.NomeGenero</option>
-                }
-            </select>
-            <select class="filter-select" name="EmpresasId">
-                <option value="">Empresas</option>
-                @foreach (Empresa empresa in ViewBag.empresas)
-                {
-                    <option value=@empresa.IdEmpresa>@empresa.NomeEmpresa</option>
-                }
-            </select>
-        </div>
-    </div>
+            <div class="filters">
+                <select class="filter-select" name="TiposId">
+                    <option value="">Tipo</option>
+                    @foreach(Tipo tipo in ViewBag.tipos)
+                    {
+                        <option value=@tipo.IdTipo>@tipo.NomeTipo</option>
+                    }
+                </select>
+                <select class="filter-select" name="GenerosId">
+                    <option value="">Gênero</option>
+                    @foreach (Genero genero in ViewBag.generos)
+                    {
+                        <option value=@genero.IdGenero>@genero.NomeGenero</option>
+                    }
+                </select>
+                <select class="filter-select" name="EmpresasId">
+                    <option value="">Empresas</option>
+                    @foreach (Empresa empresa in ViewBag.empresas)
+                    {
+                        <option value=@empresa.IdEmpresa>@empresa.NomeEmpresa</option>
+                    }
+                </select>
+            </div>
+            <button class="search-button" type="submit">
+                Filtrar
+            </button>
+        </ul>
+    </form>
         <div class="game-card">
-            @{
-                if (ViewBag.jogosAux != null)
-                {
-                    foreach(Jogo jogo in ViewBag.jogosAux)
-                    {
-                        <div class="game-card-item">
-                            <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@jogo.Imagem)" href="/Jogo/Detalhes/?idJogo = @jogo.JogoId">
-                            <div class="game-card-title">@jogo.Nome</div>
-                            <button class="game-card-button" href="/Carrinho/Adicionar">Adicionar ao Carrinho</button>
-                        </div>
-                    }
-                }
-                else
-                {
-                    foreach(Jogo jogo in ViewBag.jogos)
-                    {
-                        <div class="game-card-item">
-                            <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@jogo.Imagem)" href="/Jogo/Detalhes/?idJogo = @jogo.JogoId">
-                            <div class="game-card-title">@jogo.Nome</div>
-                            <button class="game-card-button" href="/Carrinho/Adicionar">Adicionar ao Carrinho</button>
-                        </div>
-                    }
-                }
+            @foreach(Jogo jogo in ViewBag.jogos)
+            {
+                <div class="game-card-item">
+                    <img class="game-card-image" src="data:image/jpeg;base64,@Convert.ToBase64String(@jogo.Imagem)">
+                    <a class="game-card-title" href="/Jogo/Detalhes/?idJogo=@jogo.JogoId">@jogo.Nome</a>
+                    <a class="game-card-button" href="/Carrinho/AdicionarCarrinhoJogo?idProduto=@jogo.JogoId">Adicionar ao Carrinho</a>
+                </div>
             }
         </div>
-    </form>
     </body>
 </html>
